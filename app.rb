@@ -14,7 +14,7 @@ class App < Sinatra::Base
     set :static_cache_control, [:public, max_age: 60 * 60 * 24]
     set :environment, (ENV['RACK_ENV'] || 'development').to_sym
 
-    set :app_domain, settings.development? ? /localhost/ : APP_DOMAIN
+    set :app_domain, settings.development? ? '127.0.0.1:9393' : APP_DOMAIN
 
     enable :static
   end

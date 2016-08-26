@@ -5,13 +5,18 @@ require 'json'
 module Datanames
   module Data
 
-    DATA_FILE = root_path('data/nombre_nacim_por_anio_y_sexo.csv')
+    def self.root_path(*args)
+      File.join(File.dirname(__FILE__), *args)
+    end
+
+    DATA_FILE = root_path('data/nombres1922a2015conpp.csv')
     TOP_NAMES_PER_YEAR_SIZE = 10
 
     #
     #
     #
     def self.extract_data
+      print "arrancando extract_data \n"
       names = Hash.new { |h, k| h[k] = [] }
       years = Hash.new { |h, k| h[k] = { f: [], m: [] } }
 
@@ -21,12 +26,12 @@ module Datanames
       #   2: Name
       #   3: Quantity
       CSV.foreach(DATA_FILE) do |row|
-        name = format_name(row[2])
-        year = row[0].to_i
-        quantity = row[3].to_i
-        gender = case row[1]
-                 when 'Femenino' then :f
-                 when 'Masculino' then :m
+        name = format_name(row[0])
+        year = row[2].to_i
+        quantity = row[1].to_i
+        gender = case row[3]
+                 when 'F' then :f
+                 when 'M' then :m
                  else raise "Invalid gender: #{row[1].inspect}"
                  end
 
@@ -58,7 +63,11 @@ module Datanames
     #
     #
     def self.export_data
+      print "exportando data \n"
       names, years = extract_data
+
+      print "termine de hacer el extract_data"
+      print names[0]
 
       names_folder = root_path('public', 'names')
       names.each do |name, name_data|
@@ -99,3 +108,5 @@ module Datanames
 
   end
 end
+
+Datanames::Data::export_data()

@@ -25,8 +25,8 @@ jQuery(function ($) {
     };
   }
 
-  var MIN_YEAR = 1960
-    , MAX_YEAR = 2010
+  var MIN_YEAR = 1922
+    , MAX_YEAR = 2016
     , App = {
       /**
        *
@@ -98,9 +98,7 @@ jQuery(function ($) {
         $container.empty();
 
         for (i = 0, length = statistics.length; i < length; i += 1) {
-          title = statistics[i].title;
-          desc = statistics[i].description;
-          $li = $("<li><span class=\"number-info\">" + title + "</span>" + desc + "</li>");
+          $li = $("<li>" + statistics[i] + "</li>");
           $container.append($li);
         }
       },
@@ -135,11 +133,10 @@ jQuery(function ($) {
             }
           },
           grid: {
-            drawGridlines: true,
+            drawGridlines: false,
             drawBorder: false,
             borderWidth: 0,
-            shadow: false,
-            background: "#FFF"
+            shadow: false
           },
           highlighter: {
             show: true,
@@ -218,12 +215,11 @@ jQuery(function ($) {
           },
           series: seriesOptions,
           grid: {
-            drawGridlines: true,
+            drawGridlines: false,
             drawBorder: false,
             borderWidth: 0,
             shadow: false,
-            background: "#FFF",
-            gridLineColor: "#E4E4E4"
+            background: 'transparent'
           },
           axesDefaults: {
             showTickMarks: false,
@@ -233,7 +229,7 @@ jQuery(function ($) {
           },
           axes: {
             xaxis: {
-              ticks: [[1958, ""], 1960, 1970, 1980, 1990, 2000, 2010, [2012, ""]],
+              ticks: [[1922, ""], 1930, 1940, 1950, 1960, 1970, 1980, 1990, 2000, 2010, [2015, ""]],
               tickOptions: {
                 showGridline: false,
                 formatString: "%d"

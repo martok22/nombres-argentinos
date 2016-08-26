@@ -2,8 +2,8 @@ jQuery(function ($) {
 
   var NAMES_BASE_URL = "/names/"
     , YEARS_BASE_URL = "/years/"
-    , MIN_YEAR = 1960
-    , MAX_YEAR = 2010
+    , MIN_YEAR = 1922
+    , MAX_YEAR = 2015
     , statisticsCalculator = {}
     , DataProcessor = function (names, year) {
       this.names = names;
@@ -24,7 +24,7 @@ jQuery(function ($) {
 
     checkDone = function () {
       if ((namesDone === this.processedNames.length) && yearDone) {
-        statistics = this._fetchStatistics(namesData[mainName], yearData);
+        statistics = this._fetchStatistics(namesData[mainName], this.year);
         $processing.resolve({
           names: this.names,
           processedNames: this.processedNames,
@@ -150,14 +150,13 @@ jQuery(function ($) {
   /**
    *
    */
-  DataProcessor.prototype._fetchStatistics = function (nameData) {
+  DataProcessor.prototype._fetchStatistics = function (nameData, currYear) {
     var statistics = []
       , name = this.names[0];
 
     statistics.push(statisticsCalculator.totalNames(name, nameData));
-    statistics.push(statisticsCalculator.yearsWithName(name, nameData));
-    statistics.push(statisticsCalculator.minYear(name, nameData));
-    statistics.push(statisticsCalculator.maxYear(name, nameData));
+    statistics.push(statisticsCalculator.minMaxYear(name, nameData));
+    statistics.push(statisticsCalculator.currentYear(name, nameData, currYear));
 
     return statistics;
   };
@@ -174,17 +173,14 @@ jQuery(function ($) {
       totalQuantity += nameData[i].quantity;
     }
 
-    return {
-      title: totalQuantity,
-      description: name + " en total"
-    };
+    return "Entre los años 1922 y 2016 nacieron " + totalQuantity + " personas llamadas " + name;
   };
 
   /**
    *
    */
-  statisticsCalculator.maxYear = function (name, nameData) {
-    var maxYear = 1960
+  statisticsCalculator.minMaxYear = function (name, nameData) {
+    var maxYear = 1922
       , maxYearNumber = 0
       , length = nameData.length
       , i = 0;
@@ -196,16 +192,6 @@ jQuery(function ($) {
       }
     }
 
-    return {
-      title: maxYear,
-      description: "es el a&ntilde;o con m&aacute;s " + name
-    };
-  };
-
-  /**
-   *
-   */
-  statisticsCalculator.minYear = function (name, nameData) {
     var minYear = MIN_YEAR
       , minYearNumber = 9999999
       , length = nameData.length
@@ -224,26 +210,15 @@ jQuery(function ($) {
       }
     }
 
-    return {
-      title: minYear,
-      description: "es el a&ntilde;o con menos " + name
-    };
+    return "El a&ntilde;o con m&aacute;s " + name + " fue en " + maxYear + " y con menos " + name + " en " + minYear;
   };
 
-  /**
-   *
-   */
-  statisticsCalculator.yearsWithName = function (name, nameData) {
-    var yearsWithName = nameData.length
-    , yearsWithoutName;
-
-    yearsWithoutName = (MAX_YEAR - MIN_YEAR + 1) - yearsWithName;
-
-    return {
-      title: yearsWithoutName,
-      description: "a&ntilde;os sin " + name
-    };
-  };
+  statisticsCalculator.currentYear = function (name, nameData, currYear) {
+    var indexCurrYear = currYear - MIN_YEAR;
+    var numNamesCurrYear = nameData[indexCurrYear].quantity;
+    
+    return "En el a&ntilde;o que naciste, en Argentina, nacieron " + numNamesCurrYear + " personas que tambi&eacute;n se llaman " + name;
+  }
 
   window.DataProcessor = DataProcessor;
 
