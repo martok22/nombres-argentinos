@@ -10,25 +10,26 @@ module Datanames
     end
 
     DATA_FILE = root_path('data/nombres1922a2015conpp.csv')
-    TOP_NAMES_PER_YEAR_SIZE = 10
+    TOP_NAMES_PER_YEAR_SIZE = 10  
 
     #
     #
     #
     def self.extract_data
-      print "arrancando extract_data \n"
       names = Hash.new { |h, k| h[k] = [] }
       years = Hash.new { |h, k| h[k] = { f: [], m: [] } }
 
       # CSV columns
-      #   0: Year
-      #   1: Gender
-      #   2: Name
-      #   3: Quantity
+      #   0: Name
+      #   1: Quantity
+      #   2: Year
+      #   3: Gender
+      #   4: Percentage
       CSV.foreach(DATA_FILE) do |row|
         name = format_name(row[0])
         year = row[2].to_i
         quantity = row[1].to_i
+        percentage = row[4].to_f
         gender = case row[3]
                  when 'F' then :f
                  when 'M' then :m
@@ -39,7 +40,7 @@ module Datanames
         if current_name_data
           current_name_data[:quantity] += quantity
         else
-          names[name] << { quantity: quantity, year: year }
+          names[name] << { quantity: quantity, year: year, percentage: percentage }
         end
 
         year_data = years[year][gender]
@@ -63,11 +64,7 @@ module Datanames
     #
     #
     def self.export_data
-      print "exportando data \n"
       names, years = extract_data
-
-      print "termine de hacer el extract_data"
-      print names[0]
 
       names_folder = root_path('public', 'names')
       names.each do |name, name_data|
