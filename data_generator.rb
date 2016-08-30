@@ -25,7 +25,7 @@ module Datanames
       #   2: Year
       #   3: Gender
       #   4: Percentage
-      CSV.foreach(DATA_FILE) do |row|
+      CSV.foreach(DATA_FILE, encoding:'utf-8') do |row|
         name = format_name(row[0])
         year = row[2].to_i
         quantity = row[1].to_i
