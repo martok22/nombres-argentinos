@@ -6,7 +6,7 @@ class App < Sinatra::Base
 
   helpers Helpers::Assets
 
-  APP_DOMAIN = 'data.180.com.uy'
+  APP_DOMAIN = 'casarosada.gob.ar/nombres'
 
   configure do
     set :views, root_path('views')

@@ -26,6 +26,10 @@ module Datanames
       #   3: Gender
       #   4: Percentage
       CSV.foreach(DATA_FILE, encoding:'utf-8') do |row|
+        # Print cada 100000
+        if $. % 100000 == 0
+          puts $.
+        end
         name = format_name(row[0])
         year = row[2].to_i
         quantity = row[1].to_i
@@ -37,9 +41,7 @@ module Datanames
                  end
 
         current_name_data = names[name].find { |nd| nd[:year] == year }
-        if current_name_data
-          current_name_data[:quantity] += quantity
-        else
+        if !current_name_data
           names[name] << { quantity: quantity, year: year, percentage: percentage }
         end
 
@@ -65,6 +67,9 @@ module Datanames
     #
     def self.export_data
       names, years = extract_data
+
+      # Print anos
+      print years
 
       names_folder = root_path('public', 'names')
       names.each do |name, name_data|
