@@ -132,6 +132,7 @@ footer .external-links a {
 #main-chart {
   min-height: 400px;
   margin: 30px 0;
+  text-align: center;
 }
 
 .chart .tooltip-item:nth-child(n+1) {
@@ -194,6 +195,7 @@ section#extra-name-data {
 #extra-year-data {
   overflow: auto;
   display: none;
+  text-align: center;
 }
 
 #main.active #extra-name-data,
@@ -202,9 +204,8 @@ section#extra-name-data {
 }
 
 /* Extra year data */
-#extra-year-data ul {
-  margin: 20px 0;
-  overflow: auto;
+#extra-year-data svg {
+  margin: 20px;
 }
 
 #extra-year-data .year-chart {
@@ -336,4 +337,42 @@ ul {
 }
 .main-form-title h1 {
   font-weight: 700;
+}
+
+/******
+ * Line Chart
+ *****/
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  display: none;
+}
+
+.line0, .line1 {
+  fill: none;
+  stroke-width: 3px;
+}
+
+.line0 {
+  stroke: aquamarine;
+}
+
+.line1 {
+  stroke: orange;
+}
+
+.hover-line {
+  fill: none;
+  pointer-events: all;
+}
+
+.focus circle {
+  fill: none;
+  stroke: steelblue;
 }

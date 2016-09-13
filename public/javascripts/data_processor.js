@@ -173,7 +173,7 @@ jQuery(function ($) {
       totalQuantity += nameData[i].quantity;
     }
 
-    return "Entre los años 1922 y 2016 nacieron " + totalQuantity + " personas llamadas " + name;
+    return "Entre los años 1922 y 2016 nacieron " + totalQuantity + " personas llamadas " + capitalizeFirstLetter(name);
   };
 
   /**
@@ -210,14 +210,29 @@ jQuery(function ($) {
       }
     }
 
-    return "El a&ntilde;o con m&aacute;s " + name + " fue en " + maxYear + " y con menos " + name + " en " + minYear;
+    return "El a&ntilde;o con m&aacute;s " + capitalizeFirstLetter(name) + " fue en " + maxYear + " y con menos " + capitalizeFirstLetter(name) + " en " + minYear;
   };
 
   statisticsCalculator.currentYear = function (name, nameData, currYear) {
     var indexCurrYear = currYear - MIN_YEAR;
     var numNamesCurrYear = nameData[indexCurrYear].quantity;
     
-    return "En el a&ntilde;o que naciste, en Argentina, nacieron " + numNamesCurrYear + " personas que tambi&eacute;n se llaman " + name;
+    return "En el a&ntilde;o que naciste, en Argentina, nacieron " + numNamesCurrYear + " personas que tambi&eacute;n se llaman " + capitalizeFirstLetter(name);
+  }
+
+  function capitalizeFirstLetter(name) {
+    var nombres = name.split(" ");
+    var connectors = ["de", "los", "del", "las", "la", "el"];
+    
+    // Solo capitalizar palabra si no es un conector
+    for (var i=0; i < nombres.length; i++) {
+      if (connectors.indexOf(nombres[i]) == -1)
+        nombres[i] = nombres[i].charAt(0).toUpperCase() + nombres[i].slice(1);
+    }
+    
+    name = nombres.join(" ");
+
+    return name;
   }
 
   window.DataProcessor = DataProcessor;
