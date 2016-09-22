@@ -1,7 +1,7 @@
 jQuery(function ($) {
 
-  var NAMES_BASE_URL = "/names/"
-    , YEARS_BASE_URL = "/years/"
+  var NAMES_BASE_URL = "/names/" // borrar - sin usar
+    , YEARS_BASE_URL = "/years/" // borrar - sin usar
     , MIN_YEAR = 1922
     , MAX_YEAR = 2015
     , statisticsCalculator = {}
@@ -11,9 +11,6 @@ jQuery(function ($) {
       this.year = this._processYear(year);
     };
 
-  /**
-   *
-   */
   DataProcessor.prototype.fetchData = function (callback) {
     var namesDone = 0
       , yearDone = ! this.year
@@ -173,7 +170,7 @@ jQuery(function ($) {
       totalQuantity += nameData[i].quantity;
     }
 
-    return "Entre los años 1922 y 2016 nacieron " + totalQuantity + " personas llamadas " + capitalizeFirstLetter(name);
+    return "Entre los años 1922 y 2016 nacieron <b>" + totalQuantity + "</b> personas llamadas <b>" + capitalizeFirstLetter(name) + "</b>.";
   };
 
   /**
@@ -197,7 +194,7 @@ jQuery(function ($) {
       , length = nameData.length
       , year, quantity, i;
 
-    for (year = MIN_YEAR; year <= MAX_YEAR; year += 1) {
+    for (year = MIN_YEAR; year <= MAX_YEAR; year++) {
       quantity = 0;
       for (i = 0; i < nameData.length; i += 1) {
         if (nameData[i].year == year) {
@@ -210,26 +207,30 @@ jQuery(function ($) {
       }
     }
 
-    return "El a&ntilde;o con m&aacute;s " + capitalizeFirstLetter(name) + " fue en " + maxYear + " y con menos " + capitalizeFirstLetter(name) + " en " + minYear;
+    return "El a&ntilde;o con m&aacute;s <b>" + capitalizeFirstLetter(name) + "</b> fue en <b>" + maxYear + "</b> y con menos <b>" + capitalizeFirstLetter(name) + "</b> en <b>" + minYear + "</b>.";
   };
 
   statisticsCalculator.currentYear = function (name, nameData, currYear) {
     var indexCurrYear = currYear - MIN_YEAR;
     var numNamesCurrYear = nameData[indexCurrYear].quantity;
-    
-    return "En el a&ntilde;o que naciste, en Argentina, nacieron " + numNamesCurrYear + " personas que tambi&eacute;n se llaman " + capitalizeFirstLetter(name);
+
+    if(numNamesCurrYear == 1){
+      return "En el a&ntilde;o que naciste, en Argentina, nació <b>" + numNamesCurrYear + "</b> persona que tambi&eacute;n se llama <b>" + capitalizeFirstLetter(name) + "</b>.";
+    } else {
+      return "En el a&ntilde;o que naciste, en Argentina, nacieron <b>" + numNamesCurrYear + "</b> personas que tambi&eacute;n se llaman <b>" + capitalizeFirstLetter(name) + "</b>.";
+    }
   }
 
   function capitalizeFirstLetter(name) {
     var nombres = name.split(" ");
     var connectors = ["de", "los", "del", "las", "la", "el"];
-    
+
     // Solo capitalizar palabra si no es un conector
     for (var i=0; i < nombres.length; i++) {
       if (connectors.indexOf(nombres[i]) == -1)
         nombres[i] = nombres[i].charAt(0).toUpperCase() + nombres[i].slice(1);
     }
-    
+
     name = nombres.join(" ");
 
     return name;
