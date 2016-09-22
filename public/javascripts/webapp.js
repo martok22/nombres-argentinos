@@ -50,7 +50,7 @@ jQuery(function ($) {
           event.preventDefault();
 
           if (mainName !== "") {
-            url = "/nombre/" + mainName + "/" + year;
+            url = "/nombre/" + mainName + "/" + year + "#posicion2";
             if (namesLength > 0) {
               for (i = 0; i < namesLength; i += 1) {
                 names[i] = names[i].replace(/^\s+|\s+$/g, '');
@@ -80,7 +80,7 @@ jQuery(function ($) {
           this.displayStatistics(data.statistics);
           this.processNamesData(data.processedNames, data.year, data.namesData);
           if (data.year) {
-            $("#extra-year-data .specific-year").text(data.year);
+            $("#extra-year-datas .specific-year").text(data.year);
             this.displayYearStatistics(data.yearData, "female", data.year);
             this.displayYearStatistics(data.yearData, "male", data.year);
           }
@@ -92,22 +92,24 @@ jQuery(function ($) {
        *
        */
       displayStatistics: function (statistics) {
-        var $container = $("#extra-name-data ul")
-          , i, length, $li, title, desc;
+        var $container = $("#nameDataContainer")
+          , i, length, $p, title, desc;
 
         $container.empty();
 
         for (i = 0, length = statistics.length; i < length; i += 1) {
-          $li = $("<li>" + statistics[i] + "</li>");
-          $container.append($li);
+
+          $p = $("<p>" + statistics[i] + "</p>");
+
+          $container.append($p);
         }
       },
-      
+
       /**
        * Bubble Chart de nombres
        */
       displayYearStatistics: function (yearData, gender, year) {
-        
+
         var classBubbles = "bubble" + gender;
         var diameter = 450; // Max size of the bubbles
 
@@ -117,7 +119,7 @@ jQuery(function ($) {
             .padding(1.5);
 
         // SVG
-        var svg = d3.select("#extra-year-data")
+        var svg = d3.select("#extra-year-datas")
             .append("svg")
             .attr("width", diameter)
             .attr("height", diameter)
@@ -165,11 +167,11 @@ jQuery(function ($) {
               .attr("text-anchor", "middle")
               .text(function(d){ return processNameForBubble(d.name); })
               .style({
-                  "fill":"#646363", 
+                  "fill":"#646363",
                   "font-family":"Helvetica Neue, Helvetica, Arial, san-serif",
                   "font-size": "14px"
-              }); 
-            
+              });
+
         });
 
         function toTitleCase(str)
@@ -181,7 +183,7 @@ jQuery(function ($) {
             var processedName = window.DataProcessor.prototype._processName(name);
 
             processedName = processedName.replace("_", " ");
-            
+
             return toTitleCase(processedName);
         }
 
@@ -281,7 +283,7 @@ jQuery(function ($) {
             var textHover = (Math.round(d.percentage*100) / 100).toString() + "%";
             focus.select("text").text(textHover);
           }
-        }  
+        }
 
       },
       /**

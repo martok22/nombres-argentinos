@@ -6,15 +6,6 @@ html {
   font-size: 16px;
 }
 
-section#introduction {
-  background-image: url('/images/trama-azul.png');
-  text-shadow: none;
-  padding: 20px 0;
-}
-
-#introduction h1 {  
-}
-
 /* Footer **********************************************************/
 footer {
   background: #3E4452;
@@ -186,16 +177,13 @@ footer .external-links a {
 }
 
 /* Extra data */
-
-section#extra-name-data {
-  background-color: #ffffff;
-}
-
-#extra-name-data,
-#extra-year-data {
+#extra-name-data {
+  display: flex;
+  flex-direction: column;
+  /*background-color: #ffffff;*/
+  color: white;
   overflow: auto;
-  display: none;
-  text-align: center;
+  align-items: center;
 }
 
 #main.active #extra-name-data,
@@ -375,4 +363,123 @@ ul {
 .focus circle {
   fill: none;
   stroke: steelblue;
+}
+
+/* News Modifications Francisco López */
+#firstheader {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  z-index: 9999;
+}
+.panels {
+  height: 100vh;
+  overflow: hidden;
+  padding: 0;
+  border-bottom: silver 1px solid;
+}
+.headerSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.headerTitle {
+  font-weight: 600;
+  font-size: 32px;
+  color: white;
+  text-align: center;
+  width: 550px;
+}
+.headerSubTitle {
+  font-weight: normal;
+  font-size: 16px;
+  color: white;
+  text-align: center;
+}
+
+#seccion1{background-color: white;}
+#titleIntroduction {
+  /*background-color: white;*/
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  /*height: 30%;*/
+  padding: 110px 0px 40px 0px;
+}
+#titleIntroduction h1,
+#titleIntroduction aside {
+  color: #5D5D5D;
+}
+#introduction button {
+  background-color: #3C3C3C;
+  border: 0;
+  border-radius: 10px;
+  padding: 10px;
+  font-weight: 400;
+  width: 50%;
+  margin-top: 15px;
+}
+#introduction input::-webkit-input-placeholder { color: white; font-weight: 100; text-align: center; }
+#introduction input:-moz-placeholder { color: white; font-weight: 100; text-align: center; }
+#introduction input::-moz-placeholder { color: white; font-weight: 100; text-align: center; }
+#introduction input:-ms-input-placeholder { color: white; font-weight: 100; text-align: center; }
+
+#seccion2{background-color: white;}
+#introduction {
+  background-image: url('/images/nuevaTrama.png');
+  background-size: auto;
+  text-shadow: none;
+  color: white;
+  display: flex;
+  justify-content: center;
+  /*height: 70%;*/
+  padding: 40px 0;
+}
+#introduction label {
+  text-align: center;
+  font-size: 34px;
+  font-weight: 300;
+  display: block;
+}
+#introduction input {
+  border: solid 2px #F6712E;
+  border-radius: 10px;
+  background-color: orange;
+  color: white;
+  padding: 10px;
+  width: 100%;
+  outline: none;
+  text-align: center;
+}
+
+#seccion3 {
+  background-color: #F5712E;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#nameDataContainer {
+  /*font-size: 34px;*/
+  width: 800px;
+  text-align: center;
+  margin-top: 80px;
+}
+#nameDataContainer p {
+  font-size: 34px;
+  font-weight: 300;
+  margin: 0 0 30px;
+}
+
+#seccion4{background-color: gray;}
+
+#containerSlide {
+  position: fixed;
+  right: 0px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+#containerSlide svg {
+  width: 50px;
 }
