@@ -6,7 +6,6 @@ jQuery(function ($) {
     , MAX_YEAR = 2015
     , statisticsCalculator = {}
     , DataProcessor = function (names, year) {
-      console.log(year);
       this.names = names;
       this.processedNames = this._processNames(names);
       this.year = this._processYear(year);

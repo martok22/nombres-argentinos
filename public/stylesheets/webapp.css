@@ -437,6 +437,11 @@ ul {
   /*height: 70%;*/
   padding: 40px 0;
 }
+#chart-wrapper h2,
+#chart-wrapper aside {
+  color: #5D5D5D;
+  text-align: center;
+}
 #introduction label {
   text-align: center;
   font-size: 34px;
@@ -473,7 +478,6 @@ ul {
 }
 
 #seccion4{background-color: gray;}
-
 #containerSlide {
   position: fixed;
   right: 0px;
