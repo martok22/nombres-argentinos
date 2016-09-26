@@ -116,7 +116,7 @@ jQuery(function ($) {
             .padding(1.5);
 
         // SVG
-        var svg = d3.select("#extra-year-datas")
+        var svg = d3.select("#extra-year-data")
             .append("svg")
             .attr("width", diameter)
             .attr("height", diameter)
@@ -226,28 +226,48 @@ jQuery(function ($) {
           .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+        var totalMin, totalMax;
+
+        // Iterate over all names to figure out the max and min for the percentages
         for (var i = 0, namesLength = names.length; i < namesLength; i += 1) {
           name = names[i];
           data = namesData[name];
 
+          currMinMax = d3.extent(data, function(d) { return d.percentage; });
+
+          currMin = currMinMax[0];
+          currMax = currMinMax[1]; 
+          if (i == 0) {
+            totalMin = currMin;
+            totalMax = currMax;
+          } else {
+            if (currMin < totalMin) { totalMin = currMin; }
+            if (currMax < totalMax) { totalMax = currMax; }
+          }
+        }
+
+        x.domain([1922, 2015]);
+        y.domain([totalMin, totalMax]);
+
+        svg.append("g")
+              .attr("class", "x axis")
+              .attr("transform", "translate(0," + height + ")")
+              .call(xAxis);
+
+        // Iterate over all names to figure out the max and min for the percentages
+        for (var i = 0, namesLength = names.length; i < namesLength; i += 1) {
+          name = names[i];
+          data = namesData[name];
+          
           data.forEach(function(d) {
             d.year = +d.year;
-            d.quantity = +d.quantity;
             d.percentage = +d.percentage;
           });
 
           data.sort(function(a, b) {
             return a.year - b.year;
           });
-
-          x.domain([data[0].year, data[data.length - 1].year]);
-          y.domain(d3.extent(data, function(d) { return d.percentage; }));
-
-          svg.append("g")
-              .attr("class", "x axis")
-              .attr("transform", "translate(0," + height + ")")
-              .call(xAxis);
-
+          
           svg.append("path")
               .datum(data)
               .attr("class", "line" + i.toString())
@@ -283,7 +303,6 @@ jQuery(function ($) {
             focus.select("text").text(textHover);
           }
         }
-
       },
 
       humanizeName: function (name) {

@@ -42,7 +42,7 @@ module Datanames
 
         current_name_data = names[name].find { |nd| nd[:year] == year }
         if !current_name_data
-          names[name] << { quantity: quantity, year: year, percentage: percentage }
+          names[name] << { quantity: quantity, year: year, percentage: percentage, gender: gender }
         end
 
         year_data = years[year][gender]
