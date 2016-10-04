@@ -336,11 +336,11 @@ ul {
 }
 
 .line0 {
-  stroke: aquamarine;
+  stroke: #f47139;
 }
 
 .line1 {
-  stroke: orange;
+  stroke: #48bc60;
 }
 
 .hover-line {
@@ -350,7 +350,16 @@ ul {
 
 .focus circle {
   fill: none;
-  stroke: steelblue;
+  stroke: #666666;
+}
+
+.voronoi path {
+  fill: none;
+  pointer-events: all;
+}
+
+.line-hover{
+  stroke-width: 4;  
 }
 
 /* News Modifications Francisco López */
