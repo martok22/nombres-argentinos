@@ -444,9 +444,31 @@ height: 35%;
   color: white;
   padding: 20px;
 }
-#name-form {
-text-align: center;
-max-width: 450px;
+
+#firstheader {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  z-index: 9999;
+}
+.panels {
+  height: 100vh;
+  overflow: hidden;
+  padding: 0;
+  border-bottom: silver 1px solid;
+}
+.headerSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.headerTitle {
+  font-weight: 600;
+  font-size: 32px;
+  color: white;
+  text-align: center;
+  width: 550px;
 }
 #introduction label {
   font-size: 25px;

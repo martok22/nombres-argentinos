@@ -145,7 +145,7 @@ b {
   font-weight: 300;
 }
 
-/*@media screen and (min-width: 700px) {
+@media screen and (min-width: 700px) {
   .headerTitle {
     font-size: 55px;
   }
@@ -181,7 +181,7 @@ b {
   #social {
     display: flex;
   }
-}*/
+}
 @media screen and (min-width: 700px) {
   .headerTitle {
     font-size: 42px;

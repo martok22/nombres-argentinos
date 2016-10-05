@@ -409,20 +409,17 @@ jQuery(function ($) {
 
   $(".help-tooltip").tooltip();
 
-  // Form event
+  // Ocultar el placeholder del input cuando el usuario hace foco en el elemento.
   var formSelector = $('input');
-
-  var placeholderTemp = '';
+  var placeholderData;
 
   formSelector.each(function(key, value){
-      value.addEventListener('focusin', function(){
-        placeholderTemp = this.placeholder;
-        this.placeholder = '';
-      });
-
-      value.addEventListener('focusout', function(){
-        this.placeholder = placeholderTemp;
-      });
-  })
-
+    value.focusin(function(){
+      placeholderData = $(this).attr('placeholder');
+      $(this).attr('placeholder', '');
+    })
+    value.focusout(function(){
+      $(this).attr('placeholder', placeholderData);
+    })
+  });
 });

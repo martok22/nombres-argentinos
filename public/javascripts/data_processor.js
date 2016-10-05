@@ -1,8 +1,8 @@
 jQuery(function ($) {
 
   var variableGenero;
-  var NAMES_BASE_URL = "/names/" // borrar - sin usar
-    , YEARS_BASE_URL = "/years/" // borrar - sin usar
+  var NAMES_BASE_URL = "/names/"
+    , YEARS_BASE_URL = "/years/"
     , MIN_YEAR = 1922
     , MAX_YEAR = 2015
     , statisticsCalculator = {}
@@ -162,7 +162,7 @@ jQuery(function ($) {
       totalQuantity += nameData[i].quantity;
     }
 
-    return "Entre los años 1922 y 2016 nacieron <b>" + totalQuantity + "</b> personas llamadas <b>" + capitalizeFirstLetter(name) + "</b>.";
+    return "Entre los años 1922 y 2015, nacieron <b>" + totalQuantity + " " + capitalizeFirstLetter(name) + "</b>.";
   };
 
   statisticsCalculator.minMaxYear = function (name, nameData) {
@@ -196,7 +196,7 @@ jQuery(function ($) {
       }
     }
 
-    return "El a&ntilde;o con m&aacute;s <b>" + capitalizeFirstLetter(name) + "</b> fue en <b>" + maxYear + "</b> y con menos <b>" + capitalizeFirstLetter(name) + "</b> en <b>" + minYear + "</b>.";
+    return "Tu nombre alcanzó la mayor popularidad en <b>" + maxYear + "</b> y la menor en <b>" + minYear + "</b>.";
   };
 
   statisticsCalculator.currentYear = function (name, nameData, currYear) {
@@ -204,9 +204,9 @@ jQuery(function ($) {
     var numNamesCurrYear = nameData[indexCurrYear].quantity;
 
     if(numNamesCurrYear == 1){
-      return "En el a&ntilde;o que naciste, en Argentina, nació <b>" + numNamesCurrYear + "</b> persona que tambi&eacute;n se llama <b>" + capitalizeFirstLetter(name) + "</b>.";
+      return "El año en el que naciste, solo <b>" + numNamesCurrYear + "</b> persona se llamó igual que vos. ¡Wow!";
     } else {
-      return "En el a&ntilde;o que naciste, en Argentina, nacieron <b>" + numNamesCurrYear + "</b> personas que tambi&eacute;n se llaman <b>" + capitalizeFirstLetter(name) + "</b>.";
+      return "El año en el que naciste, otras <b>" + numNamesCurrYear + "</b> personas se llamaron igual que vos. ¡Wow!";
     }
   }
 

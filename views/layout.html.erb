@@ -1,3 +1,25 @@
+<!-- cssBorrar: {
+  bootstrap.css
+  droid-serif.css
+  roboto-fontface.css
+  animate.css
+} -->
+<!-- jsBorrar: {
+  jqplot-plugins/jqplot.dateAxisRenderer.min.js
+  http://b.scorecardresearch.com/c2/16973189/ct.js
+} -->
+<!-- imageBorrar: {
+  example
+  anii.png
+  logo.png
+  trama-azul.png
+  trama-celeste-claro.png
+  trama-celeste-oscuro.png
+  ribbon-black.png
+  ribbon-black.svg
+  background-hero.png
+  datauy-logo.png
+} -->
 <!DOCTYPE html>
 <html>
 
@@ -18,109 +40,105 @@
         <link href="<%= stylesheet_path('poncho.css') %>" rel="stylesheet" type="text/css"/>
         <link href="<%= stylesheet_path('jqplot.css') %>" rel="stylesheet" type="text/css"/>
         <link href="<%= stylesheet_path('font-awesome.min.css') %>" rel="stylesheet"/>
+        <link href="<%= stylesheet_path('webapp2.css') %>" rel="stylesheet" type="text/css"/>
         <link href="<%= stylesheet_path('tipped.css') %>" rel="stylesheet" type="text/css"/>
         <link href="<%= stylesheet_path('webapp.css') %>" rel="stylesheet" type="text/css"/>
         <!-- JS -->
+        <!--[if lt IE 9]><script language="javascript" type="text/javascript" src="excanvas.js"></script><![endif]-->
+        <script src="<%= javascript_path('jquery.min.js') %>"></script>
+        <script src="<%= javascript_path('bootstrap.min.js') %>"></script>
         <script src="<%= javascript_path('d3.v3.min.js') %>" type="text/javascript"></script>
         <script src="<%= javascript_path('modernizr.min.js') %>"></script>
+        <script src="<%= javascript_path('jquery.jqplot.min.js') %>"></script>
+        <script src="<%= javascript_path('jqplot-plugins/jqplot.highlighter.min.js') %>"></script>
+        <script src="<%= javascript_path('jqplot-plugins/jqplot.cursor.min.js') %>"></script>
+        <script src="<%= javascript_path('jqplot-plugins/jqplot.donutRenderer.min.js') %>"></script>
+        <script src="<%= javascript_path('data_processor.js') %>"></script>
+        <script src="<%= javascript_path('webapp.js') %>"></script>
+        <script src="<%= javascript_path('tipped.js') %>" type="text/javascript"></script>
+        <!-- <script type="text/javascript" language="JavaScript1.3" src="http://b.scorecardresearch.com/c2/16973189/ct.js"></script> -->
+        <!-- Section Transition -->
+        <script src="<%= javascript_path('fullPage/scrolloverflow.min.js') %>"></script>
+        <script src="<%= javascript_path('fullPage/jquery.fullPage.js') %>"></script>
+        <script src="<%= javascript_path('fullPage/app.js') %>"></script>
+        <!-- tooltips -->
+        <script type="text/javascript">
+            Tipped.create('#name', 'Escribí tu nombre. En caso de querer compararlo con otro, separalos con coma.', {
+                position: 'left',
+                showOn: 'focusin',
+                hideOn: 'blur'
+            });
+            Tipped.create('#year', 'Escribí tu año de nacimiento.', {
+                position: 'left',
+                showOn: 'focusin',
+                hideOn: 'blur'
+            });
+        </script>
+        <!-- circles -->
+        <!-- <script src="<%= javascript_path('circles.js') %>"></script> -->
     </head>
 
     <body>
 
         <!-- Barra de Navegacion -->
         <header id='firstheader'>
-            <div class="row hidden-print">
-                <nav class="navbar navbar-top navbar-default navbar-error" role="navigation">
-                    <div class="container">
-                        <div class="navbar-header">
-                            <div class="navbar-brand">
-                                <img alt="Brand" src="/images/casarosada.svg" width="274" height="50">
-                                <h1 class="sr-only">casarosada.gob.ar
-                                    <small>Presidencia de la Nación</small>
-                                </h1>
-                            </div>
-                        </div>
-                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
-                            <ul class="nav navbar-nav navbar-right navbar-social">
-                                <li class="text-muted">
-                                    Compartilo
-                                    <br/>en redes
-                                </li>
-                                <li>
-                                    <a href="javascript: window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.casarosada.gob.ar/tarifasocial', 'pop', 'width=600, height=260, scrollbars=no');" target="_blank">
-                                        <span class="fa fa-facebook"></span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript: window.open('https://twitter.com/share?text=Tarifa%20Social&url=http://www.casarosada.gob.ar/tarifasocial', 'pop', 'width=600, height=260, scrollbars=no');" target="_blank">
-                                        <span class="fa fa-twitter"></span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </nav>
+            <img id="logo" alt="Brand" src="/images/casarosada.svg">
+            <h1 class="sr-only">casarosada.gob.ar
+                <small>Presidencia de la Nación</small>
+            </h1>
+            <div id="social">
+                <ul class="nav navbar-nav navbar-right navbar-social">
+                    <li class="text-muted">
+                        Compartilo
+                        <br/>en redes
+                    </li>
+                    <li>
+                        <a href="javascript: window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.casarosada.gob.ar/tarifasocial', 'pop', 'width=600, height=260, scrollbars=no');" target="_blank">
+                            <span class="fa fa-facebook"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript: window.open('https://twitter.com/share?text=Tarifa%20Social&url=http://www.casarosada.gob.ar/tarifasocial', 'pop', 'width=600, height=260, scrollbars=no');" target="_blank">
+                            <span class="fa fa-twitter"></span>
+                        </a>
+                    </li>
+                </ul>
             </div>
         </header>
 
-        <!-- Circles -->
-        <div id="containerSlide"></div>
+        <!-- Iconos Secciones -->
+        <div id="containerSlide" style="z-index:99999999;"></div>
 
+        <!-- Secciones -->
         <div id="fullpage">
-            <section id="section1" class="section containerCenter active">
-              <header id='titleIntroduction' class="titleContainer">
-                  <h1 class="header title">Descubrí la popularidad de tu nombre en los últimos 100 años en Argentina</h1>
-                  <aside class="header subTitle">Ingresá tu nombre y año de nacimiento</aside>
-              </header>
-              <article id="introduction" class="containerCenter">
-                <form id="name-form" action="/" method="POST" autocomplete="off">
-                    <label for="name">Me llamo</label>
-                    <input type="text" id="name" name="name" value="<%= names.join(', ') %>" placeholder="Maria o Juan, Carlos"/>
-                    <label for="year" class="lastLabel">Nac&iacute; en el año</label>
-                    <input type="text" id='year' name='year' placeholder="1998" value="<%= year %>"/>
-                    <button type="submit" name="submit" class="grayBtn">Ver resultados</button>
-                </form>
-              </article>
+            <section id="section1" class="section active">
+                <header class="sectionHeader containerCenter">
+                    <h1 class="headerTitle">Tu nombre en los últimos 100 años</h1>
+                    <aside class="headerSubTitle">Descubrí cuántas personas se llamaron como vos en Argentina</aside>
+                </header>
+                <section class="sectionContainer containerCenter">
+                    <form id="name-form" class="containerCenter" action="/" method="POST" autocomplete="off">
+                        <label for="name">¿Cómo te llamás?</label>
+                        <input type="text" id="name" name="name" value="<%= names.join(', ') %>" placeholder="Maria o Juan, Carlos"/>
+                        <label for="year">¿En qué año naciste?</label>
+                        <input type="text" id='year' name='year' placeholder="1998" value="<%= year %>"/>
+                        <button type="submit" name="submit" class="grayBtn">¡A buscar!</button>
+                    </form>
+                </section>
             </section>
 
             <%= yield %>
-        </div>
 
-        <div id="scripties">
-            <!--[if lt IE 9]><script language="javascript" type="text/javascript" src="excanvas.js"></script><![endif]-->
-            <script src="<%= javascript_path('jquery.min.js') %>"></script>
-            <script src="<%= javascript_path('bootstrap.min.js') %>"></script>
-            <script src="<%= javascript_path('jquery.jqplot.min.js') %>"></script>
-            <script src="<%= javascript_path('jqplot-plugins/jqplot.highlighter.min.js') %>"></script>
-            <script src="<%= javascript_path('jqplot-plugins/jqplot.cursor.min.js') %>"></script>
-            <script src="<%= javascript_path('jqplot-plugins/jqplot.donutRenderer.min.js') %>"></script>
-            <script src="<%= javascript_path('data_processor.js') %>"></script>
-            <script src="<%= javascript_path('webapp.js') %>"></script>
-            <script src="<%= javascript_path('tipped.js') %>" type="text/javascript"></script>
-            <script type="text/javascript" language="JavaScript1.3" src="http://b.scorecardresearch.com/c2/16973189/ct.js"></script>
-            <!-- Section Transition -->
-            <script src="<%= javascript_path('fullPage/scrolloverflow.min.js') %>"></script>
-            <script src="<%= javascript_path('fullPage/jquery.fullPage.js') %>"></script>
-            <script src="<%= javascript_path('fullPage/fullPage.js') %>"></script>
+            <footer id="section5" class="section">
+              <section class="sectionContainerFull containerCenter">
+                <p>Estas visualizaciones son posibles gracias a los datos de la Dirección Nacional de las Personas del Ministerio del Interior.</p>
+                <p>Nuestro equipo de desarrollo pertenece a la Dirección de Servicios Analíticos del Ministerio de Modernización.</p>
+                <p>Podés <a>consultar el dataset original</a> y también los <a>datos específicos</a> que usamos.</p>
+              </section>
+            </footer>
 
-            <!-- circles -->
-            <script src="<%= javascript_path('circles.js') %>"></script>
-
-            <!-- tooltips -->
-            <script type="text/javascript">
-                Tipped.create('#name', 'Escribí tu nombre. En caso de querer compararlo con otro, separalos con coma.', {
-                    position: 'left',
-                    showOn: 'focusin',
-                    hideOn: 'blur'
-                });
-                Tipped.create('#year', 'Escribí tu año de nacimiento.', {
-                    position: 'left',
-                    showOn: 'focusin',
-                    hideOn: 'blur'
-                });
-            </script>
-
-        </div>
+        <!-- <div id="scripties">
+        </div> -->
 
     </body>
 
