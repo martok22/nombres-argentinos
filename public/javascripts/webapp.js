@@ -414,11 +414,11 @@ jQuery(function ($) {
   var placeholderData;
 
   formSelector.each(function(key, value){
-    value.focusin(function(){
+    value.addEventListener('focusin', function(){
       placeholderData = $(this).attr('placeholder');
       $(this).attr('placeholder', '');
     })
-    value.focusout(function(){
+    value.addEventListener('focusout', function(){
       $(this).attr('placeholder', placeholderData);
     })
   });
