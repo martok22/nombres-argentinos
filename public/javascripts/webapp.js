@@ -1,7 +1,5 @@
 jQuery(function ($) {
 
-  // console.log(DataProcessor);
-
   /*
    * Check for Function.prototype.bind and define if not defined.
    */
@@ -49,7 +47,7 @@ jQuery(function ($) {
 
           if (mainName !== "") {
             url = "/nombre/" + mainName + "/" + year;
-            // url = "/nombre/" + mainName + "/year/" + year;
+
             if (namesLength > 0) {
               for (i = 0; i < namesLength; i += 1) {
                 names[i] = names[i].replace(/^\s+|\s+$/g, '');
@@ -81,7 +79,6 @@ jQuery(function ($) {
           if (data.year) {
             $("#extra-year-datas .specific-year").text(data.year);
             this.displayYearStatistics(data.yearData, 'female', data.year);
-            // this.displayYearStatistics(data.yearData, "male", data.year);
           }
         }.bind(this)).fail(function (error) {
           this._displayError(error);
@@ -236,7 +233,7 @@ jQuery(function ($) {
           currMinMax = d3.extent(data, function(d) { return d.percentage; });
 
           currMin = currMinMax[0];
-          currMax = currMinMax[1]; 
+          currMax = currMinMax[1];
           if (i == 0) {
             totalMin = currMin;
             totalMax = currMax;
@@ -258,7 +255,7 @@ jQuery(function ($) {
         for (var i = 0, namesLength = names.length; i < namesLength; i += 1) {
           name = names[i];
           data = namesData[name];
-          
+
           data.forEach(function(d) {
             d.year = +d.year;
             d.percentage = +d.percentage;
@@ -267,7 +264,7 @@ jQuery(function ($) {
           data.sort(function(a, b) {
             return a.year - b.year;
           });
-          
+
           svg.append("path")
               .datum(data)
               .attr("class", "line" + i.toString())
@@ -412,19 +409,20 @@ jQuery(function ($) {
 
   $(".help-tooltip").tooltip();
 
-  // var nombre = 'aaron_santino';
-  //
-  // var traerGenero = function (nombre) {
-  //   return $.ajax({
-  //                         url: "/names/" + nombre + ".json",
-  //                         method: "GET",
-  //                         dataType: "json",
-  //                         async: false
-  //                       }).responseText;
-  // };
-  //
-  // var contenido = traerGenero(nombre);
-  //
-  // var gender = JSON.parse(contenido)[0].gender;
+  // Form event
+  var formSelector = $('input');
+
+  var placeholderTemp = '';
+
+  formSelector.each(function(key, value){
+      value.addEventListener('focusin', function(){
+        placeholderTemp = this.placeholder;
+        this.placeholder = '';
+      });
+
+      value.addEventListener('focusout', function(){
+        this.placeholder = placeholderTemp;
+      });
+  })
 
 });
