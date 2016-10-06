@@ -55,6 +55,7 @@ jQuery(function ($) {
 
               url += "?others=" + names.join(",");
             }
+            url += "#posicion2";
             document.location.href = url;
           }
           else {
