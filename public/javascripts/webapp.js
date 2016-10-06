@@ -28,15 +28,11 @@ jQuery(function ($) {
   var MIN_YEAR = 1922
     , MAX_YEAR = 2015
     , App = {
-      /**
-       *
-       */
+
       initialize: function () {
         this.bindEvents();
       },
-      /**
-       *
-       */
+
       bindEvents: function () {
         var $form = $("#name-form");
 
@@ -50,7 +46,8 @@ jQuery(function ($) {
           event.preventDefault();
 
           if (mainName !== "") {
-            url = "/nombre/" + mainName + "/" + year + "#posicion2";
+            url = "/nombre/" + mainName + "/" + year;
+
             if (namesLength > 0) {
               for (i = 0; i < namesLength; i += 1) {
                 names[i] = names[i].replace(/^\s+|\s+$/g, '');
@@ -65,9 +62,7 @@ jQuery(function ($) {
           }
         }.bind(this));
       },
-      /**
-       *
-       */
+
       render: function () {
         var names = $("#name").val().split(",")
           , year = $("#year").val()
@@ -76,21 +71,20 @@ jQuery(function ($) {
         this._clearFormErrors();
 
         processor = new DataProcessor(names, year);
+
         processor.fetchData().done(function (data) {
+
           this.displayStatistics(data.statistics);
           this.processNamesData(data.processedNames, data.year, data.namesData);
           if (data.year) {
             $("#extra-year-datas .specific-year").text(data.year);
-            this.displayYearStatistics(data.yearData, "female", data.year);
-            this.displayYearStatistics(data.yearData, "male", data.year);
+            this.displayYearStatistics(data.yearData, 'female', data.year);
           }
         }.bind(this)).fail(function (error) {
           this._displayError(error);
         }.bind(this));
       },
-      /**
-       *
-       */
+
       displayStatistics: function (statistics) {
         var $container = $("#nameDataContainer")
           , i, length, $p, title, desc;
@@ -126,7 +120,7 @@ jQuery(function ($) {
             .attr("class", classBubbles);
 
         // Colores femenino y masculino
-        var color = (gender == "female") ? "#FFD6C1" : "#E5EFC6";
+        var color = (gender == "female") ? "#F5712E" : "#42BD5C";
 
         // Path a los datos de los años
         var path = "/years/" + year + ".json";
@@ -174,8 +168,7 @@ jQuery(function ($) {
 
         });
 
-        function toTitleCase(str)
-        {
+        function toTitleCase(str) {
             return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
         }
 
@@ -192,6 +185,7 @@ jQuery(function ($) {
        * Line Chart de nombres
        */
       processNamesData: function (names, year, namesData) {
+
         $("#main").addClass("active");
         $("#main-chart").empty();
 
@@ -218,8 +212,10 @@ jQuery(function ($) {
             .orient("left");
 
         var line = d3.svg.line()
-            .x(function(d) { return x(d.year); })
+            .x(function(d) {
+              return x(d.year); })
             .y(function(d) { return y(d.percentage); });
+
 
         var svg = d3.select("#main-chart").append("svg")
             .attr("width", width + margin.left + margin.right)
@@ -268,7 +264,7 @@ jQuery(function ($) {
           data.sort(function(a, b) {
             return a.year - b.year;
           });
-          
+
           svg.append("path")
               .datum(data)
               .attr("class", "line" + i.toString())
@@ -305,9 +301,7 @@ jQuery(function ($) {
           }
         }
       },
-      /**
-       *
-       */
+
       humanizeName: function (name) {
         var processedName = name.replace(/_(.)?/, function (fullMatch, group0) {
           return typeof group0 === "string" ? " " + group0.toUpperCase() : "";
@@ -321,9 +315,7 @@ jQuery(function ($) {
 
         return processedName;
       },
-      /**
-       *
-       */
+
       _displayError: function (error) {
         var $nameField = $(".form-field:has(#name)")
           , $yearField = $(".form-field:has(#year)");
@@ -343,9 +335,7 @@ jQuery(function ($) {
 
         }
       },
-      /**
-       *
-       */
+
       _displayInputError: function ($field, errorMessage) {
         var errorHTML = [
           "<div class=\"form-error\">",
@@ -357,17 +347,13 @@ jQuery(function ($) {
         $field.find(".form-input").append(errorHTML);
         $field.addClass("error");
       },
-      /**
-       *
-       */
+
       _clearFormErrors: function () {
         var $form = $("#name-form");
         $form.find(".form-field.error").removeClass("error");
         $form.find(".form-error").remove();
       },
-      /**
-       *
-       */
+
       _getYaxisOptions: function (series) {
         var yaxisOptions = { min: 0 }
           , maxValue = 0
@@ -388,9 +374,7 @@ jQuery(function ($) {
 
         return yaxisOptions;
       },
-      /**
-       *
-       */
+
       _getSeriesOptions: function (names, series) {
         var seriesOptions = []
           , i, length;
@@ -425,4 +409,17 @@ jQuery(function ($) {
 
   $(".help-tooltip").tooltip();
 
+  // Ocultar el placeholder del input cuando el usuario hace foco en el elemento.
+  var formSelector = $('input');
+  var placeholderData;
+
+  formSelector.each(function(key, value){
+    value.addEventListener('focusin', function(){
+      placeholderData = $(this).attr('placeholder');
+      $(this).attr('placeholder', '');
+    })
+    value.addEventListener('focusout', function(){
+      $(this).attr('placeholder', placeholderData);
+    })
+  });
 });
