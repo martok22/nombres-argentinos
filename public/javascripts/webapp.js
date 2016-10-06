@@ -233,7 +233,7 @@ jQuery(function ($) {
           currMinMax = d3.extent(data, function(d) { return d.percentage; });
 
           currMin = currMinMax[0];
-          currMax = currMinMax[1];
+          currMax = currMinMax[1]; 
           if (i == 0) {
             totalMin = currMin;
             totalMax = currMax;
@@ -255,7 +255,7 @@ jQuery(function ($) {
         for (var i = 0, namesLength = names.length; i < namesLength; i += 1) {
           name = names[i];
           data = namesData[name];
-
+          
           data.forEach(function(d) {
             d.year = +d.year;
             d.percentage = +d.percentage;
