@@ -55,6 +55,7 @@ jQuery(function ($) {
 
               url += "?others=" + names.join(",");
             }
+            url += "#posicion2";
             document.location.href = url;
           }
           else {
@@ -239,7 +240,7 @@ jQuery(function ($) {
             totalMax = currMax;
           } else {
             if (currMin < totalMin) { totalMin = currMin; }
-            if (currMax < totalMax) { totalMax = currMax; }
+            if (currMax > totalMax) { totalMax = currMax; }
           }
         }
 
@@ -251,7 +252,17 @@ jQuery(function ($) {
               .attr("transform", "translate(0," + height + ")")
               .call(xAxis);
 
-        // Iterate over all names to figure out the max and min for the percentages
+        svg.append("g")
+              .attr("class", "y axis")
+              .call(yAxis);
+
+        var voronoi = d3.geom.voronoi()
+              .x(function(d) { return x(d.year); })
+              .y(function(d) { return y(d.value); })
+              .clipExtent([[-margin.left, -margin.top], [width + margin.right, height + margin.bottom]]);
+
+        var flatData = [];
+
         for (var i = 0, namesLength = names.length; i < namesLength; i += 1) {
           name = names[i];
           data = namesData[name];
@@ -259,6 +270,8 @@ jQuery(function ($) {
           data.forEach(function(d) {
             d.year = +d.year;
             d.percentage = +d.percentage;
+
+            flatData.push({year: d.year, value: d.percentage, key: "line" + i.toString()});
           });
 
           data.sort(function(a, b) {
@@ -269,10 +282,11 @@ jQuery(function ($) {
               .datum(data)
               .attr("class", "line" + i.toString())
               .attr("d", line);
+        }
 
-          var focus = svg.append("g")
+        var focus = svg.append("g")
               .attr("class", "focus")
-              .style("display", "none");
+              .attr("transform", "translate(-100,-100)");
 
           focus.append("circle")
               .attr("r", 4.5);
@@ -281,25 +295,30 @@ jQuery(function ($) {
               .attr("x", 9)
               .attr("dy", ".35em");
 
-          svg.append("rect")
-              .attr("class", "hover-line")
-              .attr("width", width)
-              .attr("height", height)
-              .on("mouseover", function() { focus.style("display", null); })
-              .on("mouseout", function() { focus.style("display", "none"); })
-              .on("mousemove", mousemove);
+          var voronoiGroup = svg.append("g")
+            .attr("class", "voronoi");
 
-          function mousemove() {
-            var x0 = x.invert(d3.mouse(this)[0]),
-                i = bisectDate(data, x0, 1),
-                d0 = data[i - 1],
-                d1 = data[i],
-                d = x0 - d0.date > d1.date - x0 ? d1 : d0;
-            focus.attr("transform", "translate(" + x(d.year) + "," + y(d.percentage) + ")");
-            var textHover = (Math.round(d.percentage*100) / 100).toString() + "%";
-            focus.select("text").text(textHover);
+          console.log(flatData);
+
+          voronoiGroup.selectAll("path")
+              .data(voronoi(flatData))
+              .enter().append("path")
+              .attr("d", function(d) { if (d) {return "M" + d.join("L") + "Z"; }})
+              .datum(function(d) { if (d) {return d.point; }})
+              .on("mouseover", mouseover)
+              .on("mouseout", mouseout);
+
+          function mouseover(d) {
+              console.log(d);
+              d3.select("."+d.key).classed("line-hover", true);
+              focus.attr("transform", "translate(" + x(d.year) + "," + y(d.value) + ")");
+              focus.select("text").text(d.value);
+            }
+          
+          function mouseout(d) {
+            d3.select("."+d.key).classed("line-hover", false);
+            focus.attr("transform", "translate(-100,-100)");
           }
-        }
       },
 
       humanizeName: function (name) {
