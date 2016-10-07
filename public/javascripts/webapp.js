@@ -80,6 +80,7 @@ jQuery(function ($) {
           if (data.year) {
             $("#extra-year-datas .specific-year").text(data.year);
             this.displayYearStatistics(data.yearData, 'female', data.year);
+            this.displayYearStatistics(data.yearData, 'male', data.year);
           }
         }.bind(this)).fail(function (error) {
           this._displayError(error);
@@ -162,8 +163,7 @@ jQuery(function ($) {
               .attr("text-anchor", "middle")
               .text(function(d){ return processNameForBubble(d.name); })
               .style({
-                  "fill":"#646363",
-                  "font-family":"Helvetica Neue, Helvetica, Arial, san-serif",
+                  "fill":"#ffffff",
                   "font-size": "14px"
               });
 
@@ -297,8 +297,6 @@ jQuery(function ($) {
 
           var voronoiGroup = svg.append("g")
             .attr("class", "voronoi");
-
-          console.log(flatData);
 
           voronoiGroup.selectAll("path")
               .data(voronoi(flatData))
