@@ -1,61 +1,70 @@
-<!-- <section id="section2" class="section containerCenter">
-  <section id="main">
-    <section id="chart-wrapper">
-      <header class="titleContainer">
-        <h2 class="header title">La popularidad de tu nombre</h2>
-        <aside class="header subTitle">Datos expresados en 1 x 1.000 nombres registrados por año.</aside>
-      </header>
-      <div id="main-chart" class="chart titleContainer"></div>
-    </section>
-  </section>
-</section>
-<section id="section3" class="section containerCenter">
-  <section id="extra-name-data">
-      <header class="titleContainer">
-          <h2 class="header title">¿Sab&iacute;as qué?</h2>
-      </header>
-      <div id="nameDataContainer"></div>
-  </section>
-</section>
-<section id="section4" class="section containerCenter">
-  <section id="extra-year-data">
-      <header class="headerSection">
-          <h2 class="header title">Nombres más frecuentes</h2>
-          <aside class="header subTitle">Datos expresados según períodos.</aside>
-      </header>
-      <div id="female-year-chart" class="chart year-chart"></div>
-      <div id="male-year-chart" class="chart year-chart"></div>
-    </section>
-</section>
-<footer id="section5" class="section containerCenter">
-    <p>Datos provistos por la Dirección Nacional de las Personas - Secretaría de Interior - Ministerio del Interior , Obras Públicas y Vivienda.</p>
-    <p>Desarrollo: Dirección de Servicios Analíticos, Subsecretaría de Innovación Pública y Gobierno Abierto, Secretaría de Gestión de Innovación Pública, Ministerio de Modernización</p>
-    <p>¿desarrolladores de Uruguay??</p>
-    <p>Descarga</p>
-    <button type="button" name="button">CSV</button>
-</footer> -->
 <section id="section2" class="section">
-  <header class="sectionHeader containerCenter">
-      <h2 class="headerTitle">La popularidad de tu nombre</h2>
-      <aside class="headerSubTitle">Datos expresados en 1 x 1.000 nombres registrados por año.</aside>
-  </header>
-  <section class="sectionContainer containerCenter">
-    <div id="main-chart" class="chart"></div>
-  </section>
+    <header class="sectionHeader">
+      <div class="row altoTotal vcenter">
+        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-8 text-center">
+          <h2 class="headerTitle">La popularidad de tu nombre</h2>
+        </div>
+        <div class="col-xs-8 col-sm-6 col-md-8 col-lg-6 text-center">
+          <aside class="headerSubTitle">Datos expresados en 1 x 1.000 nombres registrados por año.</aside>
+        </div>
+      </div>
+    </header>
+    <section class="containerCont">
+      <div class="altoTotal vcenter">
+          <div id="infoNombres"></div>
+          <div id="main-chart"></div>
+      </div>
+    </section>
 </section>
-<section id="section3" class="section containerCenter">
-  <section class="sectionContainerFull containerCenter">
-    <h2 class="headerTitle">¿Te imaginabas esto?</h2>
-    <div id="nameDataContainer"></div>
-  </section>
+<section id="section3" class="section">
+    <section class="containerCont">
+      <div class="row altoTotal vcenter">
+        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-8 text-center">
+          <h2 class="headerTitle">¿Te imaginabas esto?</h2>
+        </div>
+        <div class="col-xs-10 col-sm-10 col-md-8 col-md-lg-6 text-center">
+          <div id="nameDataContainer"></div>
+        </div>
+      </div>
+    </section>
 </section>
-<section id="section4" class="section containerCenter">
-  <header class="sectionHeader containerCenter">
-      <h2 class="headerTitle">Nombres más frecuentes</h2>
-      <aside class="headerSubTitle">Datos expresados según períodos.</aside>
-  </header>
-  <section class="sectionContainer containerCenter">
-        <!-- <div id="female-year-chart" class="chart year-chart"></div>
-        <div id="male-year-chart" class="chart year-chart"></div> -->
-  </section>
+<section id="section4" class="section">
+    <header class="sectionHeader">
+      <div class="row altoTotal vcenter">
+        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-8 text-center">
+          <h2 class="headerTitle">Nombres más frecuentes</h2>
+        </div>
+        <div class="col-xs-8 col-sm-6 col-md-8 col-lg-6 text-center">
+          <aside class="headerSubTitle">Datos expresados según períodos.</aside>
+        </div>
+    </header>
+    <section class="containerCont">
+      <section class="formYear">
+          <div class="">
+            <form class="" action="index.html" method="post">
+              <label for="">Buscá por:</label>
+              <input type="radio" name="name" value="año">año
+              <input type="radio" name="name" value="año">decada
+              <br>
+              <select class="" name="">
+                <option>1910</option>
+                <option>1911</option>
+                <option>1912</option>
+                <option>1913</option>
+              </select>
+            </form>
+          </div>
+          <div class="contenedorCaritas">
+            <div class="imagenCaritaBorde">
+              <img class="imagenCarita" src="/images/caritas-bubble-mujer.png" alt="" />
+              <img class="imagenCarita" src="/images/caritas-bubble-varon.png" alt="" />
+            </div>
+            <div class="contenedorTextoCaritas">
+              <aside class="">Mujer</aside>
+              <aside class="">Varón</aside>
+            </div>
+          </div>
+      </section>
+      <div id="extra-year-data" class="altoTotal"></div>
+    </section>
 </section>

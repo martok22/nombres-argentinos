@@ -80,6 +80,7 @@ jQuery(function ($) {
           if (data.year) {
             $("#extra-year-datas .specific-year").text(data.year);
             this.displayYearStatistics(data.yearData, 'female', data.year);
+            this.displayYearStatistics(data.yearData, 'male', data.year);
           }
         }.bind(this)).fail(function (error) {
           this._displayError(error);
@@ -106,22 +107,23 @@ jQuery(function ($) {
       displayYearStatistics: function (yearData, gender, year) {
 
         var classBubbles = "bubble" + gender;
-        var diameter = 450; // Max size of the bubbles
+        var heightDiameter = $("#extra-year-data").height(); // Max heiht of the bubbles
+        var widthDiameter = $("#extra-year-data").width() / 2; // Max width of the bubbles
 
         var bubble = d3.layout.pack()
             .sort(null)
-            .size([diameter, diameter])
+            .size([widthDiameter, heightDiameter])
             .padding(1.5);
 
         // SVG
         var svg = d3.select("#extra-year-data")
             .append("svg")
-            .attr("width", diameter)
-            .attr("height", diameter)
+            .attr("width", "50%")
+            .attr("height", "100%")
             .attr("class", classBubbles);
 
         // Colores femenino y masculino
-        var color = (gender == "female") ? "#F5712E" : "#42BD5C";
+        var color = (gender == "female") ? "#FDE3D5" : "#ECF9EF";
 
         // Path a los datos de los años
         var path = "/years/" + year + ".json";
@@ -131,10 +133,10 @@ jQuery(function ($) {
           if (gender == "female") {
             // Convert numerical values from strings to numbers
             // Data de top 10 femenina
-            data = data.f.map(function(d){ d.value = +d.quantity; return d; });
+            data = data.f.map(function(d){ d.value =+ d.quantity; return d; });
           } else {
             // Data de top 10 masculina
-            data = data.m.map(function(d){ d.value = +d.quantity; return d; });
+            data = data.m.map(function(d){ d.value =+ d.quantity; return d; });
           }
           var nodes, bubbles;
 
@@ -142,9 +144,7 @@ jQuery(function ($) {
           nodes = bubble.nodes({children:data}).filter(function(d) { return !d.children; });
 
           // Setup the chart
-          bubbles = svg.append("g")
-              .attr("transform", "translate(0,0)")
-              .selectAll(".bubble")
+          bubbles = svg.selectAll(".bubble")
               .data(nodes)
               .enter();
 
@@ -153,6 +153,8 @@ jQuery(function ($) {
               .attr("r", function(d){ return d.r; })
               .attr("cx", function(d){ return d.x; })
               .attr("cy", function(d){ return d.y; })
+              .attr("class", function(d){ return gender + "Color"; })
+              .style("fill", function(d) { return color; })
               .style("fill", function(d) { return color; });
 
           // Format the text for each bubble
@@ -162,11 +164,9 @@ jQuery(function ($) {
               .attr("text-anchor", "middle")
               .text(function(d){ return processNameForBubble(d.name); })
               .style({
-                  "fill":"#646363",
-                  "font-family":"Helvetica Neue, Helvetica, Arial, san-serif",
-                  "font-size": "14px"
+                "fill":"#5D5D5D",
+                "font-size": "14px"
               });
-
         });
 
         function toTitleCase(str) {
@@ -217,6 +217,22 @@ jQuery(function ($) {
               return x(d.year); })
             .y(function(d) { return y(d.percentage); });
 
+        // Linea Nombre
+        d3.select("#infoNombres")
+          .append('svg')
+          .attr('width', '30px')
+          .attr('height', '2px')
+          .style('margin-right', '5px')
+          .append("line")
+          .attr('x1', '0px')
+          .attr('x2', '30px')
+          .attr('y1', '0px')
+          .attr('y2', '0px')
+          .style('stroke', 'red')
+          .style('stroke-width', '5');
+
+        d3.select("#infoNombres").append("text")
+        .text(names[0]);
 
         var svg = d3.select("#main-chart").append("svg")
             .attr("width", width + margin.left + margin.right)
@@ -234,7 +250,7 @@ jQuery(function ($) {
           currMinMax = d3.extent(data, function(d) { return d.percentage; });
 
           currMin = currMinMax[0];
-          currMax = currMinMax[1]; 
+          currMax = currMinMax[1];
           if (i == 0) {
             totalMin = currMin;
             totalMax = currMax;
@@ -266,7 +282,7 @@ jQuery(function ($) {
         for (var i = 0, namesLength = names.length; i < namesLength; i += 1) {
           name = names[i];
           data = namesData[name];
-          
+
           data.forEach(function(d) {
             d.year = +d.year;
             d.percentage = +d.percentage;
@@ -298,8 +314,6 @@ jQuery(function ($) {
           var voronoiGroup = svg.append("g")
             .attr("class", "voronoi");
 
-          console.log(flatData);
-
           voronoiGroup.selectAll("path")
               .data(voronoi(flatData))
               .enter().append("path")
@@ -309,12 +323,11 @@ jQuery(function ($) {
               .on("mouseout", mouseout);
 
           function mouseover(d) {
-              console.log(d);
               d3.select("."+d.key).classed("line-hover", true);
               focus.attr("transform", "translate(" + x(d.year) + "," + y(d.value) + ")");
               focus.select("text").text(d.value);
             }
-          
+
           function mouseout(d) {
             d3.select("."+d.key).classed("line-hover", false);
             focus.attr("transform", "translate(-100,-100)");
