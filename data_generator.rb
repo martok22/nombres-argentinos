@@ -2,6 +2,15 @@
 require 'csv'
 require 'json'
 
+class Numeric
+  def roundup(nearest=10)
+    self % nearest == 0 ? self : self + nearest - (self % nearest)
+  end
+  def rounddown(nearest=10)
+    self % nearest == 0 ? self : self - (self % nearest)
+  end
+end 
+
 module Datanames
   module Data
 
@@ -18,6 +27,7 @@ module Datanames
     def self.extract_data
       names = Hash.new { |h, k| h[k] = [] }
       years = Hash.new { |h, k| h[k] = { f: [], m: [] } }
+      decades = Hash.new { |h, k| h[k] = { f: [], m: [] } }
 
       # CSV columns
       #   0: Name
@@ -41,11 +51,28 @@ module Datanames
                  end
 
         current_name_data = names[name].find { |nd| nd[:year] == year }
+
         if !current_name_data
           names[name] << { quantity: quantity, year: year, percentage: percentage, gender: gender }
         end
 
+        current_decade = year.rounddown
+
+        # Calculo de decadas
+        decades_data = decades[current_decade][gender]
+
+        name_index = decades_data.find_index { |item| item[:name] == name }
+        if name_index
+          decade_quantity = decades_data[name_index][:quantity] + quantity
+          decades_data[name_index][:quantity] = decade_quantity
+        else
+          decades_data << { name: name, quantity: quantity }
+        end
+        decades_data.sort_by! { |name| name[:quantity] }
+      
+        # Calculo de años
         year_data = years[year][gender]
+
         if year_data.size < TOP_NAMES_PER_YEAR_SIZE
           year_data << { name: name, quantity: quantity }
         else
@@ -59,17 +86,21 @@ module Datanames
         year_data.sort_by! { |name| name[:quantity] }
       end
 
-      return [names, years]
+      # Seleccionar solo el top 
+      decades.each do |decade, genders|
+        genders.each do |gender, array|
+          decades[decade][gender] = array.last(TOP_NAMES_PER_YEAR_SIZE)
+        end
+      end
+
+      return [names, years, decades]
     end
 
     #
     #
     #
     def self.export_data
-      names, years = extract_data
-
-      # Print anos
-      print years
+      names, years, decades = extract_data
 
       names_folder = root_path('public', 'names')
       names.each do |name, name_data|
@@ -82,6 +113,12 @@ module Datanames
       years.each do |year, year_data|
         File.open(File.join(years_folder, "#{year}.json"), 'w') do |file|
           file.write(JSON.generate(year_data))
+        end
+      end
+
+      decades.each do |decade, decade_data|
+        File.open(File.join(years_folder, "decada-#{decade}.json"), 'w') do |file|
+          file.write(JSON.generate(decade_data))
         end
       end
     end
