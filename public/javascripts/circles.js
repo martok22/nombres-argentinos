@@ -1,9 +1,8 @@
 $('window').ready(function() {
 
-    var dataset = ['#anchor1', '#anchor2', '#anchor3', '#anchor4', '#anchor5'];
+    var dataset = ['#seccion1', '#seccion2', '#seccion3', '#seccion4', '#seccion5'];
 
     var containerSlide = d3.select('#containerSlide')
-        .style('z-index', 999999)
         .append('svg')
         .style('height', function(d){
           return (dataset.length * 2 * 12);
