@@ -140,10 +140,10 @@ jQuery(function ($) {
           if (gender == "female") {
             // Convert numerical values from strings to numbers
             // Data de top 10 femenina
-            data = data.f.map(function(d){ d.value =+ d.quantity; return d; });
+            data = data.f.map(function(d){ d.value = +d.quantity; return d; });
           } else {
             // Data de top 10 masculina
-            data = data.m.map(function(d){ d.value =+ d.quantity; return d; });
+            data = data.m.map(function(d){ d.value = +d.quantity; return d; });
           }
           var nodes, bubbles;
 
