@@ -165,7 +165,7 @@ b {
 #section1 label {
   font-size: 1.75rem;
 }
-<<<<<<< HEAD
+
 #section1 input {
   border: 1px solid #5D5D5D;
   border-radius: 10px;
@@ -219,9 +219,6 @@ b {
   font-size: 1.5rem;
   font-weight: 300;
 }
-=======
-
->>>>>>> master
 
 /* Graficos en Linea */
  #main-chart {
