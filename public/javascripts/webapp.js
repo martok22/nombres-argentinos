@@ -25,6 +25,9 @@ jQuery(function ($) {
     };
   }
 
+  var dataYearData;
+  var dataYear;
+
   var MIN_YEAR = 1922
     , MAX_YEAR = 2015
     , App = {
@@ -55,7 +58,7 @@ jQuery(function ($) {
 
               url += "?others=" + names.join(",");
             }
-            url += "#posicion2";
+            url += "#seccion2";
             document.location.href = url;
           }
           else {
@@ -75,12 +78,15 @@ jQuery(function ($) {
 
         processor.fetchData().done(function (data) {
 
+          dataYearData = data.yearData;
+          dataYear = data.year;
+
           this.displayStatistics(data.statistics);
           this.processNamesData(data.processedNames, data.year, data.namesData);
           if (data.year) {
             $("#extra-year-datas .specific-year").text(data.year);
-            this.displayYearStatistics(data.yearData, 'female', data.year);
-            this.displayYearStatistics(data.yearData, 'male', data.year);
+            this.displayYearStatistics(dataYearData, 'female', dataYear);
+            this.displayYearStatistics(dataYearData, 'male', dataYear);
           }
         }.bind(this)).fail(function (error) {
           this._displayError(error);
@@ -105,6 +111,7 @@ jQuery(function ($) {
        * Bubble Chart de nombres
        */
       displayYearStatistics: function (yearData, gender, year) {
+
 
         var classBubbles = "bubble" + gender;
         var heightDiameter = $("#extra-year-data").height(); // Max heiht of the bubbles
@@ -144,16 +151,33 @@ jQuery(function ($) {
           nodes = bubble.nodes({children:data}).filter(function(d) { return !d.children; });
 
           // Setup the chart
-          bubbles = svg.selectAll(".bubble")
+          bubbles = svg.style('transform', 'scale(1)')
+              .selectAll(".bubble")
               .data(nodes)
               .enter();
 
           // Create the bubbles
+
+          function MaysPrimera(string){
+            return string.charAt(0).toUpperCase() + string.slice(1);
+          }
+
           bubbles.append("circle")
-              .attr("r", function(d){ return d.r; })
+              .attr("r", function(d){return d.r;})
               .attr("cx", function(d){ return d.x; })
               .attr("cy", function(d){ return d.y; })
               .attr("class", function(d){ return gender + "Color"; })
+              .attr("tooltip", function(d,i){
+                var contenido = "<b>" + MaysPrimera(d.name) + "</b>";
+                contenido += "<hr>";
+                contenido += "<span style='color:silver;'>Cantidad</span><br>";
+                contenido += "<b>" + d.quantity + "</b>";
+                contenido += "<hr>";
+                contenido += "<span style='color:silver;'>Año</span><br>";
+                contenido += "<b>" + "1922" + "</b>";
+
+                new Opentip(this, contenido, { style: "bubbleStyle", tipJoint: "bottom" });
+              })
               .style("fill", function(d) { return color; })
               .style("fill", function(d) { return color; });
 
@@ -162,6 +186,9 @@ jQuery(function ($) {
               .attr("x", function(d){ return d.x; })
               .attr("y", function(d){ return d.y + 5; })
               .attr("text-anchor", "middle")
+              .attr('id', function(d, i){
+                return 'bubble' + i;
+              })
               .text(function(d){ return processNameForBubble(d.name); })
               .style({
                 "fill":"#5D5D5D",
@@ -454,4 +481,11 @@ jQuery(function ($) {
       $(this).attr('placeholder', placeholderData);
     })
   });
+
+  $(window).resize(function() {
+    $('.bubblemale').remove();
+    $('.bubblefemale').remove();
+    App.displayYearStatistics(dataYearData, 'female', dataYear);
+    App.displayYearStatistics(dataYearData, 'male', dataYear);
+  })
 });
