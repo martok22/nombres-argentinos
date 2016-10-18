@@ -35,7 +35,7 @@ class App < Sinatra::Base
       erb(:'index.html', layout: :'layout.html', locals: {
         names: names.map(&:strip),
         main_name: main_name,
-        year: year ? year.to_i : 2015
+        year: year ? year.to_i : ''
       })
     else
       redirect("http://#{APP_DOMAIN}", 301)

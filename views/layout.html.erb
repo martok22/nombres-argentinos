@@ -37,33 +37,6 @@
         <script src="<%= javascript_path('opentip.js') %>"></script>
         <script src="<%= javascript_path('opentip-jquery-excanvas.min.js') %>"></script>
 
-<!-- Section Transition -->
-<!-- <script>
-  var scrollingHistory;
-
-  function activador() {
-    var scrolling = $(window).height() > 900 ? true : false;
-
-    if (scrolling  === true) {
-      if (scrolling !== scrollingHistory) {
-        scrollingHistory = scrolling;
-        console.log('activar');
-      }
-    } else {
-      if (scrolling !== scrollingHistory) {
-        scrollingHistory = scrolling;
-        console.log('desactivar');
-      }
-    }
-  }
-
-  activador($(window).height());
-
-  $(window).resize(function() {
-    activador();
-  });
-</script> -->
-
         <!-- Full Page -->
         <link href="<%= stylesheet_path('jquery.fullPage.css') %>" rel="stylesheet" type="text/css"/>
         <script src="<%= javascript_path('fullPage/scrolloverflow.min.js') %>"></script>
@@ -120,10 +93,12 @@
                         <div class="form-group columnas anchoTotal">
                           <label for="name">¿Cómo te llamás?</label>
                           <input type="text" id="name" name="name" value="<%= names.join(', ') %>" placeholder="Maria o Juan, Carlos"/>
+                          <div id="errorName" class="hide"></div>
                         </div>
                         <div class="form-group columnas anchoTotal">
                           <label for="year">¿En qué año naciste?</label>
                           <input type="text" id='year' name="year" placeholder="2015" value="<%= year %>"/>
+                          <div id="errorYear" class="hide"></div>
                         </div>
                         <div class="row vcenter">
                             <button type="submit" class="btn btn-default">¡A buscar!</button>
