@@ -120,8 +120,8 @@ jQuery(function ($) {
       displayYearStatistics: function (yearData, gender, year, mobile) {
 
         var classBubbles = "bubble" + gender;
-        var heightDiameter = mobile == 'mobile' ? $("#extra-year-data").height() / 2 : $("#extra-year-data").height(); // Max heiht of the bubbles
-        var widthDiameter = mobile == 'mobile' ? $("#extra-year-data").width() : $("#extra-year-data").width() / 2; // Max width of the bubbles
+        var heightDiameter = (mobile == 'mobile') ? $("#extra-year-data").height() / 2 : $("#extra-year-data").height(); // Max heiht of the bubbles
+        var widthDiameter = (mobile == 'mobile') ? $("#extra-year-data").width() : $("#extra-year-data").width() / 2; // Max width of the bubbles
         var contadorBubble = 0;
 
         var bubble = d3.layout.pack()
@@ -477,20 +477,5 @@ jQuery(function ($) {
       $(this).attr('placeholder', placeholderData);
     })
   });
-
-  // Escalar SVG bubble chart
-  // $(window).resize(function() {
-  //
-  //   $('.bubblemale').remove();
-  //   $('.bubblefemale').remove();
-  //
-  //   if ($(window).width() < 600){
-  //     App.displayYearStatistics(dataYearData, 'female', dataYear, 'mobile');
-  //     App.displayYearStatistics(dataYearData, 'male', dataYear, 'mobile');
-  //   } else {
-  //     App.displayYearStatistics(dataYearData, 'female', dataYear);
-  //     App.displayYearStatistics(dataYearData, 'male', dataYear);
-  //   }
-  // })
 
 });
