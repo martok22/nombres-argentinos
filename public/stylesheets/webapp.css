@@ -48,6 +48,9 @@ b {
 }
 
 /* Propiedades reutilizables */
+.upper {
+  text-transform: uppercase;
+}
 .altoTotal {
   height: 100%;
   position: relative;
@@ -174,7 +177,7 @@ b {
   text-align: center;
   color: #5D5D5D;
   margin-bottom: 2rem;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   padding: 0.25rem 0px;
   width: 100%;
 }
@@ -182,7 +185,7 @@ b {
   color: #5D5D5D;
   font-weight: 300;
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
 }
 #section1 button {
   background-color: orange;
@@ -212,6 +215,16 @@ b {
   font-weight: bold;
   margin-bottom: 2.5rem;
 }
+#section3 p:last-child,
+#section5 p:last-child {
+  margin-bottom: 0px;
+}
+
+#section4 .contenedorCaritas {
+    transform: scale(0.75);
+    margin: 0px auto;
+}
+
 #section3 p b {
   color: white;
 }

@@ -6,9 +6,8 @@
         <% else %>&iquest;Qu&eacute; tan popular es tu nombre?<% end %>Nombres Argentina</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-
-        <meta name="description" content="Descubr&iacute; la historia y las estad&iacute;sticas de tu nombre durante los &uacute;ltimos 100 a&ntilde;os."/>
-        <meta name="keywords" content="data,nombres,argentina"/>
+        <meta name="description" content="Descubr&iacute; la historia y las estad&iacute;sticas de tu nombre durante los &uacute;ltimos 100 a&ntilde;os en Argentina."/>
+        <meta name="keywords" content="data,nombres,argentina,nombres de bebes,nombres para bebes,lista de nombres"/>
         <meta http-equiv="Content-Language" content="en"/>
         <meta name="viewport" content="width=device-width, user-scalable=no">
 
@@ -38,40 +37,38 @@
         <script src="<%= javascript_path('opentip.js') %>"></script>
         <script src="<%= javascript_path('opentip-jquery-excanvas.min.js') %>"></script>
 
-        <!-- Section Transition -->
-        <!-- <script>
-          var scrollingHistory;
+<!-- Section Transition -->
+<!-- <script>
+  var scrollingHistory;
 
-          function activador() {
-            var scrolling = $(window).height() > 900 ? true : false;
+  function activador() {
+    var scrolling = $(window).height() > 900 ? true : false;
 
-            if (scrolling  === true) {
-              if (scrolling !== scrollingHistory) {
-                scrollingHistory = scrolling;
-                console.log('activar');
-              }
-            } else {
-              if (scrolling !== scrollingHistory) {
-                scrollingHistory = scrolling;
-                console.log('desactivar');
-              }
-            }
-          }
+    if (scrolling  === true) {
+      if (scrolling !== scrollingHistory) {
+        scrollingHistory = scrolling;
+        console.log('activar');
+      }
+    } else {
+      if (scrolling !== scrollingHistory) {
+        scrollingHistory = scrolling;
+        console.log('desactivar');
+      }
+    }
+  }
 
-          activador($(window).height());
+  activador($(window).height());
 
-          $(window).resize(function() {
-            activador();
-          });
-        </script> -->
-        <script>
+  $(window).resize(function() {
+    activador();
+  });
+</script> -->
 
-        </script>
+        <!-- Full Page -->
+        <link href="<%= stylesheet_path('jquery.fullPage.css') %>" rel="stylesheet" type="text/css"/>
         <script src="<%= javascript_path('fullPage/scrolloverflow.min.js') %>"></script>
         <script src="<%= javascript_path('fullPage/jquery.fullPage.js') %>"></script>
         <script src="<%= javascript_path('fullPage/app.js') %>"></script>
-        <!-- circles -->
-        <script src="<%= javascript_path('circles.js') %>"></script>
     </head>
 
     <body>
@@ -101,9 +98,6 @@
                 </ul>
             </div>
         </header>
-
-        <!-- Iconos Secciones -->
-        <div id="containerSlide" style="z-index:99999999;"></div>
 
         <!-- Secciones -->
         <div id="fullpage">
