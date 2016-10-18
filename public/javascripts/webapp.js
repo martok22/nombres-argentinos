@@ -134,6 +134,12 @@ jQuery(function ($) {
         // SVG
         var svg = d3.select("#extra-year-data")
             .append("svg")
+            .style('width', '100%')
+            .attr("preserveAspectRatio", "xMidYMid meet")
+            .attr("viewBox", function(){
+                console.log( "0 " + "0 " + $("#extra-year-data").width()/2 + " " + $("#extra-year-data").height());
+                return "0 " + "0 " + $("#extra-year-data").width()/2 + " " + $("#extra-year-data").height();
+            })
             .attr("width", function(){
               return mobile == 'mobile' ? '100%' : '50%';
             })
@@ -182,12 +188,12 @@ jQuery(function ($) {
               .attr("class", function(d){ return gender + "Color"; })
               .attr("tooltip", function(d,i){
                 var contenido = "<div style='text-align:center;'><b>" + processNameForBubble(d.name) + "</b>";
-                    contenido += "<hr>";
-                    contenido += "<span style='color:silver;'>Cantidad</span><br>";
-                    contenido += "<b>" + d.quantity + "</b>";
-                    contenido += "<hr>";
-                    contenido += "<span style='color:silver;'>Año</span><br>";
-                    contenido += "<b>" + "1922" + "</b></div>";
+                contenido += "<hr>";
+                contenido += "<span style='color:silver;'>Cantidad</span><br>";
+                contenido += "<b>" + d.quantity + "</b>";
+                contenido += "<hr>";
+                contenido += "<span style='color:silver;'>Año</span><br>";
+                contenido += "<b>" + "1922" + "</b></div>";
 
                 new Opentip(this, contenido, { style: "bubbleStyle", tipJoint: "bottom" });
               })
@@ -473,18 +479,18 @@ jQuery(function ($) {
   });
 
   // Escalar SVG bubble chart
-  $(window).resize(function() {
-
-    $('.bubblemale').remove();
-    $('.bubblefemale').remove();
-
-    if ($(window).width() < 600){
-      App.displayYearStatistics(dataYearData, 'female', dataYear, 'mobile');
-      App.displayYearStatistics(dataYearData, 'male', dataYear, 'mobile');
-    } else {
-      App.displayYearStatistics(dataYearData, 'female', dataYear);
-      App.displayYearStatistics(dataYearData, 'male', dataYear);
-    }
-  })
+  // $(window).resize(function() {
+  //
+  //   $('.bubblemale').remove();
+  //   $('.bubblefemale').remove();
+  //
+  //   if ($(window).width() < 600){
+  //     App.displayYearStatistics(dataYearData, 'female', dataYear, 'mobile');
+  //     App.displayYearStatistics(dataYearData, 'male', dataYear, 'mobile');
+  //   } else {
+  //     App.displayYearStatistics(dataYearData, 'female', dataYear);
+  //     App.displayYearStatistics(dataYearData, 'male', dataYear);
+  //   }
+  // })
 
 });
