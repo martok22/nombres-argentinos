@@ -234,6 +234,13 @@ jQuery(function ($) {
        */
       processNamesData: function (names, year, namesData) {
 
+        var mousePos = [];
+
+        $(document).mousemove(function(event) {
+            mousePos[0] = event.clientX;
+            mousePos[1] = event.clientY;
+        });
+
         $("#main").addClass("active");
         $("#main-chart").empty();
 
@@ -333,8 +340,9 @@ jQuery(function ($) {
           data.forEach(function(d) {
             d.year = +d.year;
             d.percentage = +d.percentage;
+            d.name = name;
 
-            flatData.push({year: d.year, value: d.percentage, key: "line" + i.toString()});
+            flatData.push({name: d.name, year: d.year, value: d.percentage, key: "line" + i.toString()});
           });
 
           data.sort(function(a, b) {
@@ -354,10 +362,6 @@ jQuery(function ($) {
           focus.append("circle")
               .attr("r", 4.5);
 
-          focus.append("text")
-              .attr("x", 9)
-              .attr("dy", ".35em");
-
           var voronoiGroup = svg.append("g")
             .attr("class", "voronoi");
 
@@ -372,12 +376,21 @@ jQuery(function ($) {
           function mouseover(d) {
               d3.select("."+d.key).classed("line-hover", true);
               focus.attr("transform", "translate(" + x(d.year) + "," + y(d.value) + ")");
-              focus.select("text").text(d.value);
+              $("#tooltipLine").show();
+              var htmlStr = "<div style='font-size: 10px; text-transform: uppercase;'> Nombre " + d.name + " " + d.value + "</div> ";
+              $("#tooltipLine").html(htmlStr);
+
+              d3.select("#tooltipLine")
+                .attr("style",
+                    function() {
+                        return "left:" + (x(d.year) + 100) + "px; top:" + (y(d.value) + 20) + "px";
+                    });
             }
 
           function mouseout(d) {
             d3.select("."+d.key).classed("line-hover", false);
             focus.attr("transform", "translate(-100,-100)");
+            $("#tooltipLine").hide();
           }
       },
 

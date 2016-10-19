@@ -299,10 +299,16 @@ b {
    font-weight: 300;
  }
 
- .infoButton {
+ .infoButton {}
 
- }
-
+#tooltipLine {
+  background: #fff;
+  padding: .5em;
+  opacity: 0.9;
+  position: absolute;
+  z-index: 999; }
+}
+ 
  /****
  * Bubble Chart
  *****/
