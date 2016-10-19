@@ -48,6 +48,9 @@ b {
 }
 
 /* Propiedades reutilizables */
+.upper {
+  text-transform: uppercase;
+}
 .altoTotal {
   height: 100%;
   position: relative;
@@ -75,7 +78,7 @@ b {
 }
 
 .headerTitle {
-  margin-bottom: 9px;
+  margin-bottom: 5px;
   font-size: 2rem;
   font-weight: 400;
 }
@@ -84,7 +87,7 @@ b {
 }
 
 .headerSubTitle {
-  font-size: 1rem;
+  font-size: 1.3rem;
   font-weight: 300;
 }
 .headerSubTitleH1 {
@@ -132,7 +135,7 @@ b {
   border-radius: 5px;
   padding: 3px;
   width: 100px;
-  margin-top: 10px;
+  margin-left: 10px;
 }
 
 #section4 .sectionHeader {
@@ -142,6 +145,9 @@ b {
   height: 78%;
   padding: 0px;
 }
+.colorWhite {
+  color: white;
+}
 .seccionFormularioBubble {
   z-index: 20000;
   position: absolute;
@@ -149,6 +155,11 @@ b {
   transform: translateX(-50%);
   text-align: center;
   margin: 0px;
+  font-size: 14px;
+  font-weight: 400;
+}
+.contenedorCaritas svg {
+  transform: scale(1.3);
 }
 .formularioBubble {
   display: flex;
@@ -174,7 +185,7 @@ b {
   text-align: center;
   color: #5D5D5D;
   margin-bottom: 2rem;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   padding: 0.25rem 0px;
   width: 100%;
 }
@@ -182,7 +193,7 @@ b {
   color: #5D5D5D;
   font-weight: 300;
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
 }
 #section1 button {
   background-color: orange;
@@ -191,7 +202,7 @@ b {
   padding: 0.5rem 1rem;
   font-weight: 400;
   text-transform: none;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
 }
 
 #section2,
@@ -212,11 +223,20 @@ b {
   font-weight: bold;
   margin-bottom: 2.5rem;
 }
+#section3 p:last-child,
+#section5 p:last-child {
+  margin-bottom: 0px;
+}
+
+#section4 .contenedorCaritas {
+    margin: 0px auto;
+}
+
 #section3 p b {
   color: white;
 }
 #section5 p {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: 300;
 }
 
@@ -273,6 +293,11 @@ b {
    display: flex;
    align-items: center;
  }
+ #errorName {
+   color: white;
+   font-size: 1rem;
+   font-weight: 300;
+ }
 
  .infoButton {
 
@@ -285,10 +310,13 @@ b {
 /* Extra year data */
 #extra-year-data {
   display: flex;
-  padding: 0px 20px;
+  padding: 50px 20px 0px 20px;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+}
+.contenedorCaritas {
+  display: none;
 }
 
 .maleColor:nth-child(10) {
@@ -299,14 +327,6 @@ b {
   fill: #FAAA82 !important;
 }
 
-
-
-#opentip-1 .ot-content,
-#opentip-2 .ot-content,
-#opentip-3 .ot-content,
-#opentip-4 .ot-content {
-  color: white;
-}
 hr {
   margin: 5px;
 }
@@ -322,38 +342,16 @@ hr {
 .formularioBubble > div > div {
   margin-left: 10px;
 }
-#opentip-5 .ot-content,
-#opentip-6 .ot-content,
-#opentip-7 .ot-content,
-#opentip-8 .ot-content,
-#opentip-9 .ot-content,
-#opentip-10 .ot-content,
-#opentip-11 .ot-content,
-#opentip-12 .ot-content,
-#opentip-13 .ot-content,
-#opentip-14 .ot-content,
-#opentip-15 .ot-content,
-#opentip-16 .ot-content,
-#opentip-17 .ot-content,
-#opentip-18 .ot-content,
-#opentip-19 .ot-content,
-#opentip-20 .ot-content,
-#opentip-21 .ot-content,
-#opentip-22 .ot-content,
-#opentip-23 .ot-content,
-#opentip-24 .ot-content {
-  text-align: center;
-  margin: 0 20px;
-}
 
 #contenidoSitio {
   display: none;
 }
-
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
+#section1 input {
+  padding: 0.5rem 0px;
+}
+#fp-nav {
+  display: none;
+}
 
 @media(min-width:415px){
   html {
@@ -375,33 +373,39 @@ align-items: center;
   }
   #extra-year-data {
     flex-direction: row;
+    padding: 0px 20px 0px 20px;
+  }
+  #fp-nav {
+    display: block;
+  }
+  .contenedorCaritas {
+    display: block;
+  }
+  .formularioBubble select {
+    padding: 0px;
+  }
+}
+@media(min-width:600px) and (min-height:900px) {
+  html {
+    font-size: 19px;
   }
 }
 @media(min-width:768px){
   html {
     font-size: 13px;
   }
-  /*#section1 input {
-    padding: 0.5rem 0px;
-  }*/
-}
-@media (min-width:600px) and (min-height:900px) {
-  html {
-    font-size: 19px;
-  }
-  /*#section1 input {
-    padding: 0.75rem 0px;
-  }*/
 }
 @media(min-width:992px){
   html {
     font-size: 16px;
   }
-  /*#section1 input {
-    padding: 0.75rem 0px;
-  }*/
 }
 @media(min-width:1200px){
+  html {
+    font-size: 16px;
+  }
+}
+@media(min-width:1400px){
   html {
     font-size: 18px;
   }

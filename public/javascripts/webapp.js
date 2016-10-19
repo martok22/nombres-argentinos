@@ -25,8 +25,8 @@ jQuery(function ($) {
     };
   }
 
-  var dataYearData;
-  var dataYear;
+  var dataYearData,
+      dataYear;
 
   var MIN_YEAR = 1922
     , MAX_YEAR = 2015
@@ -48,6 +48,10 @@ jQuery(function ($) {
 
           event.preventDefault();
 
+          if (year === "") {
+            year = 2015;
+          }
+
           if (mainName !== "") {
             url = "/nombre/" + mainName + "/" + year;
 
@@ -60,9 +64,8 @@ jQuery(function ($) {
             }
             url += "#seccion2";
             document.location.href = url;
-          }
-          else {
-            this._displayError({ type: "invalid_name" });
+          } else {
+            this._displayError('nombre_vacio');
           }
         }.bind(this));
       },
@@ -71,8 +74,6 @@ jQuery(function ($) {
         var names = $("#name").val().split(",")
           , year = $("#year").val()
           , processor;
-
-        this._clearFormErrors();
 
         processor = new DataProcessor(names, year);
 
@@ -85,10 +86,16 @@ jQuery(function ($) {
           this.processNamesData(data.processedNames, data.year, data.namesData);
           if (data.year) {
             $("#extra-year-datas .specific-year").text(data.year);
-            this.displayYearStatistics(dataYearData, 'female', dataYear);
-            this.displayYearStatistics(dataYearData, 'male', dataYear);
+            if ($(window).width() < 600){
+              App.displayYearStatistics(dataYearData, 'female', dataYear, 'mobile');
+              App.displayYearStatistics(dataYearData, 'male', dataYear, 'mobile');
+            } else {
+              App.displayYearStatistics(dataYearData, 'female', dataYear);
+              App.displayYearStatistics(dataYearData, 'male', dataYear);
+            }
           }
         }.bind(this)).fail(function (error) {
+          console.log(error);
           this._displayError(error);
         }.bind(this));
       },
@@ -110,22 +117,31 @@ jQuery(function ($) {
       /**
        * Bubble Chart de nombres
        */
-      displayYearStatistics: function (yearData, gender, year) {
-
+      displayYearStatistics: function (yearData, gender, year, mobile) {
 
         var classBubbles = "bubble" + gender;
-        var heightDiameter = $("#extra-year-data").height(); // Max heiht of the bubbles
-        var widthDiameter = $("#extra-year-data").width() / 2; // Max width of the bubbles
+        var heightDiameter = (mobile == 'mobile') ? $("#extra-year-data").height() / 2 : $("#extra-year-data").height(); // Max heiht of the bubbles
+        var widthDiameter = (mobile == 'mobile') ? $("#extra-year-data").width() : $("#extra-year-data").width() / 2; // Max width of the bubbles
+        var contadorBubble = 0;
 
         var bubble = d3.layout.pack()
-            .sort(null)
+            .sort(function(a, b) {
+              return (a.value - b.value)
+            })
             .size([widthDiameter, heightDiameter])
-            .padding(1.5);
+            .padding(5);
 
         // SVG
         var svg = d3.select("#extra-year-data")
             .append("svg")
-            .attr("width", "50%")
+            .style('width', '100%')
+            .attr("preserveAspectRatio", "xMidYMid meet")
+            .attr("viewBox", function(){
+                return "0 " + "0 " + $("#extra-year-data").width()/2 + " " + $("#extra-year-data").height();
+            })
+            .attr("width", function(){
+              return mobile == 'mobile' ? '100%' : '50%';
+            })
             .attr("height", "100%")
             .attr("class", classBubbles);
 
@@ -151,39 +167,44 @@ jQuery(function ($) {
           nodes = bubble.nodes({children:data}).filter(function(d) { return !d.children; });
 
           // Setup the chart
-          bubbles = svg.style('transform', 'scale(1)')
-              .selectAll(".bubble")
+          bubbles = svg.selectAll(".bubble")
               .data(nodes)
               .enter();
 
+          var medida = $('#extra-year-data > svg.bubblemale').width();
+
           // Create the bubbles
-
-          function MaysPrimera(string){
-            return string.charAt(0).toUpperCase() + string.slice(1);
-          }
-
           bubbles.append("circle")
+              .attr('id', function(d){
+                contadorBubble ++;
+                return 'tooltipBubble' + contadorBubble;
+              })
               .attr("r", function(d){return d.r;})
-              .attr("cx", function(d){ return d.x; })
+              .attr("cx", function(d){
+                return this.parentNode.getAttribute('class') === 'bubblefemale' ? medida - d.x : d.x;
+              })
               .attr("cy", function(d){ return d.y; })
               .attr("class", function(d){ return gender + "Color"; })
               .attr("tooltip", function(d,i){
-                var contenido = "<b>" + MaysPrimera(d.name) + "</b>";
+                var contenido = "<div style='text-align:center;'><b>" + processNameForBubble(d.name) + "</b>";
                 contenido += "<hr>";
                 contenido += "<span style='color:silver;'>Cantidad</span><br>";
                 contenido += "<b>" + d.quantity + "</b>";
                 contenido += "<hr>";
                 contenido += "<span style='color:silver;'>Año</span><br>";
-                contenido += "<b>" + "1922" + "</b>";
+                contenido += "<b>" + "1922" + "</b></div>";
 
                 new Opentip(this, contenido, { style: "bubbleStyle", tipJoint: "bottom" });
               })
               .style("fill", function(d) { return color; })
               .style("fill", function(d) { return color; });
 
+
           // Format the text for each bubble
           bubbles.append("text")
-              .attr("x", function(d){ return d.x; })
+              .attr("x", function(d){
+                return this.parentNode.getAttribute('class') === 'bubblefemale' ? medida - d.x : d.x;
+              })
               .attr("y", function(d){ return d.y + 5; })
               .attr("text-anchor", "middle")
               .attr('id', function(d, i){
@@ -207,7 +228,6 @@ jQuery(function ($) {
 
             return toTitleCase(processedName);
         }
-
       },
       /**
        * Line Chart de nombres
@@ -376,41 +396,16 @@ jQuery(function ($) {
       },
 
       _displayError: function (error) {
-        var $nameField = $(".form-field:has(#name)")
-          , $yearField = $(".form-field:has(#year)");
 
-        this._clearFormErrors();
+        $('#errorName').attr('class', 'hide').empty();
+        $('#errorYear').attr('class', 'hide').empty();
 
-        switch (error.type) {
-          case "invalid_name":
-            this._displayInputError($nameField, "El nombre es inv&aacute;lido");
-            break;
-          case "name_not_found":
-            this._displayInputError($nameField, "No se encontr&oacute; el nombre ingresado");
-            break;
-          case "year_not_found":
-            this._displayInputError($yearField, "No se encontr&oacute; el a&ntilde;o ingresado");
-            break;
-
+        if( error == 'nombre_vacio' ) {
+          $('#name').css( 'margin-bottom', '0.5rem' );
+          $('#errorName').attr('class', '').css( 'margin-bottom', '0.5rem' ).append('<div class="glyphicon glyphicon-exclamation-sign" style="margin-right:5px;"></div>');
+          $('#errorName').append('Por favor, ingresa un nombre en este campo');
         }
-      },
 
-      _displayInputError: function ($field, errorMessage) {
-        var errorHTML = [
-          "<div class=\"form-error\">",
-            "<span class=\"tooltip-arrow\"></span>",
-            "<p>" + errorMessage + "</p>",
-          "</div>"
-        ].join("");
-
-        $field.find(".form-input").append(errorHTML);
-        $field.addClass("error");
-      },
-
-      _clearFormErrors: function () {
-        var $form = $("#name-form");
-        $form.find(".form-field.error").removeClass("error");
-        $form.find(".form-error").remove();
       },
 
       _getYaxisOptions: function (series) {
@@ -482,10 +477,4 @@ jQuery(function ($) {
     })
   });
 
-  $(window).resize(function() {
-    $('.bubblemale').remove();
-    $('.bubblefemale').remove();
-    App.displayYearStatistics(dataYearData, 'female', dataYear);
-    App.displayYearStatistics(dataYearData, 'male', dataYear);
-  })
 });

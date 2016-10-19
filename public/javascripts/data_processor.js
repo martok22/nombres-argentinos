@@ -7,10 +7,10 @@ jQuery(function ($) {
     , MAX_YEAR = 2015
     , statisticsCalculator = {}
     , DataProcessor = function (names, year, gender = 'male') {
-      this.names = names;
-      this.processedNames = this._processNames(names);
-      this.year = this._processYear(year);
-      this.gender = gender; // dato genero
+        this.names = names;
+        this.processedNames = this._processNames(names);
+        this.year = this._processYear(year);
+        this.gender = gender; // dato genero
     };
 
   DataProcessor.prototype.fetchData = function (callback) {
@@ -76,7 +76,7 @@ jQuery(function ($) {
     }
 
     return $processing;
-  }; // esto se usa ?
+  };
 
   DataProcessor.prototype._fetchNameData = function (processedName) {
     return $.ajax({

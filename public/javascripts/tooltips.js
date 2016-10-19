@@ -7,10 +7,10 @@ Opentip.styles.formStyle = {
   shadow: false
 };
 
-var opentipTop1 = new Opentip("#name", "Escribí tu nombre. ¡Pssst! Si querés compararlo con otro, separalos con una coma. Por ejemplo: Juan, Pablo.", { style: "formStyle", showOn: "focusin", hideOn: "blur", tipJoint: "top" });
-var opentipTop2 = new Opentip("#year", "Escribí en qué año naciste.", { style: "formStyle", showOn: "focusin", hideOn: "blur", tipJoint: "top" });
-var opentipRight1 = new Opentip("#name", "Escribí tu nombre. ¡Pssst! Si querés compararlo con otro, separalos con una coma. Por ejemplo: Juan, Pablo.", { style: "formStyle", showOn: "null", hideOn: "blur", tipJoint: "right" });
-var opentipRight2 = new Opentip("#year", "Escribí en qué año naciste.", { style: "formStyle", showOn: "null", hideOn: "blur", tipJoint: "right" });
+var opentipTop1 = new Opentip("#name", "<span class='colorWhite'>Escribí tu nombre. ¡Pssst! Si querés compararlo con otro, separalos con una coma. Por ejemplo: Juan, Pablo.</span>", { style: "formStyle", showOn: "focusin", hideOn: "blur", tipJoint: "top" });
+var opentipTop2 = new Opentip("#year", "<span class='colorWhite'>Escribí en qué año naciste.</span>", { style: "formStyle", showOn: "focusin", hideOn: "blur", tipJoint: "top" });
+var opentipRight1 = new Opentip("#name", "<span class='colorWhite'>Escribí tu nombre. ¡Pssst! Si querés compararlo con otro, separalos con una coma. Por ejemplo: Juan, Pablo</span>.", { style: "formStyle", showOn: "null", hideOn: "blur", tipJoint: "right" });
+var opentipRight2 = new Opentip("#year", "<span class='colorWhite'>Escribí en qué año naciste</span>.", { style: "formStyle", showOn: "null", hideOn: "blur", tipJoint: "right" });
 var inputName = window.document.querySelector('#name');
 var inputYear = window.document.querySelector('#year');
 
