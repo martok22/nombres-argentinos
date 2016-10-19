@@ -137,7 +137,6 @@ jQuery(function ($) {
             .style('width', '100%')
             .attr("preserveAspectRatio", "xMidYMid meet")
             .attr("viewBox", function(){
-                console.log( "0 " + "0 " + $("#extra-year-data").width()/2 + " " + $("#extra-year-data").height());
                 return "0 " + "0 " + $("#extra-year-data").width()/2 + " " + $("#extra-year-data").height();
             })
             .attr("width", function(){
