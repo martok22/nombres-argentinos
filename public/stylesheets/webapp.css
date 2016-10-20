@@ -261,11 +261,23 @@ b {
  }
 
  line.f0, path.f0 {
-   stroke: #F47139;
+   stroke: rgb(242, 113, 47);
+ }
+ line.f1, path.f1 {
+   stroke: rgba(242, 113, 47, 0.5);
+ }
+ line.f2, path.f2 {
+   stroke: rgba(242, 113, 47, 0.3);
  }
 
  line.m0, path.m0 {
-   stroke: #48BC60;
+   stroke: rgb(66, 190, 92);
+ }
+ line.m1, path.m1 {
+   stroke: rgba(66, 190, 92, 0.5);
+ }
+ line.m2, path.m2 {
+   stroke: rgba(66, 190, 92, 0.3);
  }
 
  line.f0, line.f1, line.m0, line.m1 {

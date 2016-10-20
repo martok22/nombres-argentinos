@@ -6,7 +6,7 @@ jQuery(function ($) {
     , MIN_YEAR = 1922
     , MAX_YEAR = 2015
     , statisticsCalculator = {}
-    , DataProcessor = function (names, year, gender = 'male') {
+    , DataProcessor = function (names, year, gender = "m") {
         this.names = names;
         this.processedNames = this._processNames(names);
         this.year = this._processYear(year);
@@ -48,7 +48,7 @@ jQuery(function ($) {
           window.GENDER = nameDataResponse[0].gender; // agrego genero global
           variableGenero = nameDataResponse[0].gender; // agrego genero global
 
-          if (window.GENDER == undefined || window.GENDER == 'female'){
+          if (window.GENDER == undefined || window.GENDER == "f"){
             $('#section3')[0].style.backgroundColor = '#F5712E';
             // document.querySelectorAll('.line0')[0].style.stroke = '#F5712E';
           } else {
