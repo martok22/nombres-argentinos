@@ -260,12 +260,16 @@ b {
    stroke-width: 2px;
  }
 
- path.f0 {
+ line.f0, path.f0 {
    stroke: #F47139;
  }
 
- path.f1 {
+ line.m0, path.m0 {
    stroke: #48BC60;
+ }
+
+ line.f0, line.f1, line.m0, line.m1 {
+  stroke-width: 4px;
  }
 
  .hover-line {
@@ -310,6 +314,7 @@ b {
   border: silver 1px solid;
   font-size: 11px;
   width: 150px;
+  display: none;
 }
  
  /****

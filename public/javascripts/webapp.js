@@ -234,13 +234,6 @@ jQuery(function ($) {
        */
       processNamesData: function (names, year, namesData) {
 
-        var mousePos = [];
-
-        $(document).mousemove(function(event) {
-            mousePos[0] = event.clientX;
-            mousePos[1] = event.clientY;
-        });
-
         $("#main").addClass("active");
         $("#main-chart").empty();
 
@@ -279,7 +272,6 @@ jQuery(function ($) {
 
         var tooltipLine = d3.select("#main-chart").append("div")
             .attr("id", "tooltipLine")
-            .attr("style", "display: hidden;");
 
         var totalMin, totalMax;
 
@@ -319,6 +311,8 @@ jQuery(function ($) {
               .clipExtent([[-margin.left, -margin.top], [width + margin.right, height + margin.bottom]]);
 
         var flatData = [];
+        var numFem = 0;
+        var numMas = 0;
 
         for (var i = 0, namesLength = names.length; i < namesLength; i += 1) {
           name = names[i];
@@ -329,8 +323,24 @@ jQuery(function ($) {
             d.quantity = +d.quantity;
             d.percentage = +d.percentage;
             d.name = name;
+            d.class = d.gender;
+            if (d.gender == "f") {
+              if (numFem == 0) { 
+                d.class = d.class+0; 
+              } else { 
+                d.class = d.class+1; 
+              }
+              numFem++;
+            } else {
+              if (numMas == 0) { 
+                d.class = d.class+0; 
+              } else { 
+                d.class = d.class+1; 
+              }
+              numMas++;
+            }
 
-            flatData.push({class: d.class, quantity: d.quantity, name: d.name, year: d.year, value: d.percentage, key: "line" + i.toString()});
+            flatData.push({class: d.class, quantity: d.quantity, name: d.name, year: d.year, value: d.percentage});
           });
 
           data.sort(function(a, b) {
@@ -339,7 +349,7 @@ jQuery(function ($) {
 
           svg.append("path")
               .datum(data)
-              .attr("class", "f0")
+              .attr("class", function(d) { return d[0].class; })
               .attr("d", line);
 
           // Linea Nombre
@@ -349,14 +359,16 @@ jQuery(function ($) {
               .attr('height', '2px')
               .style('margin-right', '5px')
             .append("line")
+              .datum(data)
               .attr('x1', '0px')
               .attr('x2', '30px')
               .attr('y1', '0px')
               .attr('y2', '0px')
-              .attr("class", 'f0');
+              .attr("class", function(d) { return d[0].class; });
 
           d3.select("#infoNombres").append("text")
-          .text(names[0]);
+            .attr("style", "margin-right: 10px;")
+            .text(names[i]);
         }
 
         var focus = svg.append("g")
@@ -378,9 +390,7 @@ jQuery(function ($) {
               .on("mouseout", mouseout);
 
           function mouseover(d) {
-              d3.select("."+d.key).classed("line-hover", true);
               focus.attr("transform", "translate(" + x(d.year) + "," + y(d.value) + ")");
-              $("#tooltipLine").show();
 
               var tooltipTxt = "<div style='text-align:center;'><b>" + formatName(d.name) + "</b>";
               tooltipTxt += "<hr>";
@@ -400,10 +410,10 @@ jQuery(function ($) {
                     function() {
                         return "left:" + (x(d.year)+80) + "px; top:" + (y(d.value)-150) + "px";
                     });
+              $("#tooltipLine").show();
             }
 
           function mouseout(d) {
-            d3.select("."+d.key).classed("line-hover", false);
             focus.attr("transform", "translate(-100,-100)");
             $("#tooltipLine").hide();
           }
