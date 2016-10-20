@@ -255,16 +255,16 @@ b {
    shape-rendering: crispEdges;
  }
 
- .line0, .line1 {
+ path.f0, path.f1, path.m0, path.m1 {
    fill: none;
-   stroke-width: 3px;
+   stroke-width: 2px;
  }
 
- .line0 {
+ path.f0 {
    stroke: #F47139;
  }
 
- .line1 {
+ path.f1 {
    stroke: #48BC60;
  }
 
@@ -306,7 +306,10 @@ b {
   padding: .5em;
   opacity: 0.9;
   position: absolute;
-  z-index: 999; }
+  z-index: 999; 
+  border: silver 1px solid;
+  font-size: 11px;
+  width: 150px;
 }
  
  /****
