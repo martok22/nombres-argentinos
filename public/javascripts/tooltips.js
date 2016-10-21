@@ -40,9 +40,3 @@ Opentip.styles.bubbleStyle = {
   borderColor: "silver",
   shadow: false
 };
-
-// checkbox form bubble graphic
-$('input').iCheck({
-  checkboxClass: 'icheckbox_square-grey',
-  radioClass: 'iradio_square-grey'
-});
