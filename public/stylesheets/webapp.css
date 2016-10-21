@@ -152,6 +152,11 @@ b {
   align-items: center;
 }
 
+/* Tooltip generales*/
+.colorWhite {
+  color: white;
+}
+
 /* Graficos en Linea */
  #main-chart {
    top: 50%;

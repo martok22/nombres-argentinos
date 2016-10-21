@@ -39,8 +39,8 @@ jQuery(function ($) {
 
   var MIN_YEAR = 1922
     , MAX_YEAR = 2015
-    , DEFAULT_NAME = 'aaron santino' // nombre por defecto
-    , DEFAULT_YEAR = '1922' // año por defecto
+    , DEFAULT_NAME = 'maria' // nombre por defecto
+    , DEFAULT_YEAR = '2015' // año por defecto
     , yearSelected
     , nameSelected
     , App = {
@@ -153,12 +153,6 @@ jQuery(function ($) {
           , i, length, $p, title, desc;
 
         $container.empty();
-
-        if (window.GENDER == undefined || window.GENDER == "f"){
-          $('#section3').css({'background-color': '#F5712E'});
-        } else {
-          $('#section3').css({'background-color': '#42BD5C'});
-        }
 
         for (i = 0, length = statistics.length; i < length; i += 1) {
 

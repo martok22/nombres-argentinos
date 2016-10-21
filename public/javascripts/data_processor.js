@@ -1,6 +1,5 @@
 jQuery(function ($) {
 
-  var variableGenero;
   var NAMES_BASE_URL = "/names/"
     , YEARS_BASE_URL = "/years/"
     , MIN_YEAR = 1922
@@ -35,6 +34,8 @@ jQuery(function ($) {
       }
     }.bind(this);
 
+    window.GENDER = false;
+
     for (i = 0, length = this.processedNames.length; i < length; i += 1) {
       name = this.processedNames[i];
 
@@ -46,12 +47,26 @@ jQuery(function ($) {
       (function (newName) {
         $('#errorName').attr('class', 'hide').empty(); // Borramos errores año
         this._fetchNameData(newName).done(function (nameDataResponse) {
-          window.GENDER = nameDataResponse[0].gender; // agrego genero global
-          variableGenero = nameDataResponse[0].gender; // agrego genero global
+
+          if (!window.GENDER) {
+            window.GENDER = nameDataResponse[0].gender; // agrego genero global
+            // color genero seccion 3
+            if (window.GENDER == "f") {
+              $('#section3').css({'background-color': '#F5712E'});
+            } else {
+              $('#section3').css({'background-color': '#42BD5C'});
+            }
+          }
 
           namesDone += 1;
           namesData[newName] = nameDataResponse;
           checkDone();
+
+          // Envia a la seccion 2 cuando recibe un pedido
+          if (window.location.pathname !== '/') {
+              window.location.hash = "#seccion2";
+          }
+
         }).fail(function () {
           $('#name').css( 'margin-bottom', '0.5rem' );
           $('#errorName').attr('class', '').css( 'margin-bottom', '0.5rem' ).append('<div class="glyphicon glyphicon-exclamation-sign" style="margin-right:5px;"></div>');
