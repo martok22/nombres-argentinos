@@ -1,5 +1,17 @@
 jQuery(function ($) {
 
+  function toTitleCase(str) {
+      return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+  }
+
+  function formatName(name) {
+      var processedName = window.DataProcessor.prototype._processName(name);
+
+      processedName = processedName.replace("_", " ");
+
+      return toTitleCase(processedName);
+  }
+
   /*
    * Check for Function.prototype.bind and define if not defined.
    */
@@ -186,7 +198,7 @@ jQuery(function ($) {
               .attr("cy", function(d){ return d.y; })
               .attr("class", function(d){ return gender + "Color"; })
               .attr("tooltip", function(d,i){
-                var contenido = "<div style='text-align:center;'><b>" + processNameForBubble(d.name) + "</b>";
+                var contenido = "<div style='text-align:center;'><b>" + formatName(d.name) + "</b>";
                 contenido += "<hr>";
                 contenido += "<span style='color:silver;'>Cantidad</span><br>";
                 contenido += "<b>" + d.quantity + "</b>";
@@ -210,24 +222,12 @@ jQuery(function ($) {
               .attr('id', function(d, i){
                 return 'bubble' + i;
               })
-              .text(function(d){ return processNameForBubble(d.name); })
+              .text(function(d){ return formatName(d.name); })
               .style({
                 "fill":"#5D5D5D",
                 "font-size": "14px"
               });
         });
-
-        function toTitleCase(str) {
-            return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
-        }
-
-        function processNameForBubble(name) {
-            var processedName = window.DataProcessor.prototype._processName(name);
-
-            processedName = processedName.replace("_", " ");
-
-            return toTitleCase(processedName);
-        }
       },
       /**
        * Line Chart de nombres
@@ -264,28 +264,14 @@ jQuery(function ($) {
               return x(d.year); })
             .y(function(d) { return y(d.percentage); });
 
-        // Linea Nombre
-        d3.select("#infoNombres")
-          .append('svg')
-          .attr('width', '30px')
-          .attr('height', '2px')
-          .style('margin-right', '5px')
-          .append("line")
-          .attr('x1', '0px')
-          .attr('x2', '30px')
-          .attr('y1', '0px')
-          .attr('y2', '0px')
-          .style('stroke', 'red')
-          .style('stroke-width', '5');
-
-        d3.select("#infoNombres").append("text")
-        .text(names[0]);
-
         var svg = d3.select("#main-chart").append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
           .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        var tooltipLine = d3.select("#main-chart").append("div")
+            .attr("id", "tooltipLine")
 
         var totalMin, totalMax;
 
@@ -325,6 +311,8 @@ jQuery(function ($) {
               .clipExtent([[-margin.left, -margin.top], [width + margin.right, height + margin.bottom]]);
 
         var flatData = [];
+        var numFem = 0;
+        var numMas = 0;
 
         for (var i = 0, namesLength = names.length; i < namesLength; i += 1) {
           name = names[i];
@@ -332,9 +320,27 @@ jQuery(function ($) {
 
           data.forEach(function(d) {
             d.year = +d.year;
+            d.quantity = +d.quantity;
             d.percentage = +d.percentage;
+            d.name = name;
+            d.class = d.gender;
+            if (d.gender == "f") {
+              if (numFem == 0) { 
+                d.class = d.class+0; 
+              } else { 
+                d.class = d.class+1; 
+              }
+              numFem++;
+            } else {
+              if (numMas == 0) { 
+                d.class = d.class+0; 
+              } else { 
+                d.class = d.class+1; 
+              }
+              numMas++;
+            }
 
-            flatData.push({year: d.year, value: d.percentage, key: "line" + i.toString()});
+            flatData.push({class: d.class, quantity: d.quantity, name: d.name, year: d.year, value: d.percentage});
           });
 
           data.sort(function(a, b) {
@@ -343,8 +349,26 @@ jQuery(function ($) {
 
           svg.append("path")
               .datum(data)
-              .attr("class", "line" + i.toString())
+              .attr("class", function(d) { return d[0].class; })
               .attr("d", line);
+
+          // Linea Nombre
+          d3.select("#infoNombres")
+            .append('svg')
+              .attr('width', '30px')
+              .attr('height', '2px')
+              .style('margin-right', '5px')
+            .append("line")
+              .datum(data)
+              .attr('x1', '0px')
+              .attr('x2', '30px')
+              .attr('y1', '0px')
+              .attr('y2', '0px')
+              .attr("class", function(d) { return d[0].class; });
+
+          d3.select("#infoNombres").append("text")
+            .attr("style", "margin-right: 10px;")
+            .text(names[i]);
         }
 
         var focus = svg.append("g")
@@ -353,10 +377,6 @@ jQuery(function ($) {
 
           focus.append("circle")
               .attr("r", 4.5);
-
-          focus.append("text")
-              .attr("x", 9)
-              .attr("dy", ".35em");
 
           var voronoiGroup = svg.append("g")
             .attr("class", "voronoi");
@@ -370,14 +390,32 @@ jQuery(function ($) {
               .on("mouseout", mouseout);
 
           function mouseover(d) {
-              d3.select("."+d.key).classed("line-hover", true);
               focus.attr("transform", "translate(" + x(d.year) + "," + y(d.value) + ")");
-              focus.select("text").text(d.value);
+
+              var tooltipTxt = "<div style='text-align:center;'><b>" + formatName(d.name) + "</b>";
+              tooltipTxt += "<hr>";
+              tooltipTxt += "<span style='color:silver;'>Cantidad</span><br>";
+              tooltipTxt += "<b>" + d.quantity + "</b>";
+              tooltipTxt += "<hr>";
+              tooltipTxt += "<span style='color:silver;'>Porcentaje sobre el total de registros del año</span><br>";
+              tooltipTxt += "<b>" + d.value + "</b>";
+              tooltipTxt += "<hr>";
+              tooltipTxt += "<span style='color:silver;'>Año</span><br>";
+              tooltipTxt += "<b>" + d.year + "</b></div>";
+
+              $("#tooltipLine").html(tooltipTxt);
+
+              d3.select("#tooltipLine")
+                .attr("style",
+                    function() {
+                        return "left:" + (x(d.year)+80) + "px; top:" + (y(d.value)-150) + "px";
+                    });
+              $("#tooltipLine").show();
             }
 
           function mouseout(d) {
-            d3.select("."+d.key).classed("line-hover", false);
             focus.attr("transform", "translate(-100,-100)");
+            $("#tooltipLine").hide();
           }
       },
 

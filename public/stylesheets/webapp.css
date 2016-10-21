@@ -255,17 +255,33 @@ b {
    shape-rendering: crispEdges;
  }
 
- .line0, .line1 {
+ path.f0, path.f1, path.m0, path.m1 {
    fill: none;
-   stroke-width: 3px;
+   stroke-width: 2px;
  }
 
- .line0 {
-   stroke: #F47139;
+ line.f0, path.f0 {
+   stroke: rgb(242, 113, 47);
+ }
+ line.f1, path.f1 {
+   stroke: rgba(242, 113, 47, 0.5);
+ }
+ line.f2, path.f2 {
+   stroke: rgba(242, 113, 47, 0.3);
  }
 
- .line1 {
-   stroke: #48BC60;
+ line.m0, path.m0 {
+   stroke: rgb(66, 190, 92);
+ }
+ line.m1, path.m1 {
+   stroke: rgba(66, 190, 92, 0.5);
+ }
+ line.m2, path.m2 {
+   stroke: rgba(66, 190, 92, 0.3);
+ }
+
+ line.f0, line.f1, line.m0, line.m1 {
+  stroke-width: 4px;
  }
 
  .hover-line {
@@ -299,10 +315,20 @@ b {
    font-weight: 300;
  }
 
- .infoButton {
+ .infoButton {}
 
- }
-
+#tooltipLine {
+  background: #fff;
+  padding: .5em;
+  opacity: 0.9;
+  position: absolute;
+  z-index: 999; 
+  border: silver 1px solid;
+  font-size: 11px;
+  width: 150px;
+  display: none;
+}
+ 
  /****
  * Bubble Chart
  *****/
