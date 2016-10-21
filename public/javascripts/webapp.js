@@ -133,11 +133,11 @@ jQuery(function ($) {
           if (data.year) {
             $("#extra-year-datas .specific-year").text(data.year);
             if ($(window).width() < 600){
-              App.displayYearStatistics(dataYearData, 'female', dataYear, 'mobile');
-              App.displayYearStatistics(dataYearData, 'male', dataYear, 'mobile');
+              App.displayYearStatistics('female', dataYear, 'mobile');
+              App.displayYearStatistics('male', dataYear, 'mobile');
             } else {
-              App.displayYearStatistics(dataYearData, 'female', dataYear);
-              App.displayYearStatistics(dataYearData, 'male', dataYear);
+              App.displayYearStatistics('female', dataYear);
+              App.displayYearStatistics('male', dataYear);
             }
           }
         }.bind(this)).fail(function (error) {
@@ -171,7 +171,7 @@ jQuery(function ($) {
       /**
        * Bubble Chart de nombres
        */
-      displayYearStatistics: function (yearData, gender, year, mobile) {
+      displayYearStatistics: function (gender, year, mobile) {
 
         var classBubbles = "bubble" + gender;
         var heightDiameter = (mobile == 'mobile') ? $("#extra-year-data").height() / 2 : $("#extra-year-data").height(); // Max heiht of the bubbles
@@ -567,85 +567,52 @@ jQuery(function ($) {
   });
 
   // Informacion Select
-    var newData = null;
     informacionAnios();
 
     $('input[type="radio"]').on('change', function(e) {
+      $('#extra-year-data').empty();
       if (this.value === 'decada') {
-        informacionDecadas();
-        newData = new DataProcessor(nameSelected, yearSelected);
+        var decadaStatistics = informacionDecadas();
+        ejecutarStatisticsYear(decadaStatistics);
       } else if (this.value === 'anio') {
-        informacionAnios();
-        newData = new DataProcessor(nameSelected, yearSelected);
-      }
-      if (newData !== null) {
-        newData.fetchData().done(function (data) {
-          dataYearData = data.yearData;
-          dataYear = data.year;
-          App.displayStatistics(data.statistics);
-          App.processNamesData(data.processedNames, data.year, data.namesData);
-
-          $('#extra-year-data').empty();
-
-          if (data.year) {
-            $("#extra-year-datas .specific-year").text(data.year);
-            if ($(window).width() < 600){
-              App.displayYearStatistics(dataYearData, 'female', dataYear, 'mobile');
-              App.displayYearStatistics(dataYearData, 'male', dataYear, 'mobile');
-            } else {
-              App.displayYearStatistics(dataYearData, 'female', dataYear);
-              App.displayYearStatistics(dataYearData, 'male', dataYear);
-            }
-          }
-        }.bind(this)).fail(function (error) {
-          this._displayError(error);
-        }.bind(this));
+        var anioStatistics = informacionAnios();
+        ejecutarStatisticsYear(anioStatistics);
       }
     });
 
     $('.selectBubble').on('change', function(e) {
-
-      newData = new DataProcessor(nameSelected, this.value);
-
-      if (newData !== null) {
-        newData.fetchData().done(function (data) {
-          dataYearData = data.yearData;
-          dataYear = data.year;
-          App.displayStatistics(data.statistics);
-          App.processNamesData(data.processedNames, data.year, data.namesData);
-
-          $('#extra-year-data').empty();
-
-          if (data.year) {
-            $("#extra-year-datas .specific-year").text(data.year);
-            if ($(window).width() < 600){
-              App.displayYearStatistics(dataYearData, 'female', dataYear, 'mobile');
-              App.displayYearStatistics(dataYearData, 'male', dataYear, 'mobile');
-            } else {
-              App.displayYearStatistics(dataYearData, 'female', dataYear);
-              App.displayYearStatistics(dataYearData, 'male', dataYear);
-            }
-          }
-        }.bind(this)).fail(function (error) {
-          this._displayError(error);
-        }.bind(this));
+      $('#extra-year-data').empty();
+      if ($('#anio').is(':checked')) {
+        var datoSeleccionado = window.document.querySelector('.selectBubble').value;
+      } else {
+        var datoSeleccionado = 'decada-' + window.document.querySelector('.selectBubble').value;
       }
+      ejecutarStatisticsYear(datoSeleccionado);
     });
 
     function informacionAnios() {
-      window.document.querySelector('.selectBubble').innerHTML = '';
+      window.document.querySelector('.selectBubble').innerHTML = ''; // Borramos datos del select
       for (var i = 1922; i <= 2015; i++) {
         window.document.querySelector('.selectBubble').innerHTML += "<option id='element" + i + "'>" + i + "</option>";
-      }
-      window.document.querySelector('#element' + yearSelected).selected = true;
+      } // Generamos datos del select
+      window.document.querySelector('#element' + yearSelected).selected = true; // Seleccionamos año ingresado por el usuario
+      return yearSelected;
     }
     function informacionDecadas() {
       window.document.querySelector('.selectBubble').innerHTML = '';
       for (var i = 1920; i <= 2015; i += 10) {
         window.document.querySelector('.selectBubble').innerHTML += "<option id='decada" + i + "'>" + i + "</option>";
       }
-
       window.document.querySelector('#decada1920').selected = true;
+      return 'decada-1920';
     }
-
+    function ejecutarStatisticsYear(anio) {
+      if ($(window).width() < 600){
+        App.displayYearStatistics('female', anio, 'mobile');
+        App.displayYearStatistics('male', anio, 'mobile');
+      } else {
+        App.displayYearStatistics('female', anio);
+        App.displayYearStatistics('male', anio);
+      }
+    }
 });

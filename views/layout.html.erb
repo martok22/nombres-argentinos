@@ -75,10 +75,10 @@
                 <header class="sectionHeader">
                   <div class="row altoTotal vcenter">
                     <div class="col-xs-10 col-sm-10 col-md-10 col-lg-8 text-center">
-                      <h1 class="headerTitle headerTitleH1">Tu nombre en los últimos 100 años</h1>
+                      <h1 class="headerTitle">Tu nombre en los últimos 100 años</h1>
                     </div>
                     <div class="col-xs-8 col-sm-6 col-md-8 col-lg-6 text-center">
-                      <aside class="headerSubTitle headerSubTitleH1">Descubrí cuántas personas se llamaron como vos en Argentina</aside>
+                      <aside class="headerSubTitle">Descubrí cuántas personas se llamaron como vos en Argentina</aside>
                     </div>
                   </div>
                 </header>
@@ -108,15 +108,26 @@
             <%= yield %>
 
             <footer id="section5" class="section">
-                <section class="containerCont">
-                  <div class="row altoTotal vcenter">
-                    <div class="col-xs-10 col-sm-8 col-md-6 col-md-lg-6 text-center">
-                      <p>Estas visualizaciones son posibles gracias a los datos de la Dirección Nacional de las Personas del <b>Ministerio del Interior</b>.</p>
-                      <p>Nuestro equipo de desarrollo pertenece a la Dirección de Servicios Analíticos del <b>Ministerio de Modernización</b>.</p>
-                      <p>Podés <a>consultar el dataset original</a> y también los <a>datos específicos</a> que usamos.</p>
+              <header class="sectionHeader">
+                <div class="row altoTotal vcenter">
+                  <div class="vcenter">
+                    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-12 text-center">
+                      <h2 class="headerTitle">¿Querés saber curiosidades sobre los nombres?</h2>
+                    </div>
+                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-10 text-center">
+                      <aside class="headerSubTitle">Te contamos lo que aprendimos sobre los nombres en Argentina.</aside>
                     </div>
                   </div>
-                </section>
+                  <button type="submit" class="btn btn-default">Ver curiosidades</button>
+                </div>
+              </header>
+              <section class="containerCont vcenter">
+                <div class="col-xs-10 col-sm-10 col-md-10 col-md-lg-8 text-center">
+                  <p>Estas visualizaciones son posibles gracias a los datos de la Dirección Nacional de las Personas del Ministerio del Interior.</p>
+                  <p>Nuestro equipo de desarrollo pertenece a la Dirección de Servicios Analíticos del Ministerio de Modernización.</p>
+                  <p>Podés <a>consultar el dataset original</a> y también los <a>datos específicos</a> que usamos.</p>
+                </div>
+              </section>
             </footer>
 
           <!-- scripts -->

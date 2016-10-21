@@ -48,9 +48,6 @@ b {
 }
 
 /* Propiedades reutilizables */
-.upper {
-  text-transform: uppercase;
-}
 .altoTotal {
   height: 100%;
   position: relative;
@@ -66,59 +63,156 @@ b {
   flex-direction: column;
   align-items: center;
 }
-
 .anchoTotal {
   width: 100%;
 }
 
-/* Contenedor Encabezado */
+/* Contenedores */
 .sectionHeader {
   height: 40%;
-  padding: 60px 0px 0px 0px;
+  padding: 0px 0px 0px 0px;
+  color: #5D5D5D;
 }
-
-.headerTitle {
-  margin-bottom: 5px;
-  font-size: 2rem;
-  font-weight: 400;
-}
-.headerTitleH1 {
-  font-size: 3rem;
-}
-
-.headerSubTitle {
-  font-size: 1.3rem;
-  font-weight: 300;
-}
-.headerSubTitleH1 {
-  font-size: 1.3rem;
-}
-
-/* Contenedor Contenido */
-.containerCont {
-  height: 100%;
-  padding: 60px 0px 0px 0px;
-}
-
-/* Secciones */
 #section1 .sectionHeader {
   background-image: url('/images/nuevaTrama.png');
   background-size: 5em;
   color: white;
+  padding: 60px 0px 0px 0px;
 }
-#section1 .headerTitle {
-  font-weight: 600;
+#section4 .sectionHeader {
+  height: 15%;
+}
+#section5 .sectionHeader {
+  height: 70%;
+}
+.containerCont {
+  height: 100%;
+  padding: 0px 0px 0px 0px;
+  width: 100%;
 }
 #section1 .containerCont {
-  padding: 0px;
   background-color: #3C3C3C;
   color: orange;
   height: 60%;
 }
 #section2 .containerCont {
-  padding: 0px;
   height: 60%;
 }
+#section4 .containerCont {
+  height: 85%;
+}
+#section5 .containerCont {
+  height: 30%;
+}
+
+/* Encabezados */
+.headerTitle {
+  margin-bottom: 5px;
+  font-size: 2rem;
+  font-weight: 400;
+}
+#section1 .headerTitle {
+  font-weight: 600;
+  font-size: 3rem;
+}
+.headerSubTitle {
+  font-size: 1.3rem;
+  font-weight: 300;
+}
+#section1 .headerSubTitle {
+  font-size: 1.3rem;
+}
+
+/* Parrafos */
+#section3 p {
+  font-size: 2rem;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 1rem auto 2.5rem auto;
+}
+#section3 p:last-child {
+  margin-bottom: 0px;
+}
+#section5 p {
+  font-size: 1rem;
+  font-weight: 300;
+  color: #5D5D5D;
+  margin: 0px;
+}
+
+/* Seccion 1 */
+/* Seccion 2 */
+/* Seccion 3 */
+/* Seccion 4 */
+/* Seccion 5 */
+#section5 header > div {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Graficos en Linea */
+ #main-chart {
+   top: 50%;
+   left: 50%;
+   position: absolute;
+   transform: translate(-50%, -50%);
+ }
+ .axis path,
+ .axis line {
+   fill: none;
+   stroke: #000;
+   shape-rendering: crispEdges;
+ }
+ path.f0, path.f1, path.m0, path.m1 {
+   fill: none;
+   stroke-width: 2px;
+ }
+ line.f0, path.f0 {
+   stroke: rgb(242, 113, 47);
+ }
+ line.f1, path.f1 {
+   stroke: rgba(242, 113, 47, 0.5);
+ }
+ line.f2, path.f2 {
+   stroke: rgba(242, 113, 47, 0.3);
+ }
+ line.m0, path.m0 {
+   stroke: rgb(66, 190, 92);
+ }
+ line.m1, path.m1 {
+   stroke: rgba(66, 190, 92, 0.5);
+ }
+ line.m2, path.m2 {
+   stroke: rgba(66, 190, 92, 0.3);
+ }
+ line.f0, line.f1, line.m0, line.m1 {
+  stroke-width: 4px;
+ }
+ .hover-line {
+   fill: none;
+   pointer-events: all;
+ }
+ .focus circle {
+   fill: none;
+   stroke: #666666;
+ }
+ .voronoi path {
+   fill: none;
+   pointer-events: all;
+ }
+ .line-hover{
+   stroke-width: 4;
+ }
+ #infoNombres {
+   position: absolute;
+   top: 0px;
+   display: flex;
+   align-items: center;
+ }
+
+/* Grafico Bubble */
 .contenedorCaritas {
   display: flex;
   justify-content: center;
@@ -136,17 +230,6 @@ b {
   padding: 3px;
   width: 100px;
   margin-left: 10px;
-}
-
-#section4 .sectionHeader {
-  height: 22%;
-}
-#section4 .containerCont {
-  height: 78%;
-  padding: 0px;
-}
-.colorWhite {
-  color: white;
 }
 .seccionFormularioBubble {
   z-index: 20000;
@@ -205,27 +288,22 @@ b {
   font-size: 1.3rem;
 }
 
+#section5 button {
+  background-color: #5D5D5D;
+  border: 0px;
+  border-radius: 10px;
+  padding: 0.5rem 1rem;
+  font-weight: 400;
+  text-transform: none;
+  font-size: 1.3rem;
+}
+
 #section2,
 #section4 {
   background-color: white;
 }
 #section5 {
   background-color: #E6E7E8;
-}
-
-#section3 p,
-#section5 p {
-  margin: 1rem auto;
-}
-#section3 p {
-  font-size: 2rem;
-  font-weight: bold;
-  color: rgba(255, 255, 255, 0.5);
-  margin-bottom: 2.5rem;
-}
-#section3 p:last-child,
-#section5 p:last-child {
-  margin-bottom: 0px;
 }
 
 #section4 .contenedorCaritas {
@@ -235,80 +313,10 @@ b {
 #section3 p b {
   color: white;
 }
-#section5 p {
-  font-size: 1.3rem;
-  font-weight: 300;
-}
 
-/* Graficos en Linea */
- #main-chart {
-   top: 50%;
-   left: 50%;
-   position: absolute;
-   transform: translate(-50%, -50%);
- }
 
- .axis path,
- .axis line {
-   fill: none;
-   stroke: #000;
-   shape-rendering: crispEdges;
- }
 
- path.f0, path.f1, path.m0, path.m1 {
-   fill: none;
-   stroke-width: 2px;
- }
 
- line.f0, path.f0 {
-   stroke: rgb(242, 113, 47);
- }
- line.f1, path.f1 {
-   stroke: rgba(242, 113, 47, 0.5);
- }
- line.f2, path.f2 {
-   stroke: rgba(242, 113, 47, 0.3);
- }
-
- line.m0, path.m0 {
-   stroke: rgb(66, 190, 92);
- }
- line.m1, path.m1 {
-   stroke: rgba(66, 190, 92, 0.5);
- }
- line.m2, path.m2 {
-   stroke: rgba(66, 190, 92, 0.3);
- }
-
- line.f0, line.f1, line.m0, line.m1 {
-  stroke-width: 4px;
- }
-
- .hover-line {
-   fill: none;
-   pointer-events: all;
- }
-
- .focus circle {
-   fill: none;
-   stroke: #666666;
- }
-
- .voronoi path {
-   fill: none;
-   pointer-events: all;
- }
-
- .line-hover{
-   stroke-width: 4;
- }
-
- #infoNombres {
-   position: absolute;
-   top: 0px;
-   display: flex;
-   align-items: center;
- }
  #errorName {
    color: white;
    font-size: 1rem;
@@ -414,6 +422,22 @@ hr {
   .formularioBubble select {
     padding: 0px;
   }
+  .sectionHeader {
+    height: 40%;
+    padding: 60px 0px 0px 0px;
+  }
+  #section4 .sectionHeader {
+    height: 25%;
+  }
+  #section4 .containerCont {
+    height: 75%;
+  }
+  #section5 .containerCont {
+    height: 20%;
+  }
+  #section4 .sectionHeader {
+    height: 25%;
+  }
 }
 @media(min-width:600px) and (min-height:900px) {
   html {
@@ -423,6 +447,9 @@ hr {
 @media(min-width:768px){
   html {
     font-size: 13px;
+  }
+  .seccionFormularioBubble {
+    top: 175px;
   }
 }
 @media(min-width:992px){

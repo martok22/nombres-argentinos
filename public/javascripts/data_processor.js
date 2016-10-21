@@ -49,14 +49,6 @@ jQuery(function ($) {
           window.GENDER = nameDataResponse[0].gender; // agrego genero global
           variableGenero = nameDataResponse[0].gender; // agrego genero global
 
-          // if (window.GENDER == undefined || window.GENDER == "f"){
-          //   $('#section3').css({'background-color': '#F5712E'});
-          //   $('#section3 p').attr('class', 'female');
-          // } else {
-          //   $('#section3').css({'background-color': '#42BD5C'});
-          //   $('#section3 p').attr('class', 'male');
-          // }
-
           namesDone += 1;
           namesData[newName] = nameDataResponse;
           checkDone();
