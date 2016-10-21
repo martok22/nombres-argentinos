@@ -44,34 +44,40 @@ jQuery(function ($) {
       }
 
       (function (newName) {
+        $('#errorName').attr('class', 'hide').empty(); // Borramos errores año
         this._fetchNameData(newName).done(function (nameDataResponse) {
           window.GENDER = nameDataResponse[0].gender; // agrego genero global
           variableGenero = nameDataResponse[0].gender; // agrego genero global
 
-          if (window.GENDER == undefined || window.GENDER == "f"){
-            $('#section3')[0].style.backgroundColor = '#F5712E';
-            // document.querySelectorAll('.line0')[0].style.stroke = '#F5712E';
-          } else {
-            $('#section3')[0].style.backgroundColor = '#42BD5C';
-            // document.querySelectorAll('.line0')[0].style.stroke = '#42BD5C';
-          }
+          // if (window.GENDER == undefined || window.GENDER == "f"){
+          //   $('#section3').css({'background-color': '#F5712E'});
+          //   $('#section3 p').attr('class', 'female');
+          // } else {
+          //   $('#section3').css({'background-color': '#42BD5C'});
+          //   $('#section3 p').attr('class', 'male');
+          // }
 
           namesDone += 1;
           namesData[newName] = nameDataResponse;
           checkDone();
         }).fail(function () {
-          $processing.reject({ type: "name_not_found", name: newName });
+          $('#name').css( 'margin-bottom', '0.5rem' );
+          $('#errorName').attr('class', '').css( 'margin-bottom', '0.5rem' ).append('<div class="glyphicon glyphicon-exclamation-sign" style="margin-right:5px;"></div>');
+          $('#errorName').append('¡Ups! No tenemos resultados. Revisá que el nombre esté bien escrito o probá con otro.');
         });
       }.bind(this)(name));
     }
 
     if (!yearDone) {
+      $('#errorYear').attr('class', 'hide').empty(); // Borramos errores año
       this._fetchYearData().done(function (yearDataResponse) {
         yearDone = true;
         yearData = yearDataResponse;
         checkDone();
       }).fail(function () {
-        $processing.reject({ type: "year_not_found" });
+        $('#year').css( 'margin-bottom', '0.5rem' );
+        $('#errorYear').attr('class', '').css( 'margin-bottom', '0.5rem' ).append('<div class="glyphicon glyphicon-exclamation-sign" style="margin-right:5px;"></div>');
+        $('#errorYear').append('¡Ups! No tenemos esa fecha. Por favor, buscá entre 1922 y 2015.');
       });
     }
 
@@ -226,4 +232,5 @@ jQuery(function ($) {
   }
 
   window.DataProcessor = DataProcessor;
+
 });

@@ -219,8 +219,8 @@ b {
 }
 #section3 p {
   font-size: 2rem;
-  color: hsl(20, 90%, 80%);
   font-weight: bold;
+  color: rgba(255, 255, 255, 0.5);
   margin-bottom: 2.5rem;
 }
 #section3 p:last-child,
@@ -315,20 +315,24 @@ b {
    font-weight: 300;
  }
 
- .infoButton {}
+ #errorYear {
+   color: white;
+   font-size: 1rem;
+   font-weight: 300;
+ }
 
 #tooltipLine {
   background: #fff;
   padding: .5em;
   opacity: 0.9;
   position: absolute;
-  z-index: 999; 
+  z-index: 999;
   border: silver 1px solid;
   font-size: 11px;
   width: 150px;
   display: none;
 }
- 
+
  /****
  * Bubble Chart
  *****/
@@ -346,11 +350,11 @@ b {
 }
 
 .maleColor:nth-child(10) {
-  fill: #C6ECCE !important;
+  fill: rgba(66, 190, 92, 0.5) !important;
 }
 
 .femaleColor:nth-child(10) {
-  fill: #FAAA82 !important;
+  fill: rgba(242, 113, 47, 0.5) !important;
 }
 
 hr {
