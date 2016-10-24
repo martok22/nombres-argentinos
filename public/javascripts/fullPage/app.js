@@ -75,7 +75,7 @@ $(document).ready(function () {
   var seccionesColor = window.document.querySelector('#fp-nav').children[0].children;
 
   function detectarColor(){
-    if (window.location.hash === "#seccion1" || window.location.hash === "#seccion3") {
+    if (window.location.hash == "" || window.location.hash === "#seccion1" || window.location.hash === "#seccion3") {
       for (i = 0; i < seccionesColor.length; i++) {
         window.document.querySelector('#fp-nav').children[0].children[i].children[0].children[0].style.backgroundColor = "white";
       }
