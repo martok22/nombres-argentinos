@@ -405,7 +405,7 @@ jQuery(function ($) {
 
           d3.select("#infoNombres").append("text")
             .attr("style", "margin-right: 10px;")
-            .text(names[i]);
+            .text(formatName(names[i]));
         }
 
         var focus = svg.append("g")
