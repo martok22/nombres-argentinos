@@ -105,6 +105,10 @@ b {
   height: 30%;
 }
 
+input[type="radio"], input[type="checkbox"] {
+  margin: 5px 0px 0px 10px;
+}
+
 /* Encabezados */
 .headerTitle {
   margin-bottom: 5px;
@@ -362,11 +366,11 @@ b {
   display: none;
 }
 
-.maleColor:nth-child(10) {
+.malef:nth-child(10) {
   fill: rgba(66, 190, 92, 0.5) !important;
 }
 
-.femaleColor:nth-child(10) {
+.femalef:nth-child(10) {
   fill: rgba(242, 113, 47, 0.5) !important;
 }
 

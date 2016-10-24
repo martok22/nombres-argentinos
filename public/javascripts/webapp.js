@@ -40,7 +40,7 @@ jQuery(function ($) {
   var MIN_YEAR = 1922
     , MAX_YEAR = 2015
     , DEFAULT_NAME = 'maria' // nombre por defecto
-    , DEFAULT_YEAR = '2015' // año por defecto
+    , DEFAULT_YEAR = '1922' // año por defecto
     , yearSelected
     , nameSelected
     , App = {
@@ -185,7 +185,7 @@ jQuery(function ($) {
             .style('width', '100%')
             .attr("preserveAspectRatio", "xMidYMid meet")
             .attr("viewBox", function(){
-                return "0 " + "0 " + $("#extra-year-data").width()/2 + " " + $("#extra-year-data").height();
+                return mobile == 'mobile' ? "0 " + "0 " + $("#extra-year-data").width() + " " + $("#extra-year-data").height()/2 : "0 " + "0 " + $("#extra-year-data").width()/2 + " " + $("#extra-year-data").height();
             })
             .attr("width", function(){
               return mobile == 'mobile' ? '100%' : '50%';
@@ -303,7 +303,8 @@ jQuery(function ($) {
         var svg = d3.select("#main-chart").append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
-          .append("g")
+            .attr("preserveAspectRatio", "xMidYMid meet")
+            .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
         var tooltipLine = d3.select("#main-chart").append("div")
@@ -404,7 +405,7 @@ jQuery(function ($) {
 
           d3.select("#infoNombres").append("text")
             .attr("style", "margin-right: 10px;")
-            .text(names[i]);
+            .text(formatName(names[i]));
         }
 
         var focus = svg.append("g")
