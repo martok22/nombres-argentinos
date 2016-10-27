@@ -419,6 +419,7 @@ jQuery(function ($) {
             d.percentage = +d.percentage;
             d.name = name;
             d.class = d.gender;
+
             if (d.gender == "f") {
               if (numFem == 0) {
                 d.class = d.class+0;
@@ -482,7 +483,6 @@ jQuery(function ($) {
             if (v.year == window.document.getElementById('year').value) {
               yearBaby = v.year;
               valueBaby = v.percentage;
-              console.log(v);
             }
           })
         })
@@ -498,21 +498,27 @@ jQuery(function ($) {
           var voronoiGroup = svg.append("g")
             .attr("class", "voronoi");
 
+          flatData.forEach(function(v){console.log(v.name);});
+
           voronoiGroup.selectAll("path")
               .data(voronoi(flatData))
-              .enter().append("path")
+              .enter()
+              .append("path")
               .attr("d", function(d) { if (d) {return "M" + d.join("L") + "Z"; }})
-              .datum(function(d) { if (d) {return d.point; }})
-              .attr("tooltip", function(d,i){
-                var contenido = "<b>" + formatName(d.name) + "</b><br />";
-                contenido += "Cantidad: " + d.quantity + "<br />";
-                contenido += (d.value * 10).toFixed(4) + " por cada mil registros<br />";
-                contenido += "Año: " + d.year;
+              .datum(function(d) { if (d) { return d.point; }})
+              .attr("tooltip", function(d){
 
-                new Opentip(this, contenido, { style: "bubbleStyle", tipJoint: "bottom", borderRadius: 20 });
+                if (d) {
+                  var contenido = "<b>" + formatName(d.name) + "</b><br />";
+                  contenido += "Cantidad: " + d.quantity + "<br />";
+                  contenido += (d.value * 10).toFixed(4) + " por cada mil registros<br />";
+                  contenido += "Año: " + d.year;
+
+                  new Opentip(this, contenido, { style: "bubbleStyle", tipJoint: "bottom", borderRadius: 20 });
+                }
+
               })
               .on("mouseover", function(d){
-                console.log(d);
                 focus.attr("transform", "translate(" + x(d.year) + "," + y(d.value) + ")");
               })
               .on("mouseout", function(d){
