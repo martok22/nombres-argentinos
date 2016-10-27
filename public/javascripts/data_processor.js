@@ -217,7 +217,7 @@ jQuery(function ($) {
     var numNamesCurrYear = nameData[indexCurrYear].quantity;
 
     if(numNamesCurrYear == 1){
-      return "El año en el que naciste, solo <b>" + numNamesCurrYear + "</b> persona se llamó igual que vos. ¡Uauu!";
+      return "El año en el que naciste, sólo <b>" + numNamesCurrYear + "</b> persona se llamó igual que vos. ¡Uauu!";
     } else {
       return "El año en el que naciste, otras <b>" + numNamesCurrYear + "</b> personas se llamaron igual que vos. ¡Uauu!";
     }

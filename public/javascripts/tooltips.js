@@ -40,3 +40,7 @@ Opentip.styles.bubbleStyle = {
   borderColor: "silver",
   shadow: false
 };
+
+window.addEventListener("hashchange", function(){
+   for(var i = 0; i < Opentip.tips.length; i ++) { Opentip.tips[i].hide(); }
+});

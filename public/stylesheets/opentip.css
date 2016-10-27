@@ -159,7 +159,7 @@
   -o-transition: -o-transform 0.5s ease-in-out, opacity 1s ease-in-out;
   -ms-transition: -ms-transform 0.5s ease-in-out, opacity 1s ease-in-out;
   transition: transform 0.5s ease-in-out, opacity 1s ease-in-out;
-  opacity: 1;
+  opacity: 0.9;
   -ms-filter: none;
   filter: none;
 }
@@ -182,12 +182,12 @@
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
 }
 .opentip-container.ot-show-effect-appear.ot-showing {
-  opacity: 1;
+  opacity: 0.9;
   -ms-filter: none;
   filter: none;
 }
 .opentip-container.ot-show-effect-appear.ot-visible {
-  opacity: 1;
+  opacity: 0.9;
   -ms-filter: none;
   filter: none;
 }

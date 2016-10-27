@@ -5,7 +5,7 @@
           <h2 class="headerTitle">La popularidad de tu nombre</h2>
         </div>
         <div class="col-xs-8 col-sm-6 col-md-8 col-lg-6 text-center">
-          <aside class="headerSubTitle">Datos expresados en 1 x 1.000 nombres registrados por año</aside>
+          <aside class="headerSubTitle">Datos expresados en 1 x 1.000 (‰) nombres registrados por año</aside>
         </div>
       </div>
     </header>
@@ -41,13 +41,15 @@
     <section class="containerCont">
       <section class="seccionFormularioBubble">
         <form class="formularioBubble" action="index.html" method="post">
-          <div>
+          <div id="buscaPor">
             <label>Buscá por</label>
-            <input id="anio" type="radio" name="bubble" value="anio" checked>
-            <span class="infoButton">año</span>
-            <input type="radio" name="bubble" value="decada">
-            <span class="infoButton">decada</span>
-            <select class="selectBubble" name=""></select>
+            <div class="vcenterRow">
+              <input id="anio" type="radio" name="bubble" value="anio" checked>
+              <span class="infoButton">año</span>
+              <input type="radio" name="bubble" value="decada">
+              <span class="infoButton">decada</span>
+              <select class="selectBubble" name=""></select>
+            </div>
           </div>
         </form>
         <div class="contenedorCaritas">
