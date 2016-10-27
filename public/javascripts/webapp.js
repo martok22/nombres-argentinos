@@ -350,9 +350,8 @@ jQuery(function ($) {
             .scale(y)
             .orient("left")
             .tickFormat(function(d){
-              return (d * 10) + " ‰";
-            })
-            .tickValues([0.001, 0.002, 0.003, 0.004, 0.005, 0.006, 0.007, 0.008, 0.009, 0.010, 0.011, 0.012, 0.013, 0.014, 0.015]);
+              return (d * 10).toFixed(2) + " ‰";
+            });
 
         var line = d3.svg.line()
             .x(function(d) {
@@ -465,7 +464,10 @@ jQuery(function ($) {
             .text(formatName(names[i]));
         }
 
+        var yearBaby, valueBaby;
+
         var bebe = svg.append("svg:image")
+        .datum(data)
         .attr("xlink:href", function(d){
           if (window.GENDER == "f") {
             return  "/images/icono-nacimiento-mujer.png";
@@ -473,9 +475,18 @@ jQuery(function ($) {
             return "/images/icono-nacimiento-varon.png";
           }
         })
-        .attr("width", 20)
-        .attr("height", 20)
-        .attr("transform", "translate(" + (x((chartYear == undefined)?DEFAULT_YEAR:chartYear) - 10) + "," + (y(0) - 20) + ")");
+        .attr("width", 30)
+        .attr("height", 30)
+        .attr("bebe", function(d){
+          d.forEach(function(v){
+            if (v.year == window.document.getElementById('year').value) {
+              yearBaby = v.year;
+              valueBaby = v.percentage;
+              console.log(v);
+            }
+          })
+        })
+        .attr("transform", "translate(" + (x(yearBaby)-10) + "," + (y(valueBaby)-12.5) + ")");
 
         var focus = svg.append("g")
               .attr("class", "focus")
@@ -501,6 +512,7 @@ jQuery(function ($) {
                 new Opentip(this, contenido, { style: "bubbleStyle", tipJoint: "bottom", borderRadius: 20 });
               })
               .on("mouseover", function(d){
+                console.log(d);
                 focus.attr("transform", "translate(" + x(d.year) + "," + y(d.value) + ")");
               })
               .on("mouseout", function(d){
