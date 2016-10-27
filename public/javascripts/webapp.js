@@ -40,7 +40,7 @@ jQuery(function ($) {
   var MIN_YEAR = 1922
     , MAX_YEAR = 2015
     , DEFAULT_NAME = 'maria' // nombre por defecto
-    , DEFAULT_YEAR = '1922' // año por defecto
+    , DEFAULT_YEAR = '2015' // año por defecto
     , yearSelected
     , nameSelected
     , chartName
