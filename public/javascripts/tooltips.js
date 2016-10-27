@@ -38,7 +38,8 @@ Opentip.styles.bubbleStyle = {
   stem: true,
   background: "white",
   borderColor: "silver",
-  shadow: false
+  shadow: false,
+  showEffectDuration: 0 
 };
 
 window.addEventListener("hashchange", function(){

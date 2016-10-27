@@ -486,14 +486,15 @@ jQuery(function ($) {
             }
           })
         })
-        .attr("transform", "translate(" + (x(yearBaby)-10) + "," + (y(valueBaby)-12.5) + ")");
+        .attr("transform", "translate(" + (x(yearBaby)-15) + "," + (y(valueBaby)-15) + ")");
 
         var focus = svg.append("g")
               .attr("class", "focus")
               .attr("transform", "translate(-100,-100)");
 
           focus.append("circle")
-              .attr("r", 4.5);
+              .attr("r", 8)
+              .attr("stroke-width", "2px");
 
           var voronoiGroup = svg.append("g")
             .attr("class", "voronoi");
