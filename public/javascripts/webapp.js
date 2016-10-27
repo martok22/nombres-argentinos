@@ -44,6 +44,7 @@ jQuery(function ($) {
     , yearSelected
     , nameSelected
     , chartName
+    , bebeCheck = true
     , chartYear
     , chartData
     , anchoUltimo = $(window).width()
@@ -465,28 +466,33 @@ jQuery(function ($) {
             .text(formatName(names[i]));
         }
 
-        var yearBaby, valueBaby;
+        if (bebeCheck === true) {
+          var yearBaby, valueBaby;
 
-        var bebe = svg.append("svg:image")
-        .datum(data)
-        .attr("xlink:href", function(d){
-          if (window.GENDER == "f") {
-            return  "/images/icono-nacimiento-mujer.png";
-          } else {
-            return "/images/icono-nacimiento-varon.png";
-          }
-        })
-        .attr("width", 30)
-        .attr("height", 30)
-        .attr("bebe", function(d){
-          d.forEach(function(v){
-            if (v.year == window.document.getElementById('year').value) {
-              yearBaby = v.year;
-              valueBaby = v.percentage;
+          var bebe = svg.append("svg:image")
+          .datum(flatData)
+          .attr("xlink:href", function(d){
+            if (window.GENDER == "f") {
+              return  "/images/icono-nacimiento-mujer.png";
+            } else {
+              return "/images/icono-nacimiento-varon.png";
             }
           })
-        })
-        .attr("transform", "translate(" + (x(yearBaby)-15) + "," + (y(valueBaby)-15) + ")");
+          .attr("width", 30)
+          .attr("height", 30)
+          .attr("bebe", function(d){
+            d.forEach(function(v){
+              if (v.year == window.document.getElementById('year').value && bebeCheck == true) {
+                yearBaby = v.year;
+                valueBaby = v.value;
+                bebeCheck = false;
+              }
+            })
+          })
+          .attr("transform", "translate(" + (x(yearBaby)-15) + "," + (y(valueBaby)-15) + ")");
+
+          bebeCheck = false;
+        }
 
         var focus = svg.append("g")
               .attr("class", "focus")
@@ -498,8 +504,6 @@ jQuery(function ($) {
 
           var voronoiGroup = svg.append("g")
             .attr("class", "voronoi");
-
-          flatData.forEach(function(v){console.log(v.name);});
 
           voronoiGroup.selectAll("path")
               .data(voronoi(flatData))
