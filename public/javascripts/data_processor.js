@@ -52,9 +52,9 @@ jQuery(function ($) {
             window.GENDER = nameDataResponse[0].gender; // agrego genero global
             // color genero seccion 3
             if (window.GENDER == "f") {
-              $('#section3').css({'background-color': '#F5712E'});
+              $('#section3').css({'background-color': '#FF5722'});
             } else {
-              $('#section3').css({'background-color': '#42BD5C'});
+              $('#section3').css({'background-color': '#4CAF50'});
             }
           }
 
@@ -217,7 +217,7 @@ jQuery(function ($) {
     var numNamesCurrYear = nameData[indexCurrYear].quantity;
 
     if(numNamesCurrYear == 1){
-      return "El año en el que naciste, solo <b>" + numNamesCurrYear + "</b> persona se llamó igual que vos. ¡Uauu!";
+      return "El año en el que naciste, sólo <b>" + numNamesCurrYear + "</b> persona se llamó igual que vos. ¡Uauu!";
     } else {
       return "El año en el que naciste, otras <b>" + numNamesCurrYear + "</b> personas se llamaron igual que vos. ¡Uauu!";
     }

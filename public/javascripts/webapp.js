@@ -40,9 +40,14 @@ jQuery(function ($) {
   var MIN_YEAR = 1922
     , MAX_YEAR = 2015
     , DEFAULT_NAME = 'maria' // nombre por defecto
-    , DEFAULT_YEAR = '1922' // año por defecto
+    , DEFAULT_YEAR = '2015' // año por defecto
     , yearSelected
     , nameSelected
+    , chartName
+    , bebeCheck = true
+    , chartYear
+    , chartData
+    , anchoUltimo = $(window).width()
     , App = {
 
       initialize: function () {
@@ -130,6 +135,11 @@ jQuery(function ($) {
 
           this.displayStatistics(data.statistics);
           this.processNamesData(data.processedNames, data.year, data.namesData);
+
+          chartName = data.processedNames;
+          chartYear = data.year;
+          chartData = data.namesData;
+
           if (data.year) {
             $("#extra-year-datas .specific-year").text(data.year);
             if ($(window).width() < 600){
@@ -234,35 +244,68 @@ jQuery(function ($) {
               .attr("cy", function(d){ return d.y; })
               .attr("class", function(d){ return gender + "f"; })
               .attr("tooltip", function(d,i){
-                var contenido = "<div style='text-align:center;'><b>" + formatName(d.name) + "</b>";
-                contenido += "<hr>";
-                contenido += "<span style='color:silver;'>Cantidad</span><br>";
-                contenido += "<b>" + d.quantity + "</b>";
-                contenido += "<hr>";
-                contenido += "<span style='color:silver;'>Año</span><br>";
-                contenido += "<b>" + "1922" + "</b></div>";
+                var contenido = "<b>" + formatName(d.name) + "</b><br />";
+                contenido += "Cantidad: " + d.quantity + "<br />";
+                contenido += "Año: " + $('select')[0].value;
 
-                new Opentip(this, contenido, { style: "bubbleStyle", tipJoint: "bottom" });
+                new Opentip(this, contenido, { style: "bubbleStyle", tipJoint: "bottom", borderRadius: 20 });
               })
               .style("fill", function(d) { return color; })
               .style("fill", function(d) { return color; });
 
 
           // Format the text for each bubble
-          bubbles.append("text")
+          bubbles.append('text')
               .attr("x", function(d){
                 return this.parentNode.getAttribute('class') === 'bubblefemale' ? medida - d.x : d.x;
               })
-              .attr("y", function(d){ return d.y + 5; })
+              .attr("y", function(d){
+
+                if (d.name.split('_').length != 1) {
+                  return d.y - 2.5;
+                } else {
+                  return d.y + 5;
+                }
+
+              })
               .attr("text-anchor", "middle")
               .attr('id', function(d, i){
                 return 'bubble' + i;
               })
-              .text(function(d){ return formatName(d.name); })
+              .text(function(d){
+                var names = d.name.split('_');
+                var name1 = (names[0]) ? (names[0]) : '';
+                var name2 = (names[1]) ? (names[1]) : '';
+                var name3 = (names[2]) ? (names[2]) : '';
+
+                return formatName(name1);
+              })
               .style({
                 "fill":"#5D5D5D",
-                "font-size": "14px"
+                "font-size": "1rem"
               });
+
+              bubbles.append('text')
+                .attr("x", function(d){
+                  return this.parentNode.getAttribute('class') === 'bubblefemale' ? medida - d.x : d.x;
+                })
+                .attr("y", function(d){ return d.y + 12.5; })
+                .attr("text-anchor", "middle")
+                .attr('id', function(d, i){
+                  return 'bubble' + i;
+                })
+                .text(function(d){
+                  var names = d.name.split('_');
+                  var name1 = (names[0]) ? (names[0]) : '';
+                  var name2 = (names[1]) ? (names[1]) : '';
+                  var name3 = (names[2]) ? (names[2]) : '';
+
+                  return formatName(name2);
+                })
+                .style({
+                  "fill":"#5D5D5D",
+                  "font-size": "1rem"
+                });
         });
       },
       /**
@@ -271,11 +314,18 @@ jQuery(function ($) {
       processNamesData: function (names, year, namesData) {
 
         $("#main").addClass("active");
+        $("#infoNombres").empty();
         $("#main-chart").empty();
 
-        var margin = {top: 20, right: 50, bottom: 30, left: 50},
-            width = 800 - margin.left - margin.right,
-            height = 350 - margin.top - margin.bottom;
+        if ($('#section2 .containerCont').width() > 500) {
+          var margin = {top: 10, right: 190, bottom: 50, left: 190};
+        } else {
+          var margin = {top: 10, right: 25, bottom: 50, left: 75};
+        }
+
+
+        var width = $('#section2 .containerCont').width() - margin.left - margin.right,
+            height = $('#section2 .containerCont').height() - margin.top - margin.bottom;
 
         var bisectDate = d3.bisector(function(d) { return d.year; }).left;
 
@@ -289,15 +339,24 @@ jQuery(function ($) {
             .scale(x)
             .orient("bottom")
             .tickFormat(d3.format("d"))
-            .tickValues([1922, 1930, 1940, 1950, 1960, 1970, 1980, 1990, 2000, 2010, 2015]);
+            .tickValues(function(){
+              if ($('#section2 .containerCont').width() > 500) {
+                return [1925, 1935, 1945, 1955, 1965, 1975, 1985, 1995, 2005, 2015];
+              } else {
+                return [1922, 1968, 2015];
+              }
+            });
 
         var yAxis = d3.svg.axis()
             .scale(y)
-            .orient("left");
+            .orient("left")
+            .tickFormat(function(d){
+              return (d * 10).toFixed(2) + " ‰";
+            });
 
         var line = d3.svg.line()
             .x(function(d) {
-              return x(d.year); })
+              return x(d.year ); })
             .y(function(d) { return y(d.percentage); });
 
         var svg = d3.select("#main-chart").append("svg")
@@ -334,12 +393,12 @@ jQuery(function ($) {
         y.domain([totalMin, totalMax]);
 
         svg.append("g")
-              .attr("class", "x axis")
+              .attr("class", "x axis xAxis")
               .attr("transform", "translate(0," + height + ")")
               .call(xAxis);
 
         svg.append("g")
-              .attr("class", "y axis")
+              .attr("class", "y axis yAxis")
               .call(yAxis);
 
         var voronoi = d3.geom.voronoi()
@@ -361,6 +420,7 @@ jQuery(function ($) {
             d.percentage = +d.percentage;
             d.name = name;
             d.class = d.gender;
+
             if (d.gender == "f") {
               if (numFem == 0) {
                 d.class = d.class+0;
@@ -391,16 +451,14 @@ jQuery(function ($) {
 
           // Linea Nombre
           d3.select("#infoNombres")
+            .datum(data)
             .append('svg')
-              .attr('width', '30px')
-              .attr('height', '2px')
+              .attr("class", function(d) { return d[0].class; })
               .style('margin-right', '5px')
             .append("line")
-              .datum(data)
+
               .attr('x1', '0px')
-              .attr('x2', '30px')
-              .attr('y1', '0px')
-              .attr('y2', '0px')
+              .attr('x2', '15px')
               .attr("class", function(d) { return d[0].class; });
 
           d3.select("#infoNombres").append("text")
@@ -408,52 +466,69 @@ jQuery(function ($) {
             .text(formatName(names[i]));
         }
 
+        if (bebeCheck === true) {
+          var yearBaby, valueBaby;
+
+          var bebe = svg.append("svg:image")
+          .datum(flatData)
+          .attr("xlink:href", function(d){
+            if (window.GENDER == "f") {
+              return  "/images/icono-nacimiento-mujer.png";
+            } else {
+              return "/images/icono-nacimiento-varon.png";
+            }
+          })
+          .attr("width", 30)
+          .attr("height", 30)
+          .attr("bebe", function(d){
+            d.forEach(function(v){
+              if (v.year == window.document.getElementById('year').value && bebeCheck == true) {
+                yearBaby = v.year;
+                valueBaby = v.value;
+                bebeCheck = false;
+              }
+            })
+          })
+          .attr("transform", "translate(" + (x(yearBaby)-15) + "," + (y(valueBaby)-15) + ")");
+
+          bebeCheck = false;
+        }
+
         var focus = svg.append("g")
               .attr("class", "focus")
               .attr("transform", "translate(-100,-100)");
 
           focus.append("circle")
-              .attr("r", 4.5);
+              .attr("r", 8)
+              .attr("stroke-width", "2px");
 
           var voronoiGroup = svg.append("g")
             .attr("class", "voronoi");
 
           voronoiGroup.selectAll("path")
               .data(voronoi(flatData))
-              .enter().append("path")
+              .enter()
+              .append("path")
               .attr("d", function(d) { if (d) {return "M" + d.join("L") + "Z"; }})
-              .datum(function(d) { if (d) {return d.point; }})
-              .on("mouseover", mouseover)
-              .on("mouseout", mouseout);
+              .datum(function(d) { if (d) { return d.point; }})
+              .attr("tooltip", function(d){
 
-          function mouseover(d) {
-              focus.attr("transform", "translate(" + x(d.year) + "," + y(d.value) + ")");
+                if (d) {
+                  var contenido = "<b>" + formatName(d.name) + "</b><br />";
+                  contenido += "Cantidad: " + d.quantity + "<br />";
+                  contenido += (d.value * 10).toFixed(4) + " por cada mil registros<br />";
+                  contenido += "Año: " + d.year;
 
-              var tooltipTxt = "<div style='text-align:center;'><b>" + formatName(d.name) + "</b>";
-              tooltipTxt += "<hr>";
-              tooltipTxt += "<span style='color:silver;'>Cantidad</span><br>";
-              tooltipTxt += "<b>" + d.quantity + "</b>";
-              tooltipTxt += "<hr>";
-              tooltipTxt += "<span style='color:silver;'>Porcentaje sobre el total de registros del año</span><br>";
-              tooltipTxt += "<b>" + d.value + "</b>";
-              tooltipTxt += "<hr>";
-              tooltipTxt += "<span style='color:silver;'>Año</span><br>";
-              tooltipTxt += "<b>" + d.year + "</b></div>";
+                  new Opentip(this, contenido, { style: "bubbleStyle", tipJoint: "bottom", borderRadius: 20 });
+                }
 
-              $("#tooltipLine").html(tooltipTxt);
-
-              d3.select("#tooltipLine")
-                .attr("style",
-                    function() {
-                        return "left:" + (x(d.year)+80) + "px; top:" + (y(d.value)-150) + "px";
-                    });
-              $("#tooltipLine").show();
-            }
-
-          function mouseout(d) {
-            focus.attr("transform", "translate(-100,-100)");
-            $("#tooltipLine").hide();
-          }
+              })
+              .on("mouseover", function(d){
+                focus.attr("transform", "translate(" + x(d.year) + "," + y(d.value) + ")");
+              })
+              .on("mouseout", function(d){
+                focus.attr("transform", "translate(-100,-100)");
+              });
       },
 
       humanizeName: function (name) {
@@ -610,4 +685,36 @@ jQuery(function ($) {
         App.displayYearStatistics('male', anio);
       }
     }
+
+    // Resize Line Chart
+    $( window ).resize(function() {
+      App.processNamesData(chartName, chartYear, chartData);
+
+      var anchoActual = $(window).width();
+
+      // if (anchoActual < (anchoUltimo - 150) || anchoActual > (anchoUltimo + 150)) {
+      if (anchoUltimo < 600 && anchoActual > 600) {
+        $('#extra-year-data').empty();
+        App.displayYearStatistics('female', yearSelected);
+        App.displayYearStatistics('male', yearSelected);
+        anchoUltimo = anchoActual;
+      } else if (anchoUltimo > 600 && anchoActual < 600) {
+        $('#extra-year-data').empty();
+        App.displayYearStatistics('female', yearSelected, 'mobile');
+        App.displayYearStatistics('male', yearSelected, 'mobile');
+        anchoUltimo = anchoActual;
+      } else if (anchoUltimo > 600 && anchoActual > 600 && ( (anchoActual > (anchoUltimo + 200)) || (anchoActual < (anchoUltimo - 200)) )) {
+        $('#extra-year-data').empty();
+        App.displayYearStatistics('female', yearSelected);
+        App.displayYearStatistics('male', yearSelected);
+        anchoUltimo = anchoActual;
+      } else if (anchoUltimo < 600 && anchoActual < 600 && ( (anchoActual > (anchoUltimo + 100)) || (anchoActual < (anchoUltimo - 100)) )) {
+        $('#extra-year-data').empty();
+        App.displayYearStatistics('female', yearSelected, 'mobile');
+        App.displayYearStatistics('male', yearSelected, 'mobile');
+        anchoUltimo = anchoActual;
+      }
+
+
+    });
 });
