@@ -1,6 +1,8 @@
 # encoding: utf-8
 require 'csv'
 require 'json'
+require 'yaml'
+require 'mysql2'
 
 class Numeric
   def roundup(nearest=10)
@@ -19,8 +21,11 @@ module Datanames
     end
 
     DATA_FILE = root_path('data/nombres1922a2015conpp.csv')
-    TOP_NAMES_PER_YEAR_SIZE = 10  
+    TOP_NAMES_PER_YEAR_SIZE = 10
 
+    config = YAML.load(File.open(root_path("config.yml")))
+
+    CLIENT = Mysql2::Client.new(:host => config['mysql']['host'], :username => config['mysql']['user'], :password => config['mysql']['password'], :database => "nombres")
     #
     #
     #
@@ -40,6 +45,7 @@ module Datanames
         if $. % 100000 == 0
           puts $.
         end
+        
         name = format_name(row[0])
         year = row[2].to_i
         quantity = row[1].to_i
@@ -50,48 +56,60 @@ module Datanames
                  else raise "Invalid gender: #{row[1].inspect}"
                  end
 
-        current_name_data = names[name].find { |nd| nd[:year] == year }
-
-        if !current_name_data
-          names[name] << { quantity: quantity, year: year, percentage: percentage, gender: gender }
+        begin
+          CLIENT.query("INSERT INTO nombres (name, quantity, year, gender, percentage) VALUES ('#{name}', #{quantity}, #{year}, '#{gender}', #{percentage})")
+        rescue Exception => e
+          puts e          
         end
 
-        current_decade = year.rounddown
+        # query de ano
+        # "SELECT * FROM `nombres` WHERE year=#{year} ORDER BY quantity DESC LIMIT #{TOP_NAMES_PER_YEAR_SIZE}"
 
-        # Calculo de decadas
-        decades_data = decades[current_decade][gender]
+        # query distint de nombres
+        # "SELECT DISTINCT name FROM `nombres`"
 
-        name_index = decades_data.find_index { |item| item[:name] == name }
-        if name_index
-          decade_quantity = decades_data[name_index][:quantity] + quantity
-          decades_data[name_index][:quantity] = decade_quantity
-        else
-          decades_data << { name: name, quantity: quantity }
-        end
-        decades_data.sort_by! { |name| name[:quantity] }
+        # current_name_data = names[name].find { |nd| nd[:year] == year }
+
+        # if !current_name_data
+        #   names[name] << { quantity: quantity, year: year, percentage: percentage, gender: gender }
+        # end
+
+        # current_decade = year.rounddown
+
+        # # Calculo de decadas
+        # decades_data = decades[current_decade][gender]
+
+        # name_index = decades_data.find_index { |item| item[:name] == name }
+        # if name_index
+        #   decade_quantity = decades_data[name_index][:quantity] + quantity
+        #   decades_data[name_index][:quantity] = decade_quantity
+        # else
+        #   decades_data << { name: name, quantity: quantity }
+        # end
+        # decades_data.sort_by! { |name| name[:quantity] }
       
-        # Calculo de años
-        year_data = years[year][gender]
+        # # Calculo de años
+        # year_data = years[year][gender]
 
-        if year_data.size < TOP_NAMES_PER_YEAR_SIZE
-          year_data << { name: name, quantity: quantity }
-        else
-          lowest_name = year_data.shift
-          if lowest_name[:quantity] < quantity
-            year_data.push({ name: name, quantity: quantity })
-          else
-            year_data.push(lowest_name)
-          end
-        end
-        year_data.sort_by! { |name| name[:quantity] }
+        # if year_data.size < TOP_NAMES_PER_YEAR_SIZE
+        #   year_data << { name: name, quantity: quantity }
+        # else
+        #   lowest_name = year_data.shift
+        #   if lowest_name[:quantity] < quantity
+        #     year_data.push({ name: name, quantity: quantity })
+        #   else
+        #     year_data.push(lowest_name)
+        #   end
+        # end
+        # year_data.sort_by! { |name| name[:quantity] }
       end
 
       # Seleccionar solo el top 
-      decades.each do |decade, genders|
-        genders.each do |gender, array|
-          decades[decade][gender] = array.last(TOP_NAMES_PER_YEAR_SIZE)
-        end
-      end
+      # decades.each do |decade, genders|
+      #   genders.each do |gender, array|
+      #     decades[decade][gender] = array.last(TOP_NAMES_PER_YEAR_SIZE)
+      #   end
+      # end
 
       return [names, years, decades]
     end
@@ -102,25 +120,25 @@ module Datanames
     def self.export_data
       names, years, decades = extract_data
 
-      names_folder = root_path('public', 'names')
-      names.each do |name, name_data|
-        File.open(File.join(names_folder, "#{name}.json"), 'w') do |file|
-          file.write(JSON.generate(name_data))
-        end
-      end
+      # names_folder = root_path('public', 'names')
+      # names.each do |name, name_data|
+      #   File.open(File.join(names_folder, "#{name}.json"), 'w') do |file|
+      #     file.write(JSON.generate(name_data))
+      #   end
+      # end
 
-      years_folder = root_path('public', 'years')
-      years.each do |year, year_data|
-        File.open(File.join(years_folder, "#{year}.json"), 'w') do |file|
-          file.write(JSON.generate(year_data))
-        end
-      end
+      # years_folder = root_path('public', 'years')
+      # years.each do |year, year_data|
+      #   File.open(File.join(years_folder, "#{year}.json"), 'w') do |file|
+      #     file.write(JSON.generate(year_data))
+      #   end
+      # end
 
-      decades.each do |decade, decade_data|
-        File.open(File.join(years_folder, "decada-#{decade}.json"), 'w') do |file|
-          file.write(JSON.generate(decade_data))
-        end
-      end
+      # decades.each do |decade, decade_data|
+      #   File.open(File.join(years_folder, "decada-#{decade}.json"), 'w') do |file|
+      #     file.write(JSON.generate(decade_data))
+      #   end
+      # end
     end
 
     #
