@@ -20,7 +20,7 @@ module Datanames
       File.join(File.dirname(__FILE__), *args)
     end
 
-    DATA_FILE = root_path('data/nombres1922a2015conpp.csv')
+    DATA_FILE = root_path('data/sample_2013_2014.csv')
     TOP_NAMES_PER_YEAR_SIZE = 10
 
     config = YAML.load(File.open(root_path("config.yml")))
@@ -31,7 +31,6 @@ module Datanames
     #
     def self.extract_data
       names = Hash.new { |h, k| h[k] = [] }
-      years = Hash.new { |h, k| h[k] = { f: [], m: [] } }
       decades = Hash.new { |h, k| h[k] = { f: [], m: [] } }
 
       # CSV columns
@@ -57,60 +56,48 @@ module Datanames
                  end
 
         begin
-          CLIENT.query("INSERT INTO nombres (name, quantity, year, gender, percentage) VALUES ('#{name}', #{quantity}, #{year}, '#{gender}', #{percentage})")
+          CLIENT.query("INSERT INTO nombres_sample (name, quantity, year, gender, percentage) VALUES ('#{name}', #{quantity}, #{year}, '#{gender}', #{percentage})")
         rescue Exception => e
           puts e          
         end
-
-        # query de ano
-        # "SELECT * FROM `nombres` WHERE year=#{year} ORDER BY quantity DESC LIMIT #{TOP_NAMES_PER_YEAR_SIZE}"
-
-        # query distint de nombres
-        # "SELECT DISTINCT name FROM `nombres`"
-
-        # current_name_data = names[name].find { |nd| nd[:year] == year }
-
-        # if !current_name_data
-        #   names[name] << { quantity: quantity, year: year, percentage: percentage, gender: gender }
-        # end
-
-        # current_decade = year.rounddown
-
-        # # Calculo de decadas
-        # decades_data = decades[current_decade][gender]
-
-        # name_index = decades_data.find_index { |item| item[:name] == name }
-        # if name_index
-        #   decade_quantity = decades_data[name_index][:quantity] + quantity
-        #   decades_data[name_index][:quantity] = decade_quantity
-        # else
-        #   decades_data << { name: name, quantity: quantity }
-        # end
-        # decades_data.sort_by! { |name| name[:quantity] }
-      
-        # # Calculo de años
-        # year_data = years[year][gender]
-
-        # if year_data.size < TOP_NAMES_PER_YEAR_SIZE
-        #   year_data << { name: name, quantity: quantity }
-        # else
-        #   lowest_name = year_data.shift
-        #   if lowest_name[:quantity] < quantity
-        #     year_data.push({ name: name, quantity: quantity })
-        #   else
-        #     year_data.push(lowest_name)
-        #   end
-        # end
-        # year_data.sort_by! { |name| name[:quantity] }
       end
 
-      # Seleccionar solo el top 
-      # decades.each do |decade, genders|
-      #   genders.each do |gender, array|
-      #     decades[decade][gender] = array.last(TOP_NAMES_PER_YEAR_SIZE)
+      # years = (1922..2015).to_a
+      
+      # # ---- START TOP DE NOMBRES POR ANIO ----
+      # genders = ['f', 'm']
+      # years_folder = root_path('public', 'years')
+
+      # years.each do |y| 
+      #   top_year = Hash.new { |h, k| h[k] = { f: [], m: [] } }
+        
+      #   genders.each do |g| 
+      #     top_gender = []
+          
+      #     results_year = CLIENT.query("SELECT `name`, `quantity` FROM `nombres` WHERE year=#{y} AND gender='#{g}' ORDER BY quantity DESC LIMIT #{TOP_NAMES_PER_YEAR_SIZE}")
+      #     results_year.each do |row|
+      #       top_gender.push(row)
+      #     end
+
+      #     top_year[g] = top_gender
+      #   end
+
+      #   File.open(File.join(years_folder, "#{y}.json"), 'w') do |file|
+      #     file.write(JSON.generate(top_year))
       #   end
       # end
 
+      # ---- END TOP DE NOMBRES POR ANIO -----
+
+      # ---- START TOP DE NOMBRES POR DECADA ----
+      
+
+      # ---- END TOP DE NOMBRES POR DECADA ----
+
+
+      # query distint de nombres
+      # "SELECT DISTINCT name FROM `nombres`"
+      
       return [names, years, decades]
     end
 
