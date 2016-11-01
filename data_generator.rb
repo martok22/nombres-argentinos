@@ -57,6 +57,7 @@ module Datanames
                  end
 
         begin
+          CLIENT.query("DROP TABLE IF EXISTS `nombres`")
           CLIENT.query("INSERT INTO nombres (name, quantity, year, gender, percentage) VALUES ('#{name}', #{quantity}, #{year}, '#{gender}', #{percentage})")
         rescue Exception => e
           puts e          
