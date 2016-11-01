@@ -20,7 +20,7 @@ module Datanames
       File.join(File.dirname(__FILE__), *args)
     end
 
-    DATA_FILE = root_path('data/sample_2013_2014.csv')
+    DATA_FILE = root_path('data/nombres1922a2015conpp.csv')
     TOP_NAMES_PER_YEAR_SIZE = 10
 
     config = YAML.load(File.open(root_path("config.yml")))
@@ -39,32 +39,32 @@ module Datanames
       #   2: Year
       #   3: Gender
       #   4: Percentage
-      CSV.foreach(DATA_FILE, encoding:'utf-8') do |row|
-        # Print cada 100000
-        if $. % 100000 == 0
-          puts $.
-        end
+      # CSV.foreach(DATA_FILE, encoding:'utf-8') do |row|
+      #   # Print cada 100000
+      #   if $. % 100000 == 0
+      #     puts $.
+      #   end
         
-        name = format_name(row[0])
-        year = row[2].to_i
-        quantity = row[1].to_i
-        percentage = row[4].to_f
-        gender = case row[3]
-                 when 'F' then :f
-                 when 'M' then :m
-                 else raise "Invalid gender: #{row[1].inspect}"
-                 end
+      #   name = format_name(row[0])
+      #   year = row[2].to_i
+      #   quantity = row[1].to_i
+      #   percentage = row[4].to_f
+      #   gender = case row[3]
+      #            when 'F' then :f
+      #            when 'M' then :m
+      #            else raise "Invalid gender: #{row[1].inspect}"
+      #            end
 
-        begin
-          CLIENT.query("INSERT INTO nombres_sample (name, quantity, year, gender, percentage) VALUES ('#{name}', #{quantity}, #{year}, '#{gender}', #{percentage})")
-        rescue Exception => e
-          puts e          
-        end
-      end
+      #   begin
+      #     CLIENT.query("INSERT INTO nombres (name, quantity, year, gender, percentage) VALUES ('#{name}', #{quantity}, #{year}, '#{gender}', #{percentage})")
+      #   rescue Exception => e
+      #     puts e          
+      #   end
+      # end
 
-      # years = (1922..2015).to_a
+      years = (1922..2015).to_a
       
-      # # ---- START TOP DE NOMBRES POR ANIO ----
+      # ---- START TOP DE NOMBRES POR ANIO ----
       # genders = ['f', 'm']
       # years_folder = root_path('public', 'years')
 
@@ -90,13 +90,28 @@ module Datanames
       # ---- END TOP DE NOMBRES POR ANIO -----
 
       # ---- START TOP DE NOMBRES POR DECADA ----
-      
-
       # ---- END TOP DE NOMBRES POR DECADA ----
 
 
-      # query distint de nombres
-      # "SELECT DISTINCT name FROM `nombres`"
+      # ---- START NOMBRES INDIVIDUALES ----
+      begin
+        # Crear tablas de index
+        # CLIENT.query("DROP TABLE IF EXISTS `nombres_crudos`")
+        # CLIENT.query("CREATE TABLE `nombres_crudos` AS SELECT DISTINCT `name` FROM `nombres`")
+        # CLIENT.query("ALTER TABLE `nombres_crudos` ADD KEY `name` (`name`)")
+        # CLIENT.query("DROP TABLE IF EXISTS `anios`")
+        # CLIENT.query("CREATE TABLE `anios` AS SELECT DISTINCT `year` FROM `nombres`")
+        # CLIENT.query("ALTER TABLE `anios` ADD KEY `year` (`year`)")
+
+        # Crear tabla con cruce de nombres con años para contar los casos 0
+        CLIENT.query("DROP TABLE IF EXISTS `nombres_con_ceros`")
+        CLIENT.query("CREATE TABLE `nombres_con_ceros` AS SELECT `nombres_crudos`.`name`, `anios`.`year`, SUM(COALESCE(`nombres`.`quantity`,0)) AS `quantity` FROM `nombres_crudos` JOIN `anios` LEFT JOIN `nombres` ON (`nombres_crudos`.`name`=`nombres`.`name` AND `anios`.`year`=`nombres`.`year`) GROUP BY `nombres_crudos`.`name`, `anios`.`year`")
+
+      rescue Exception => e
+        puts e          
+      end
+      # ---- END NOMBRES INDIVIDUALES ----
+      
       
       return [names, years, decades]
     end

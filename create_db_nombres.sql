@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Oct 31, 2016 at 03:58 PM
--- Server version: 5.7.9
--- PHP Version: 5.5.36
+-- Generation Time: Nov 01, 2016 at 03:11 AM
+-- Server version: 5.7.16
+-- PHP Version: 5.5.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -28,6 +28,7 @@ USE `nombres`;
 -- Table structure for table `nombres`
 --
 
+DROP TABLE IF EXISTS `nombres`;
 CREATE TABLE `nombres` (
   `name` varchar(100) NOT NULL,
   `quantity` int(11) NOT NULL,
@@ -35,6 +36,17 @@ CREATE TABLE `nombres` (
   `gender` varchar(1) NOT NULL,
   `percentage` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `nombres`
+--
+ALTER TABLE `nombres`
+  ADD KEY `name` (`name`),
+  ADD KEY `year` (`year`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
