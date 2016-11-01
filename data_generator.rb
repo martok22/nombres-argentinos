@@ -4,15 +4,6 @@ require 'json'
 require 'yaml'
 require 'mysql2'
 
-class Numeric
-  def roundup(nearest=10)
-    self % nearest == 0 ? self : self + nearest - (self % nearest)
-  end
-  def rounddown(nearest=10)
-    self % nearest == 0 ? self : self - (self % nearest)
-  end
-end 
-
 module Datanames
   module Data
 
@@ -57,6 +48,9 @@ module Datanames
                  end
 
         begin
+          # Vaciar tabla
+          CLIENT.query("TRUNCATE TABLE `nombres`")
+          # TODO: cambiar esto por LOAD DATA INFILE para que sea mil veces más eficiente
           CLIENT.query("INSERT INTO nombres (name, quantity, year, gender, percentage) VALUES ('#{name}', #{quantity}, #{year}, '#{gender}', #{percentage})")
         rescue Exception => e
           puts e          
@@ -64,9 +58,10 @@ module Datanames
       end
 
       years = (1922..2015).to_a
-      
-      # ---- START TOP DE NOMBRES POR ANIO ----
+      decades = (1920..2010).step(10).to_a
       genders = ['f', 'm']
+
+      # ---- START TOP DE NOMBRES POR ANIO ----
       years_folder = root_path('public', 'years')
 
       years.each do |y| 
@@ -89,16 +84,13 @@ module Datanames
       end
       # ---- END TOP DE NOMBRES POR ANIO -----
 
-      # ---- START TOP DE NOMBRES POR DECADA ----
-      # ---- END TOP DE NOMBRES POR DECADA ----
-
       # ---- START NOMBRES INDIVIDUALES ----
       names_folder = root_path('public', 'names')
       begin
-        # # Desactivar full group by
+        # Desactivar full group by
         CLIENT.query("SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))")
 
-        # # Colapsar records duplicados
+        # Colapsar records duplicados
         CLIENT.query("DROP TABLE IF EXISTS `nombres_nodup`")
         CLIENT.query("CREATE TABLE `nombres_nodup` AS 
           SELECT `name`, `year`, `gender`, SUM(`percentage`) as `percentage`, SUM(`quantity`) as `quantity`
@@ -107,7 +99,7 @@ module Datanames
         CLIENT.query("ALTER TABLE `nombres_nodup` ADD KEY `nombres_nodup_year` (`year`)")
         CLIENT.query("ALTER TABLE `nombres_nodup` ADD UNIQUE KEY `nombres_nodup_unique_name_year` (`name`, `year`)")
 
-        # # Crear table de top 100k de nombres
+        # Crear table de top 100k de nombres
         CLIENT.query("DROP TABLE IF EXISTS `nombres_top_100`")
         CLIENT.query("CREATE TABLE `nombres_top_100` AS 
           SELECT `name`, sum(`quantity`) as `sum_q`, `gender`
@@ -115,7 +107,7 @@ module Datanames
           ORDER BY `sum_q` DESC LIMIT 100000;")
         CLIENT.query("ALTER TABLE `nombres_top_100` ADD UNIQUE KEY `nombres_top_100_name` (`name`)")
 
-        # # Crear tablas de index de anios
+        # Crear tablas de index de anios
         CLIENT.query("DROP TABLE IF EXISTS `anios`")
         CLIENT.query("CREATE TABLE `anios` AS SELECT DISTINCT `year` FROM `nombres`")
         CLIENT.query("ALTER TABLE `anios` ADD UNIQUE KEY `anios_year` (`year`)")
@@ -166,6 +158,38 @@ module Datanames
       end
       # ---- END NOMBRES INDIVIDUALES ----
       
+      # ---- START TOP DE NOMBRES POR DECADA ----
+      begin
+        # Agregar columna de decada
+        CLIENT.query("ALTER TABLE `nombres_con_ceros` ADD COLUMN `decade` INT")
+        CLIENT.query("UPDATE TABLE `nombres_con_ceros` SET `decade` = (`year` DIV 10) * 10")
+
+        decades.each do |decade|
+          top_decade = Hash.new { |h, k| h[k] = { f: [], m: [] } }
+          genders.each do |g|
+            top_decade_gender = []
+            results_decade = CLIENT.query("SELECT `name`, sum(`quantity`) as `sum_decada`, `decade` 
+                                           FROM `nombres_con_ceros` 
+                                           WHERE `gender` = '#{g}' AND `decade` = #{decade} 
+                                           GROUP BY `name` 
+                                           ORDER BY `decade` ASC, `sum_decada` DESC 
+                                           LIMIT #{TOP_NAMES_PER_YEAR_SIZE}")
+            results_decade.each do |row|
+              top_decade_gender.push(row)
+            end
+
+            top_decade[g] = top_decade_gender
+          end
+
+          File.open(File.join(years_folder, "decada-#{decade}.json"), 'w') do |file|
+            file.write(JSON.generate(top_decade))
+          end
+        end
+      rescue Exception => e
+        puts e
+      end  
+      # ---- END TOP DE NOMBRES POR DECADA ----
+
     end
 
     #
