@@ -26,7 +26,10 @@ module Datanames
     config = YAML.load(File.open(root_path("config.yml")))
 
     CLIENT = Mysql2::Client.new(:host => config['mysql']['host'], :username => config['mysql']['user'], :password => config['mysql']['password'], :database => "nombres")
-    
+
+    #
+    #
+    #
     def self.extract_data
       names = Hash.new { |h, k| h[k] = [] }
       decades = Hash.new { |h, k| h[k] = { f: [], m: [] } }
@@ -88,7 +91,6 @@ module Datanames
 
       # ---- START TOP DE NOMBRES POR DECADA ----
       # ---- END TOP DE NOMBRES POR DECADA ----
-
 
       # ---- START NOMBRES INDIVIDUALES ----
       names_folder = root_path('public', 'names')
