@@ -22,9 +22,6 @@ module Datanames
     #
     #
     def self.extract_data
-      names = Hash.new { |h, k| h[k] = [] }
-      decades = Hash.new { |h, k| h[k] = { f: [], m: [] } }
-
       # CSV columns
       #   0: Name
       #   1: Quantity
