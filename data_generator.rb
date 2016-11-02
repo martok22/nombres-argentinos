@@ -1,15 +1,8 @@
 # encoding: utf-8
 require 'csv'
 require 'json'
-
-class Numeric
-  def roundup(nearest=10)
-    self % nearest == 0 ? self : self + nearest - (self % nearest)
-  end
-  def rounddown(nearest=10)
-    self % nearest == 0 ? self : self - (self % nearest)
-  end
-end 
+require 'yaml'
+require 'mysql2'
 
 module Datanames
   module Data
@@ -19,16 +12,16 @@ module Datanames
     end
 
     DATA_FILE = root_path('data/nombres1922a2015conpp.csv')
-    TOP_NAMES_PER_YEAR_SIZE = 10  
+    TOP_NAMES_PER_YEAR_SIZE = 10
+
+    config = YAML.load(File.open(root_path("config.yml")))
+
+    CLIENT = Mysql2::Client.new(:host => config['mysql']['host'], :username => config['mysql']['user'], :password => config['mysql']['password'], :database => "nombres")
 
     #
     #
     #
     def self.extract_data
-      names = Hash.new { |h, k| h[k] = [] }
-      years = Hash.new { |h, k| h[k] = { f: [], m: [] } }
-      decades = Hash.new { |h, k| h[k] = { f: [], m: [] } }
-
       # CSV columns
       #   0: Name
       #   1: Quantity
@@ -40,6 +33,7 @@ module Datanames
         if $. % 100000 == 0
           puts $.
         end
+        
         name = format_name(row[0])
         year = row[2].to_i
         quantity = row[1].to_i
@@ -50,77 +44,149 @@ module Datanames
                  else raise "Invalid gender: #{row[1].inspect}"
                  end
 
-        current_name_data = names[name].find { |nd| nd[:year] == year }
+        begin
+          # Vaciar tabla
+          CLIENT.query("TRUNCATE TABLE `nombres`")
+          # TODO: cambiar esto por LOAD DATA INFILE para que sea mil veces más eficiente
+          CLIENT.query("INSERT INTO nombres (name, quantity, year, gender, percentage) VALUES ('#{name}', #{quantity}, #{year}, '#{gender}', #{percentage})")
+        rescue Exception => e
+          puts e          
+        end
+      end
 
-        if !current_name_data
-          names[name] << { quantity: quantity, year: year, percentage: percentage, gender: gender }
+      years = (1922..2015).to_a
+      decades = (1920..2010).step(10).to_a
+      genders = ['f', 'm']
+
+      # ---- START TOP DE NOMBRES POR ANIO ----
+      years_folder = root_path('public', 'years')
+
+      years.each do |y| 
+        top_year = Hash.new { |h, k| h[k] = { f: [], m: [] } }
+        
+        genders.each do |g| 
+          top_gender = []
+          
+          results_year = CLIENT.query("SELECT `name`, `quantity` FROM `nombres` WHERE year=#{y} AND gender='#{g}' ORDER BY quantity DESC LIMIT #{TOP_NAMES_PER_YEAR_SIZE}")
+          results_year.each do |row|
+            top_gender.push(row)
+          end
+
+          top_year[g] = top_gender
         end
 
-        current_decade = year.rounddown
-
-        # Calculo de decadas
-        decades_data = decades[current_decade][gender]
-
-        name_index = decades_data.find_index { |item| item[:name] == name }
-        if name_index
-          decade_quantity = decades_data[name_index][:quantity] + quantity
-          decades_data[name_index][:quantity] = decade_quantity
-        else
-          decades_data << { name: name, quantity: quantity }
+        File.open(File.join(years_folder, "#{y}.json"), 'w') do |file|
+          file.write(JSON.generate(top_year))
         end
-        decades_data.sort_by! { |name| name[:quantity] }
+      end
+      # ---- END TOP DE NOMBRES POR ANIO -----
+
+      # ---- START NOMBRES INDIVIDUALES ----
+      names_folder = root_path('public', 'names')
+      begin
+        # Desactivar full group by
+        CLIENT.query("SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))")
+
+        # Colapsar records duplicados
+        CLIENT.query("DROP TABLE IF EXISTS `nombres_nodup`")
+        CLIENT.query("CREATE TABLE `nombres_nodup` AS 
+          SELECT `name`, `year`, `gender`, SUM(`percentage`) as `percentage`, SUM(`quantity`) as `quantity`
+          FROM `nombres` GROUP BY `name`, `year`")
+        CLIENT.query("ALTER TABLE `nombres_nodup` ADD KEY `nombres_nodup_name` (`name`)")
+        CLIENT.query("ALTER TABLE `nombres_nodup` ADD KEY `nombres_nodup_year` (`year`)")
+        CLIENT.query("ALTER TABLE `nombres_nodup` ADD UNIQUE KEY `nombres_nodup_unique_name_year` (`name`, `year`)")
+
+        # Crear table de top 100k de nombres
+        CLIENT.query("DROP TABLE IF EXISTS `nombres_top_100`")
+        CLIENT.query("CREATE TABLE `nombres_top_100` AS 
+          SELECT `name`, sum(`quantity`) as `sum_q`, `gender`
+          FROM `nombres_nodup` GROUP BY `name` 
+          ORDER BY `sum_q` DESC LIMIT 100000;")
+        CLIENT.query("ALTER TABLE `nombres_top_100` ADD UNIQUE KEY `nombres_top_100_name` (`name`)")
+
+        # Crear tablas de index de anios
+        CLIENT.query("DROP TABLE IF EXISTS `anios`")
+        CLIENT.query("CREATE TABLE `anios` AS SELECT DISTINCT `year` FROM `nombres`")
+        CLIENT.query("ALTER TABLE `anios` ADD UNIQUE KEY `anios_year` (`year`)")
+
+        # # Crear tabla con cruce de nombres con años para contar los casos 0
+        CLIENT.query("DROP TABLE IF EXISTS `nombres_con_ceros`")
+        CLIENT.query(
+          "CREATE TABLE `nombres_con_ceros` AS 
+          SELECT `nombres_top_100`.`name` as `name`, 
+                 `nombres_top_100`.`gender` as `gender`,
+                 `anios`.`year` as `year`,
+                 SUM(COALESCE(`nombres_nodup`.`quantity`,0)) AS `quantity`, 
+                 SUM(COALESCE(`nombres_nodup`.`percentage`,0)) as `percentage` 
+          FROM `nombres_top_100` 
+          JOIN `anios` 
+          LEFT JOIN `nombres_nodup` 
+          ON (`nombres_top_100`.`name`=`nombres_nodup`.`name` AND `anios`.`year`=`nombres_nodup`.`year`) 
+          GROUP BY `nombres_top_100`.`name`, `anios`.`year`")
+        
+        results_distint_name = CLIENT.query("SELECT * FROM `nombres_con_ceros` ORDER BY `name` ASC, `year` ASC")
+        last_name = ''
+        nombre_lista = []
+
+        results_distint_name.each do |row_name, index|
+          curr_name = row_name['name']
+          
+          if curr_name == last_name or index == 0
+            nombre_lista.push(row_name)
+          elsif curr_name != last_name and index != 0
+            File.open(File.join(names_folder, "#{last_name}.json"),'w') do |file|
+              file.write(JSON.generate(nombre_lista))
+            end
+            nombre_lista = []
+            nombre_lista.push(row_name)
+          end
+
+          if index == results_distint_name.size - 1
+            File.open(File.join(names_folder, "#{curr_name}.json"), 'w') do |file|
+              file.write(JSON.generate(nombre_lista))
+            end
+          end
+
+          last_name = curr_name
+        end
+
+      rescue Exception => e
+        puts e          
+      end
+      # ---- END NOMBRES INDIVIDUALES ----
       
-        # Calculo de años
-        year_data = years[year][gender]
+      # ---- START TOP DE NOMBRES POR DECADA ----
+      begin
+        # Agregar columna de decada
+        CLIENT.query("ALTER TABLE `nombres_con_ceros` ADD COLUMN `decade` INT")
+        CLIENT.query("UPDATE TABLE `nombres_con_ceros` SET `decade` = (`year` DIV 10) * 10")
 
-        if year_data.size < TOP_NAMES_PER_YEAR_SIZE
-          year_data << { name: name, quantity: quantity }
-        else
-          lowest_name = year_data.shift
-          if lowest_name[:quantity] < quantity
-            year_data.push({ name: name, quantity: quantity })
-          else
-            year_data.push(lowest_name)
+        decades.each do |decade|
+          top_decade = Hash.new { |h, k| h[k] = { f: [], m: [] } }
+          genders.each do |g|
+            top_decade_gender = []
+            results_decade = CLIENT.query("SELECT `name`, sum(`quantity`) as `sum_decada`, `decade` 
+                                           FROM `nombres_con_ceros` 
+                                           WHERE `gender` = '#{g}' AND `decade` = #{decade} 
+                                           GROUP BY `name` 
+                                           ORDER BY `decade` ASC, `sum_decada` DESC 
+                                           LIMIT #{TOP_NAMES_PER_YEAR_SIZE}")
+            results_decade.each do |row|
+              top_decade_gender.push(row)
+            end
+
+            top_decade[g] = top_decade_gender
+          end
+
+          File.open(File.join(years_folder, "decada-#{decade}.json"), 'w') do |file|
+            file.write(JSON.generate(top_decade))
           end
         end
-        year_data.sort_by! { |name| name[:quantity] }
-      end
+      rescue Exception => e
+        puts e
+      end  
+      # ---- END TOP DE NOMBRES POR DECADA ----
 
-      # Seleccionar solo el top 
-      decades.each do |decade, genders|
-        genders.each do |gender, array|
-          decades[decade][gender] = array.last(TOP_NAMES_PER_YEAR_SIZE)
-        end
-      end
-
-      return [names, years, decades]
-    end
-
-    #
-    #
-    #
-    def self.export_data
-      names, years, decades = extract_data
-
-      names_folder = root_path('public', 'names')
-      names.each do |name, name_data|
-        File.open(File.join(names_folder, "#{name}.json"), 'w') do |file|
-          file.write(JSON.generate(name_data))
-        end
-      end
-
-      years_folder = root_path('public', 'years')
-      years.each do |year, year_data|
-        File.open(File.join(years_folder, "#{year}.json"), 'w') do |file|
-          file.write(JSON.generate(year_data))
-        end
-      end
-
-      decades.each do |decade, decade_data|
-        File.open(File.join(years_folder, "decada-#{decade}.json"), 'w') do |file|
-          file.write(JSON.generate(decade_data))
-        end
-      end
     end
 
     #
@@ -148,4 +214,4 @@ module Datanames
   end
 end
 
-Datanames::Data::export_data()
+Datanames::Data::extract_data()
