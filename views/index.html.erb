@@ -18,7 +18,7 @@
 </section>
 <section id="section3" class="section">
     <section class="containerCont">
-      <div class="row altoTotal vcenter">
+      <div id="section3Padd" class="row altoTotal vcenter">
         <div class="col-xs-10 col-sm-10 col-md-10 col-lg-8 text-center">
           <h2 class="headerTitle">¿Te imaginabas esto?</h2>
         </div>
@@ -42,12 +42,12 @@
       <section class="seccionFormularioBubble">
         <form class="formularioBubble" action="index.html" method="post">
           <div id="buscaPor">
-            <label>Buscá por</label>
+            <aside>Buscá por</aside>
             <div class="vcenterRow">
               <input id="anio" type="radio" name="bubble" value="anio" checked>
-              <span class="infoButton">año</span>
-              <input type="radio" name="bubble" value="decada">
-              <span class="infoButton">decada</span>
+              <label for="anio" class="infoButton">año</label>
+              <input id="decada" type="radio" name="bubble" value="decada">
+              <label for="decada" class="infoButton">década</label>
               <select class="selectBubble" name=""></select>
             </div>
           </div>

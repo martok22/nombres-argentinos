@@ -111,6 +111,9 @@ hr {
 }
 #section5 .containerCont {
   height: 30%;
+  background-color: white;
+  justify-content: center;
+  padding: 20px 0px;
 }
 
 /* Encabezados */
@@ -144,7 +147,7 @@ hr {
 #section5 p {
   font-size: 1rem;
   font-weight: 300;
-  color: #5D5D5D;
+  color: #868686;
   margin: 0px;
 }
 
@@ -163,9 +166,10 @@ hr {
   border: 1px solid #5D5D5D;
   border-radius: 10px;
   background-color: transparent;
+  color: white;
   outline: none;
   text-align: center;
-  color: #5D5D5D;
+  color: white;
   margin-bottom: 2rem;
   font-size: 1.3rem;
   padding: 0.25rem 0px;
@@ -187,14 +191,15 @@ hr {
   font-size: 1.3rem;
 }
 #section5 button {
-  background-color: #5D5D5D;
+  background-color: #CCCCCC;
   border: 0px;
   border-radius: 10px;
   padding: 0.5rem 1rem;
   font-weight: 400;
   text-transform: none;
   font-size: 1.3rem;
-  margin: 50px auto;
+  color: #5D5D5D;
+  margin: 0px;
 }
 #section2,
 #section4 {
@@ -204,7 +209,9 @@ hr {
   background-color: #E6E7E8;
 }
 #section4 .contenedorCaritas {
-    margin: 0px auto;
+  margin: 0px auto;
+  top: 20px;
+  position: relative;
 }
 #section3 p b {
   color: white;
@@ -213,6 +220,10 @@ hr {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-around;
+}
+#section3Padd {
+  padding-top: 60px;
 }
 
 /* Tooltip generales*/
@@ -258,6 +269,7 @@ hr {
   fill: none;
   stroke-width: 0.3rem;
   stroke-linecap: round;
+  stroke-linejoin: round;
  }
  line.f0,
  line.f1,
@@ -364,6 +376,43 @@ hr {
 input[type="radio"], input[type="checkbox"] {
   margin: 0px 5px 0px 5px;
 }
+#section4 input[type="radio"] {
+  display: none;
+}
+.infoButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+#section4 label {
+  cursor: pointer;
+  position: relative;
+  padding-left: 20px;
+}
+#section4 label:before {
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+  background-color: transparent;
+  border: 1px solid #5D5D5D;
+  border-radius: 100%;
+}
+#section4 input[type=radio]:checked + label:before {
+  content: "\2022";
+  color: #5D5D5D;
+  font-size: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+}
+
+#section4 {
+
+}
 #extra-year-data {
   display: flex;
   padding: 50px 20px 0px 20px;
@@ -392,6 +441,27 @@ input[type="radio"], input[type="checkbox"] {
 .formularioBubble > div > div {
   margin-left: 10px;
 }
+.redesSociales {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 25%;
+  min-width: 200px;
+  margin-top: 10px;
+}
+.redesSociales a,
+.redesSociales a:hover {
+  color: #868686;
+  font-size: 2rem;
+}
+.redesSociales a:hover {
+  color: rgba(0, 0, 0, 0.25);
+}
+#section5 h3 {
+  font-size: 1rem;
+  font-weight: 300;
+  color: #868686;
+}
 #contenidoSitio {
   display: none;
 }
@@ -407,6 +477,9 @@ input[type="radio"], input[type="checkbox"] {
   justify-content: center;
   align-items: center;
   flex-flow: wrap;
+}
+#buscaPor label {
+  margin: 0px;
 }
 
 /* Errores */
@@ -463,14 +536,14 @@ input[type="radio"], input[type="checkbox"] {
   #section4 .containerCont {
     height: 75%;
   }
-  #section5 .containerCont {
-    height: 20%;
-  }
   #section4 .sectionHeader {
     height: 25%;
   }
   #section2 .containerCont {
     padding: 20px 40px;
+  }
+  #section5 .sectionHeader {
+    height: 70%;
   }
 }
 @media(min-width:600px) and (min-height:900px) {
