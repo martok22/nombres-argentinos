@@ -165,11 +165,11 @@ module Datanames
           top_decade = Hash.new { |h, k| h[k] = { f: [], m: [] } }
           genders.each do |g|
             top_decade_gender = []
-            results_decade = CLIENT.query("SELECT `name`, sum(`quantity`) as `sum_decada`, `decade` 
+            results_decade = CLIENT.query("SELECT `name`, sum(`quantity`) as `quantity`, `decade` 
                                            FROM `nombres_con_ceros` 
                                            WHERE `gender` = '#{g}' AND `decade` = #{decade} 
                                            GROUP BY `name` 
-                                           ORDER BY `decade` ASC, `sum_decada` DESC 
+                                           ORDER BY `decade` ASC, `quantity` DESC 
                                            LIMIT #{TOP_NAMES_PER_YEAR_SIZE}")
             results_decade.each do |row|
               top_decade_gender.push(row)
