@@ -46,6 +46,7 @@ jQuery(function ($) {
 
       (function (newName) {
         $('#errorName').attr('class', 'hide').empty(); // Borramos errores año
+
         this._fetchNameData(newName).done(function (nameDataResponse) {
 
           if (!window.GENDER) {
@@ -67,11 +68,19 @@ jQuery(function ($) {
               window.location.hash = "#seccion2";
           }
 
-        }).fail(function () {
+        }).fail(function (nameDataResponse) {
           $('#name').css( 'margin-bottom', '0.5rem' );
           $('#errorName').attr('class', '').css( 'margin-bottom', '0.5rem' ).append('<div class="glyphicon glyphicon-exclamation-sign" style="margin-right:5px;"></div>');
           $('#errorName').append('¡Ups! No tenemos resultados. Revisá que el nombre esté bien escrito o probá con otro.');
+          $.fn.fullpage.destroy('all');
+          $('#section1').css({ margin: '0px', height: '100vh'});
+          $('#section1 > section').css({ margin: '0px'});
+          $('#section2').hide();
+          $('#section3').hide();
+          $('#section4').hide();
+          $('#section5').hide();
         });
+
       }.bind(this)(name));
     }
 
@@ -175,7 +184,7 @@ jQuery(function ($) {
       totalQuantity += nameData[i].quantity;
     }
 
-    return "Entre los años 1922 y 2015, nacieron <b>" + totalQuantity + " " + capitalizeFirstLetter(name) + "</b>.";
+    return "Entre los años 1922 y 2015, nacieron <b>" + new Intl.NumberFormat("de-DE").format(totalQuantity) + " " + capitalizeFirstLetter(name) + "</b>.";
   };
 
   statisticsCalculator.minMaxYear = function (name, nameData) {
@@ -219,7 +228,7 @@ jQuery(function ($) {
     if(numNamesCurrYear == 1){
       return "El año en el que naciste, sólo <b>" + numNamesCurrYear + "</b> persona se llamó igual que vos. ¡Uauu!";
     } else {
-      return "El año en el que naciste, otras <b>" + numNamesCurrYear + "</b> personas se llamaron igual que vos. ¡Uauu!";
+      return "El año en el que naciste, otras <b>" + new Intl.NumberFormat("de-DE").format(numNamesCurrYear) + "</b> personas se llamaron igual que vos. ¡Uauu!";
     }
   }
 

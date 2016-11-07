@@ -48,6 +48,7 @@ jQuery(function ($) {
     , chartYear
     , chartData
     , anchoUltimo = $(window).width()
+    , countNames = 0
     , App = {
 
       initialize: function () {
@@ -66,7 +67,7 @@ jQuery(function ($) {
             , url
             , i
             , errores = false
-            , regexName = /^[a-zA-Z ,]+$/;
+            , regexName = /^[a-zA-Z ,áéíóú]+$/;
 
           event.preventDefault();
 
@@ -78,6 +79,9 @@ jQuery(function ($) {
           } else if (!regexName.test(mainName)) { // Validacion Nombre - Formato Incorrecto
             errores = true;
             App._displayError('nombre_incorrecto');
+          } else if (names.length > 2) {
+            errores = true;
+            App._displayError('muchos_nombres');
           }
 
           $('#errorYear').attr('class', 'hide').empty(); // Borramos errores año
@@ -318,9 +322,9 @@ jQuery(function ($) {
         $("#main-chart").empty();
 
         if ($('#section2 .containerCont').width() > 500) {
-          var margin = {top: 10, right: 190, bottom: 50, left: 190};
+          var margin = {top: 30, right: 190, bottom: 50, left: 190};
         } else {
-          var margin = {top: 10, right: 25, bottom: 50, left: 75};
+          var margin = {top: 30, right: 25, bottom: 50, left: 75};
         }
 
 
@@ -410,7 +414,7 @@ jQuery(function ($) {
         var numFem = 0;
         var numMas = 0;
 
-        for (var i = 0, namesLength = names.length; i < namesLength; i += 1) {
+        for (var i = 0; i < names.length; i++) {
           name = names[i];
           data = namesData[name];
 
@@ -423,20 +427,23 @@ jQuery(function ($) {
 
             if (d.gender == "f") {
               if (numFem == 0) {
-                d.class = d.class+0;
+                d.class = d.class + 0;
+              } else if (numFem == data.length) {
+                d.class = d.class + 1;
               } else {
-                d.class = d.class+1;
+                d.class = d.class + 2;
               }
               numFem++;
             } else {
               if (numMas == 0) {
-                d.class = d.class+0;
+                d.class = d.class + 0;
+              } else if (numMas == data.length) {
+                d.class = d.class + 1;
               } else {
-                d.class = d.class+1;
+                d.class = d.class + 2;
               }
-              numMas++;
+              numMas = numMas + 1;
             }
-
             flatData.push({class: d.class, quantity: d.quantity, name: d.name, year: d.year, value: d.percentage});
           });
 
@@ -466,13 +473,13 @@ jQuery(function ($) {
             .text(formatName(names[i]));
         }
 
-        if (bebeCheck === true) {
+        if (bebeCheck != false) {
           var yearBaby, valueBaby;
 
           var bebe = svg.append("svg:image")
           .datum(flatData)
           .attr("xlink:href", function(d){
-            if (window.GENDER == "f") {
+            if (d[0].class.charAt(0) == "f") {
               return  "/images/icono-nacimiento-mujer.png";
             } else {
               return "/images/icono-nacimiento-varon.png";
@@ -505,6 +512,13 @@ jQuery(function ($) {
           var voronoiGroup = svg.append("g")
             .attr("class", "voronoi");
 
+          Number.prototype.format = function(n, x, s, c) {
+            var re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\D' : '$') + ')',
+            num = this.toFixed(Math.max(0, ~~n));
+
+            return (c ? num.replace('.', c) : num).replace(new RegExp(re, 'g'), '$&' + (s || ','));
+          };
+
           voronoiGroup.selectAll("path")
               .data(voronoi(flatData))
               .enter()
@@ -516,7 +530,7 @@ jQuery(function ($) {
                 if (d) {
                   var contenido = "<b>" + formatName(d.name) + "</b><br />";
                   contenido += "Cantidad: " + d.quantity + "<br />";
-                  contenido += (d.value * 10).toFixed(4) + " por cada mil registros<br />";
+                  contenido += (d.value * 10).format(4, 3, '', ',') + " por cada mil registros<br />";
                   contenido += "Año: " + d.year;
 
                   new Opentip(this, contenido, { style: "bubbleStyle", tipJoint: "bottom", borderRadius: 20 });
@@ -556,6 +570,11 @@ jQuery(function ($) {
           $('#name').css( 'margin-bottom', '0.5rem' );
           $('#errorName').attr('class', '').css( 'margin-bottom', '0.5rem' ).append('<div class="glyphicon glyphicon-exclamation-sign" style="margin-right:5px;"></div>');
           $('#errorName').append('¡Ups! Revisá que el nombre esté bien escrito.');
+        }
+        if (error == 'muchos_nombres') {
+          $('#name').css( 'margin-bottom', '0.5rem' );
+          $('#errorName').attr('class', '').css( 'margin-bottom', '0.5rem' ).append('<div class="glyphicon glyphicon-exclamation-sign" style="margin-right:5px;"></div>');
+          $('#errorName').append('¡Ups! Podes ingresar hasta 3 nombres.');
         }
         if (error == 'anio_fueraDeRango') {
           $('#year').css( 'margin-bottom', '0.5rem' );
@@ -688,6 +707,7 @@ jQuery(function ($) {
 
     // Resize Line Chart
     $( window ).resize(function() {
+      bebeCheck = true;
       App.processNamesData(chartName, chartYear, chartData);
 
       var anchoActual = $(window).width();
