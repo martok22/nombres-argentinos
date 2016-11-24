@@ -14,6 +14,9 @@ b {
 hr {
   margin: 5px;
 }
+input:focus, button:focus, select:focus {
+  outline: none;
+}
 
 /* Barra Superior */
 #firstheader {
@@ -423,10 +426,10 @@ input[type="radio"], input[type="checkbox"] {
 .contenedorCaritas {
   display: none;
 }
-.malef:nth-child(10) {
+.malef:first-child {
   fill: rgba(66, 190, 92, 0.5) !important;
 }
-.femalef:nth-child(10) {
+.femalef:first-child {
   fill: rgba(242, 113, 47, 0.5) !important;
 }
 #containerSlide {

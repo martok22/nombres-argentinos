@@ -2,4 +2,4 @@ source 'http://rubygems.org'
 
 gem 'sinatra'
 gem 'shotgun'
-gem 'mysql2'
+#gem 'mysql2'

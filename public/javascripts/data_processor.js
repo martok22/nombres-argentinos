@@ -225,7 +225,9 @@ jQuery(function ($) {
     var indexCurrYear = currYear - MIN_YEAR;
     var numNamesCurrYear = nameData[indexCurrYear].quantity;
 
-    if(numNamesCurrYear == 1){
+    if (numNamesCurrYear == 0) {
+      return "No hay registro de personas llamadas así en ese año";
+    } else if(numNamesCurrYear == 1){
       return "El año en el que naciste, sólo <b>" + numNamesCurrYear + "</b> persona se llamó igual que vos. ¡Uauu!";
     } else {
       return "El año en el que naciste, otras <b>" + new Intl.NumberFormat("de-DE").format(numNamesCurrYear) + "</b> personas se llamaron igual que vos. ¡Uauu!";
