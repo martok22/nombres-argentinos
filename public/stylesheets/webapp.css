@@ -203,6 +203,7 @@ input:focus, button:focus, select:focus {
   font-size: 1.3rem;
   color: #5D5D5D;
   margin: 0px;
+  margin-top: 10px;
 }
 #section2,
 #section4 {
@@ -316,7 +317,7 @@ input:focus, button:focus, select:focus {
    stroke-width: 4;
  }
  #infoNombres {
-   position: absolute;
+   /*position: absolute;*/
    top: -20%;
    display: flex;
    align-items: center;
@@ -426,10 +427,10 @@ input[type="radio"], input[type="checkbox"] {
 .contenedorCaritas {
   display: none;
 }
-.malef:first-child {
+.bubblemale #tooltipBubble10 {
   fill: rgba(66, 190, 92, 0.5) !important;
 }
-.femalef:first-child {
+.bubblefemale #tooltipBubble10 {
   fill: rgba(242, 113, 47, 0.5) !important;
 }
 #containerSlide {

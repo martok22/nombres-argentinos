@@ -79,7 +79,7 @@ jQuery(function ($) {
           } else if (!regexName.test(mainName)) { // Validacion Nombre - Formato Incorrecto
             errores = true;
             App._displayError('nombre_incorrecto');
-          } else if (names.length > 2) {
+          } else if (names.length > 2 || names.length < 120) {
             errores = true;
             App._displayError('muchos_nombres');
           }
