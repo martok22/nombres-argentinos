@@ -13,8 +13,7 @@ Proyecto de visualización de estadísticas sobre nombres de nacimientos argenti
 
 ## Instalación
 
-Generación de data
----------------------
+#### Generación de data
 
 1. Cambiar el path del archivo csv con la data de nombres por el correpondiente en `data_generator.rb`.
 2. Correr `data_generator.rb`:
@@ -22,8 +21,7 @@ Generación de data
 ruby data_generator.rb
 ```
 
-Iniciar el servidor 
----------------------
+#### Iniciar el servidor 
 
 Iniciar el servidor en modo dev en el puerto 9393:
 
