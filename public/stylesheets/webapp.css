@@ -18,6 +18,49 @@ input:focus, button:focus, select:focus {
   outline: none;
 }
 
+.errorBody {
+  background-color: #F8F8F8;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  margin: 0px;
+  padding: 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.errorText {
+  color: #777777;
+  font-family: 'Roboto';
+  font-size: 1.5rem;
+  text-align: center;
+}
+.errorButton {
+  background: transparent;
+  border: 1px solid #777777;
+  border-radius: 10px;
+  padding: 10px 60px;
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+.errorTitle {
+  font-size: 6rem;
+}
+.errorButton a {
+  text-decoration: none;
+  color: #777777;
+}
+.errorButton:hover,
+.errorButton:active {
+  background-color: #777777;
+  color: white;
+}
+.errorButton:hover a,
+.errorButton:active a {
+  color: white;
+}
+
 /* Barra Superior */
 #firstheader {
   position: absolute;

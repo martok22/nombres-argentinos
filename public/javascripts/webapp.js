@@ -75,12 +75,15 @@ jQuery(function ($) {
 
           if (mainName === "") { // Validacion Nombre - Nombre vacio
             errores = true;
+            console.log('nombre vacio');
             App._displayError('nombre_vacio');
-          } else if (!regexName.test(mainName)) { // Validacion Nombre - Formato Incorrecto
+          } else if (!regexName.test(mainName) || $("#name").val().length > 120 || $("#name").val().length < 2) { // Validacion Nombre - Formato Incorrecto
             errores = true;
+            console.log('mal escrito');
             App._displayError('nombre_incorrecto');
-          } else if (names.length > 2 || names.length < 120) {
+          } else if (names.length > 2) {
             errores = true;
+            console.log('muchos nombres');
             App._displayError('muchos_nombres');
           }
 
