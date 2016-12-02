@@ -10,6 +10,23 @@
         <meta name="keywords" content="data,nombres,argentina,nombres de bebes,nombres para bebes,lista de nombres"/>
         <meta http-equiv="Content-Language" content="es"/>
         <meta name="viewport" content="width=device-width, user-scalable=no">
+        <!-- FaceBook -->
+        <meta property="og:url" content="http://datos.gob.ar">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Tu nombre en los últimos 100 años">
+        <meta property="og:site_name" content="Nombres en Argentina">
+        <meta property="og:description" content="¡Descubrí qué tan popular fue tu nombre en el último siglo en Argentina! ">
+        <meta property="og:image" content="http://datos.gob.ar/img/fb_card.png">
+        <meta property="og:image:type" content="image/png">
+        <meta property="og:image:width" content="2400">
+        <meta property="og:image:height" content="1260">
+        <meta property="og:locale" content="es_AR">
+        <!-- Twitter -->
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:site" content="@datosgobar"/>
+        <meta name="twitter:title" content="Tu nombre en los últimos 100 años">
+        <meta name="twitter:description" content="¡Descubrí qué tan popular fue tu nombre en el último siglo en Argentina!">
+        <meta name="twitter:image:src" content="http://datos.gob.ar/img/twitter_card.png">
 
         <link href="<%= asset_path('images/favicon.png') %>" rel="shortcut icon" type="image/png"/>
 
@@ -38,6 +55,9 @@
         <script src="<%= javascript_path('fullPage/scrolloverflow.min.js') %>"></script>
         <script src="<%= javascript_path('fullPage/jquery.fullPage.js') %>"></script>
         <script src="<%= javascript_path('fullPage/app.js') %>"></script>
+        <!-- easyDropDown -->
+        <link href="<%= stylesheet_path('easydropdown.css') %>" rel="stylesheet" type="text/css"/>
+        <script src="<%= javascript_path('jquery.easydropdown.js') %>"></script>
     </head>
 
     <body>
@@ -117,8 +137,8 @@
                     <div class="col-xs-8 col-sm-8 col-md-8 col-lg-10 text-center">
                       <aside class="headerSubTitle">Te contamos lo que aprendimos sobre los nombres en Argentina.</aside>
                     </div>
+                    <button type="submit" class="btn btn-default">Ver curiosidades</button>
                   </div>
-                  <button type="submit" class="btn btn-default">Ver curiosidades</button>
                   <div class="col-xs-10 col-sm-10 col-md-10 col-md-lg-8 text-center">
                     <p>Estas visualizaciones son posibles gracias a los datos de la Dirección Nacional de las Personas del Ministerio del Interior.</p>
                     <p>Nuestro equipo de desarrollo pertenece a la Dirección de Servicios Analíticos del Ministerio de Modernización.</p>
@@ -131,11 +151,11 @@
                   <h3>SUMATE A LA COMUNIDAD DE DATOS ARGENTINA</h3>
                 </div>
                 <div class="redesSociales">
-                  <a href=""><i class="fa fa-link" aria-hidden="true"></i></a>
-                  <a href=""><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                  <a href=""><i class="fa fa-medium" aria-hidden="true"></i></a>
-                  <a href=""><i class="fa fa-github" aria-hidden="true"></i></i></a>
-                  <a href=""><i class="fa fa-facebook-official" aria-hidden="true"></i></a>
+                  <a href="http://www.datos.gob.ar/"><i class="fa fa-link" aria-hidden="true"></i></a>
+                  <a href="https://twitter.com/datosgobar"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                  <a href="https://medium.com/datos-argentina"><i class="fa fa-medium" aria-hidden="true"></i></a>
+                  <a href="https://github.com/datosgobar/"><i class="fa fa-github" aria-hidden="true"></i></i></a>
+                  <a href="https://www.facebook.com/GobAbiertoAR/"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>
                 </div>
               </section>
             </footer>

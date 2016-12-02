@@ -7,10 +7,10 @@ Opentip.styles.formStyle = {
   shadow: false
 };
 
-var opentipTop1 = new Opentip("#name", "<span class='colorWhite'>Escribí tu nombre. ¡Pssst! Si querés compararlo con otro, separalos con una coma. Por ejemplo: Juan, Pablo.</span>", { style: "formStyle", showOn: "focusin", hideOn: "blur", tipJoint: "top" });
-var opentipTop2 = new Opentip("#year", "<span class='colorWhite'>Escribí en qué año naciste.</span>", { style: "formStyle", showOn: "focusin", hideOn: "blur", tipJoint: "top" });
-var opentipRight1 = new Opentip("#name", "<span class='colorWhite'>Escribí tu nombre. ¡Pssst! Si querés compararlo con otro, separalos con una coma. Por ejemplo: Juan, Pablo</span>.", { style: "formStyle", showOn: "null", hideOn: "blur", tipJoint: "right" });
-var opentipRight2 = new Opentip("#year", "<span class='colorWhite'>Escribí en qué año naciste</span>.", { style: "formStyle", showOn: "null", hideOn: "blur", tipJoint: "right" });
+var opentipTop1 = new Opentip("#name", "<span class='colorWhite'>Escribí tu nombre. ¡Pssst! Si querés compararlo con otro, separalos con una coma. Por ejemplo: Emilia, Benjamín.</span>", { style: "formStyle", showOn: "focusin", hideOn: "blur", tipJoint: "top" , borderRadius: 0});
+var opentipTop2 = new Opentip("#year", "<span class='colorWhite'>Escribí en qué año naciste.</span>", { style: "formStyle", showOn: "focusin", hideOn: "blur", tipJoint: "top" , borderRadius: 0});
+var opentipRight1 = new Opentip("#name", "<span class='colorWhite'>Escribí tu nombre. ¡Pssst! Si querés compararlo con otro, separalos con una coma. Por ejemplo: Emilia, Benjamín</span>.", { style: "formStyle", showOn: "null", hideOn: "blur", tipJoint: "right" , borderRadius: 0});
+var opentipRight2 = new Opentip("#year", "<span class='colorWhite'>Escribí en qué año naciste</span>.", { style: "formStyle", showOn: "null", hideOn: "blur", tipJoint: "right" , borderRadius: 0});
 var inputName = window.document.querySelector('#name');
 var inputYear = window.document.querySelector('#year');
 
@@ -39,7 +39,7 @@ Opentip.styles.bubbleStyle = {
   background: "white",
   borderColor: "silver",
   shadow: false,
-  showEffectDuration: 0 
+  showEffectDuration: 0
 };
 
 window.addEventListener("hashchange", function(){
