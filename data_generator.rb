@@ -101,7 +101,7 @@ module Datanames
         CLIENT.query("CREATE TABLE `nombres_top_100` AS 
           SELECT `name`, sum(`quantity`) as `sum_q`, `gender`
           FROM `nombres_nodup` GROUP BY `name` 
-          ORDER BY `sum_q` DESC LIMIT 100000;")
+          ORDER BY `sum_q` DESC;")
         CLIENT.query("ALTER TABLE `nombres_top_100` ADD UNIQUE KEY `nombres_top_100_name` (`name`)")
 
         # Crear tablas de index de anios
