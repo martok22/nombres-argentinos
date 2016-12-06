@@ -14,6 +14,52 @@ b {
 hr {
   margin: 5px;
 }
+input:focus, button:focus, select:focus {
+  outline: none;
+}
+
+.errorBody {
+  background-color: #F8F8F8;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  margin: 0px;
+  padding: 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.errorText {
+  color: #777777;
+  font-family: 'Roboto';
+  font-size: 1.5rem;
+  text-align: center;
+}
+.errorButton {
+  background: transparent;
+  border: 1px solid #777777;
+  border-radius: 10px;
+  padding: 10px 60px;
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+.errorTitle {
+  font-size: 6rem;
+}
+.errorButton a {
+  text-decoration: none;
+  color: #777777;
+}
+.errorButton:hover,
+.errorButton:active {
+  background-color: #777777;
+  color: white;
+}
+.errorButton:hover a,
+.errorButton:active a {
+  color: white;
+}
 
 /* Barra Superior */
 #firstheader {
@@ -200,6 +246,7 @@ hr {
   font-size: 1.3rem;
   color: #5D5D5D;
   margin: 0px;
+  margin-top: 10px;
 }
 #section2,
 #section4 {
@@ -313,7 +360,7 @@ hr {
    stroke-width: 4;
  }
  #infoNombres {
-   position: absolute;
+   /*position: absolute;*/
    top: -20%;
    display: flex;
    align-items: center;
@@ -423,10 +470,10 @@ input[type="radio"], input[type="checkbox"] {
 .contenedorCaritas {
   display: none;
 }
-.malef:nth-child(10) {
+.bubblemale #tooltipBubble10 {
   fill: rgba(66, 190, 92, 0.5) !important;
 }
-.femalef:nth-child(10) {
+.bubblefemale #tooltipBubble10 {
   fill: rgba(242, 113, 47, 0.5) !important;
 }
 #containerSlide {

@@ -39,7 +39,7 @@ jQuery(function ($) {
 
   var MIN_YEAR = 1922
     , MAX_YEAR = 2015
-    , DEFAULT_NAME = 'maria' // nombre por defecto
+    , DEFAULT_NAME = ['Emilia', 'Benjamin'] // nombre por defecto
     , DEFAULT_YEAR = '2015' // año por defecto
     , yearSelected
     , nameSelected
@@ -75,12 +75,15 @@ jQuery(function ($) {
 
           if (mainName === "") { // Validacion Nombre - Nombre vacio
             errores = true;
+            console.log('nombre vacio');
             App._displayError('nombre_vacio');
-          } else if (!regexName.test(mainName)) { // Validacion Nombre - Formato Incorrecto
+          } else if (!regexName.test(mainName) || $("#name").val().length > 120 || $("#name").val().length < 2) { // Validacion Nombre - Formato Incorrecto
             errores = true;
+            console.log('mal escrito');
             App._displayError('nombre_incorrecto');
           } else if (names.length > 2) {
             errores = true;
+            console.log('muchos nombres');
             App._displayError('muchos_nombres');
           }
 
@@ -119,7 +122,7 @@ jQuery(function ($) {
 
         // Si el nombre esta vacio, toma por defecto el nombre predeterminado
         if ($("#name").val() === '') {
-          names = [DEFAULT_NAME];
+          names = DEFAULT_NAME;
         } else {
           names = $("#name").val().split(',')
         }
@@ -530,7 +533,7 @@ jQuery(function ($) {
                 if (d) {
                   var contenido = "<b>" + formatName(d.name) + "</b><br />";
                   contenido += "Cantidad: " + d.quantity + "<br />";
-                  contenido += (d.value * 10).format(4, 3, '', ',') + " por cada mil registros<br />";
+                  contenido += (d.value * 10).format(3, 3, '', ',') + " por cada mil registros<br />";
                   contenido += "Año: " + d.year;
 
                   new Opentip(this, contenido, { style: "bubbleStyle", tipJoint: "bottom", borderRadius: 20 });
@@ -734,7 +737,5 @@ jQuery(function ($) {
         App.displayYearStatistics('male', yearSelected, 'mobile');
         anchoUltimo = anchoActual;
       }
-
-
     });
 });
