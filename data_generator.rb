@@ -22,6 +22,9 @@ module Datanames
     #
     #
     def self.extract_data
+      # Vaciar tabla
+      CLIENT.query("TRUNCATE TABLE `nombres`")
+
       # CSV columns
       #   0: Name
       #   1: Quantity
@@ -45,8 +48,6 @@ module Datanames
                  end
 
         begin
-          # Vaciar tabla
-          CLIENT.query("TRUNCATE TABLE `nombres`")
           # TODO: cambiar esto por LOAD DATA INFILE para que sea mil veces más eficiente
           CLIENT.query("INSERT INTO nombres (name, quantity, year, gender, percentage) VALUES ('#{name}', #{quantity}, #{year}, '#{gender}', #{percentage})")
         rescue Exception => e
