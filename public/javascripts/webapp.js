@@ -659,7 +659,13 @@ jQuery(function ($) {
   });
 
   // Informacion Select
-    informacionAnios();
+    for (var i = 1922; i <= 2015; i++) {
+      $("#yearData").append("<option id='element" + i + "'>" + i + "</option>");
+    } // Generamos datos del select
+
+    for (var i = 1920; i <= 2015; i += 10) {
+      $("#decadaData").append("<option id='element" + i + "'>" + i + "</option>");
+    }
 
     $('input[type="radio"]').on('change', function(e) {
       $('#extra-year-data').empty();
@@ -674,31 +680,28 @@ jQuery(function ($) {
 
     $('.selectBubble').on('change', function(e) {
       $('#extra-year-data').empty();
+
       if ($('#anio').is(':checked')) {
         var datoSeleccionado = window.document.querySelector('.selectBubble').value;
       } else {
         var datoSeleccionado = 'decada-' + window.document.querySelector('.selectBubble').value;
       }
+
       ejecutarStatisticsYear(datoSeleccionado);
     });
 
+    $(window).ready(function(){ informacionAnios(); });
+
     function informacionAnios() {
-      window.document.querySelector('.selectBubble').innerHTML = ''; // Borramos datos del select
-      for (var i = 1922; i <= 2015; i++) {
-        window.document.querySelector('.selectBubble').innerHTML += "<option id='element" + i + "'>" + i + "</option>";
-      } // Generamos datos del select
-      window.document.querySelector('#element' + yearSelected).selected = true; // Seleccionamos año ingresado por el usuario
-      return yearSelected;
+      $("#decadaData").parent().parent().hide();
+      $("#yearData").parent().parent().show();
     }
     function informacionDecadas() {
-      window.document.querySelector('.selectBubble').innerHTML = '';
-      for (var i = 1920; i <= 2015; i += 10) {
-        window.document.querySelector('.selectBubble').innerHTML += "<option id='decada" + i + "'>" + i + "</option>";
-      }
-      window.document.querySelector('#decada1920').selected = true;
-      return 'decada-1920';
+      $("#decadaData").parent().parent().show();
+      $("#yearData").parent().parent().hide();
     }
     function ejecutarStatisticsYear(anio) {
+
       if ($(window).width() < 600){
         App.displayYearStatistics('female', anio, 'mobile');
         App.displayYearStatistics('male', anio, 'mobile');
