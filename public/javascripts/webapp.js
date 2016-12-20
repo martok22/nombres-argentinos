@@ -75,15 +75,12 @@ jQuery(function ($) {
 
           if (mainName === "") { // Validacion Nombre - Nombre vacio
             errores = true;
-            console.log('nombre vacio');
             App._displayError('nombre_vacio');
           } else if (!regexName.test(mainName) || $("#name").val().length > 120 || $("#name").val().length < 2) { // Validacion Nombre - Formato Incorrecto
             errores = true;
-            console.log('mal escrito');
             App._displayError('nombre_incorrecto');
           } else if (names.length > 2) {
             errores = true;
-            console.log('muchos nombres');
             App._displayError('muchos_nombres');
           }
 
@@ -682,10 +679,11 @@ jQuery(function ($) {
       $('#extra-year-data').empty();
 
       if ($('#anio').is(':checked')) {
-        var datoSeleccionado = window.document.querySelector('.selectBubble').value;
+        var datoSeleccionado = $("#yearData").val();
       } else {
-        var datoSeleccionado = 'decada-' + window.document.querySelector('.selectBubble').value;
+        var datoSeleccionado = 'decada-' + $("#decadaData").val();
       }
+
 
       ejecutarStatisticsYear(datoSeleccionado);
     });
@@ -695,10 +693,14 @@ jQuery(function ($) {
     function informacionAnios() {
       $("#decadaData").parent().parent().hide();
       $("#yearData").parent().parent().show();
+
+      return "1922";
     }
     function informacionDecadas() {
       $("#decadaData").parent().parent().show();
       $("#yearData").parent().parent().hide();
+
+      return "decada-1920";
     }
     function ejecutarStatisticsYear(anio) {
 
