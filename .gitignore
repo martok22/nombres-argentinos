@@ -1,6 +1,6 @@
 Gemfile.lock
 public/names/*
 public/years/*
-data/*
+data/nombres1922a2015conpp.csv
+data/nombres1922a2015-sin-genero.csv
 .DS_Store
-config.yml

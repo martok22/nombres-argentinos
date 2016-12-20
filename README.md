@@ -5,37 +5,40 @@ Proyecto de visualización de estadísticas sobre nombres de nacimientos argenti
 <!-- NO MODIFICAR NI INDICE NI TITULOS -->
 ## Índice
 
-* [Instalación](#instalacion)
+* [Instalación](#instalación)
 	* [Dependencias](#dependencias)
-	* [Verificación de instalación](#verificacion-de-instalacion)
-* [Créditos](#creditos)
+	* [Generación de data](#generación-de-data)
+    * [Iniciar el servidor](#iniciar-el-servidor-en-development)
+* [Créditos](#créditos)
 * [Contacto](#contacto)
 
 ## Instalación
 
-#### Generación de data
-
-1. Cambiar el path del archivo csv con la data de nombres por el correpondiente en `data_generator.rb`.
-2. Correr `data_generator.rb`:
-```
-ruby data_generator.rb
-```
-
-#### Iniciar el servidor 
-
-Iniciar el servidor en modo dev en el puerto 9393:
-
-```
-bundle exec shotgun -p 9393
-```
-
 ### Dependencias
 
 * Ruby
+* Python
+  * pip
+  * pandas
 
-### Verificación de instalación
+#### Generación de data
 
-Ir a `127.0.0.1:9393/` y confirmar que la web está corriendo correctamente.
+1. Instalar `pandas`: `pip install pandas`
+2. Cambiar el path del archivo csv con la data de nombres por el correpondiente en `process_names.py`.
+3. Correr `process_names.py`: `python process_names.py`
+4. Verificar que los jsons fueron generados en `public/names/` y `public/years/`
+
+##### Nota sobre los datos
+
+En `data/` pueden encontrar:
+- Una muestra de los datos usados para el proyecto de nombres argentinos.
+- Todos los datos de nombres argentinos, pero sin la columna de género, ya que la misma fue calculada de manera predictiva.
+
+#### Iniciar el servidor en development
+
+1. Asegurarse que el host está correctamente configurado en `app.rb`
+2. Iniciar el servidor en el puerto 9393: `bundle exec shotgun -p 9393`
+3. Ir a `127.0.0.1:9393/` y confirmar que la web está corriendo correctamente.
 
 ## Créditos
 

@@ -6,7 +6,8 @@ class App < Sinatra::Base
 
   helpers Helpers::Assets
 
-  APP_DOMAIN = 'casarosada.gob.ar/nombres'
+  # Cambiar por IP adecuada
+  APP_DOMAIN = '127.0.0.1'
 
   configure do
     set :views, root_path('views')
