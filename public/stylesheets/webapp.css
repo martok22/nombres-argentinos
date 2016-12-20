@@ -25,10 +25,23 @@ input:focus, button:focus, select:focus {
   position: absolute;
   margin: 0px;
   padding: 0px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 .errorText {
   color: #777777;
@@ -67,9 +80,18 @@ input:focus, button:focus, select:focus {
   top: 0px;
   left: 0px;
   width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   background-color: white;
   box-shadow: 0 2px 2px rgba(0,0,0,0.2);
   padding: 10px 20px;
@@ -84,9 +106,18 @@ input:focus, button:focus, select:focus {
   display: none;
 }
 #social ul {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   list-style: none;
   margin: 0px;
   padding: 0px;
@@ -102,20 +133,52 @@ input:focus, button:focus, select:focus {
   position: relative;
 }
 .vcenter {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+            flex-direction: column;
 }
 .vcenterRow {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center;
 }
 .columnas {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 .anchoTotal {
   width: 100%;
@@ -158,7 +221,10 @@ input:focus, button:focus, select:focus {
 #section5 .containerCont {
   height: 30%;
   background-color: white;
-  justify-content: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   padding: 20px 0px;
 }
 
@@ -264,10 +330,22 @@ input:focus, button:focus, select:focus {
   color: white;
 }
 #section5 header > div {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-justify-content: space-around;
+      -ms-flex-pack: distribute;
+          justify-content: space-around;
 }
 #section3Padd {
   padding-top: 60px;
@@ -324,7 +402,9 @@ input:focus, button:focus, select:focus {
  line.m0,
  line.m1,
  line.m2 {
-  transform: translate(4px, 0.15rem);
+  -webkit-transform: translate(4px, 0.15rem);
+      -ms-transform: translate(4px, 0.15rem);
+          transform: translate(4px, 0.15rem);
  }
  line.f0, path.f0 {
    stroke: #FF5722;
@@ -362,8 +442,14 @@ input:focus, button:focus, select:focus {
  #infoNombres {
    /*position: absolute;*/
    top: -20%;
+   display: -webkit-box;
+   display: -webkit-flex;
+   display: -ms-flexbox;
    display: flex;
-   align-items: center;
+   -webkit-box-align: center;
+   -webkit-align-items: center;
+       -ms-flex-align: center;
+           align-items: center;
  }
  #infoNombres svg {
    width: 24px;
@@ -372,21 +458,34 @@ input:focus, button:focus, select:focus {
 
 
  .yAxis .tick text {
-   transform: translateX(-10px);
+   -webkit-transform: translateX(-10px);
+       -ms-transform: translateX(-10px);
+           transform: translateX(-10px);
    font-size: 12px;
    fill: #CCCCCC;
  }
  .xAxis .tick text {
-   transform: translateY(10px);
+   -webkit-transform: translateY(10px);
+       -ms-transform: translateY(10px);
+           transform: translateY(10px);
    font-size: 16px;
    fill: #777777;
  }
 
 /* Grafico Bubble */
 .contenedorCaritas {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   width: 150px;
   margin: 10px auto;
 }
@@ -405,20 +504,37 @@ input:focus, button:focus, select:focus {
   z-index: 20000;
   position: absolute;
   left: 50%;
-  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+      -ms-transform: translateX(-50%);
+          transform: translateX(-50%);
   text-align: center;
   margin: 0px;
   font-size: 14px;
   font-weight: 400;
 }
 .contenedorCaritas svg {
-  transform: scale(1.3);
+  -webkit-transform: scale(1.3);
+      -ms-transform: scale(1.3);
+          transform: scale(1.3);
 }
 .formularioBubble {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 input[type="radio"], input[type="checkbox"] {
   margin: 0px 5px 0px 5px;
@@ -427,10 +543,23 @@ input[type="radio"], input[type="checkbox"] {
   display: none;
 }
 .infoButton {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: row;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
 }
 #section4 label {
   cursor: pointer;
@@ -451,9 +580,18 @@ input[type="radio"], input[type="checkbox"] {
   content: "\2022";
   color: #5D5D5D;
   font-size: 28px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   font-weight: 900;
 }
 
@@ -461,19 +599,32 @@ input[type="radio"], input[type="checkbox"] {
 
 }
 #extra-year-data {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
   padding: 50px 20px 0px 20px;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 .contenedorCaritas {
   display: none;
 }
-.bubblemale #tooltipBubble10 {
+.bubblemale #tooltipBubble1 {
   fill: rgba(66, 190, 92, 0.5) !important;
 }
-.bubblefemale #tooltipBubble10 {
+.bubblefemale #tooltipBubble1 {
   fill: rgba(242, 113, 47, 0.5) !important;
 }
 #containerSlide {
@@ -481,17 +632,34 @@ input[type="radio"], input[type="checkbox"] {
   position: fixed;
   right: 0px;
   top: 50%;
-  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+          transform: translateY(-50%);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 .formularioBubble > div > div {
   margin-left: 10px;
 }
 .redesSociales {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   width: 25%;
   min-width: 200px;
   margin-top: 10px;
@@ -520,10 +688,21 @@ input[type="radio"], input[type="checkbox"] {
 }
 
 #buscaPor {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-flow: wrap;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-flex-flow: wrap;
+      -ms-flex-flow: wrap;
+          flex-flow: wrap;
 }
 #buscaPor label {
   margin: 0px;
@@ -550,18 +729,33 @@ input[type="radio"], input[type="checkbox"] {
 @media(min-width:600px){
   /* Barra Superior */
   #firstheader {
-    justify-content: space-around;
+    -webkit-justify-content: space-around;
+        -ms-flex-pack: distribute;
+            justify-content: space-around;
   }
   #logo {
       margin: 0px;
     }
   #social {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
   }
   #extra-year-data {
-    flex-direction: row;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+            flex-direction: row;
     padding: 0px 20px 0px 20px;
   }
   #fp-nav {
