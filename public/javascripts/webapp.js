@@ -264,29 +264,46 @@ jQuery(function ($) {
 
           // Format the text for each bubble
           bubbles.append('text')
-              .attr("x", function(d){
+              .attr('text-anchor', 'middle')
+              .attr('alignment-baseline', 'central')
+              .attr("x", function(d) {
                 return this.parentNode.getAttribute('class') === 'bubblefemale' ? medida - d.x : d.x;
               })
-              .attr("y", function(d){
+              .attr("y", function(d) {
 
-                if (d.name.split('_').length != 1) {
-                  return d.y - 2.5;
+                var names = d.name.split('_');
+
+                if (names.length < 3) {
+                  return d.y;
                 } else {
-                  return d.y + 5;
+                  return d.y - 5;
                 }
 
               })
-              .attr("text-anchor", "middle")
               .attr('id', function(d, i){
                 return 'bubble' + i;
               })
-              .text(function(d){
+              .text(function(d) {
                 var names = d.name.split('_');
-                var name1 = (names[0]) ? (names[0]) : '';
-                var name2 = (names[1]) ? (names[1]) : '';
-                var name3 = (names[2]) ? (names[2]) : '';
+                var lines = names.length;
 
-                return formatName(name1);
+                names.forEach(function (v, k) {
+                  if (v !== 'de' && v !== 'de la' && v !== 'de los' && v !== 'de las' && v !== 'del') {
+                    names[k] = formatName(v);
+                  }
+                });
+
+                if (lines === 1) {
+                  return names[0];
+                } else if (lines === 2) {
+                  return names[0];
+                } else if (lines === 3) {
+                  return names[0];
+                } else if (lines === 4) {
+                  return names[0] + ' ' + names[1];
+                } else if (lines === 5) {
+                  return names[0] + ' ' + names[1];
+                }
               })
               .style({
                 "fill":"#5D5D5D",
@@ -302,13 +319,23 @@ jQuery(function ($) {
                 .attr('id', function(d, i){
                   return 'bubble' + i;
                 })
-                .text(function(d){
+                .text(function(d) {
                   var names = d.name.split('_');
-                  var name1 = (names[0]) ? (names[0]) : '';
-                  var name2 = (names[1]) ? (names[1]) : '';
-                  var name3 = (names[2]) ? (names[2]) : '';
+                  var lines = names.length;
 
-                  return formatName(name2);
+                  names.forEach(function (v, k) {
+                    if (v !== 'de' && v !== 'de la' && v !== 'de los' && v !== 'de las' && v !== 'del') {
+                      names[k] = formatName(v);
+                    }
+                  });
+
+                  if (lines === 3) {
+                    return names[1] + ' ' + names[2];
+                  } else if (lines === 4) {
+                    return names[2] + ' ' + names[3];
+                  } else if (lines === 5) {
+                    return names[2] + ' ' + names[3] + ' ' + names[4];
+                  }
                 })
                 .style({
                   "fill":"#5D5D5D",
