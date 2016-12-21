@@ -4,10 +4,14 @@ jQuery(function ($) {
       return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
   }
 
+  function replaceAll(str, find, replace) {
+    return str.replace(new RegExp(find, 'g'), replace);
+  }
+
   function formatName(name) {
       var processedName = window.DataProcessor.prototype._processName(name);
 
-      processedName = processedName.replace("_", " ");
+      processedName = replaceAll(processedName, "_", " ");
 
       return toTitleCase(processedName);
   }
@@ -545,20 +549,6 @@ jQuery(function ($) {
               });
       },
 
-      humanizeName: function (name) {
-        var processedName = name.replace(/_(.)?/, function (fullMatch, group0) {
-          return typeof group0 === "string" ? " " + group0.toUpperCase() : "";
-        });
-
-        if (name.length > 0) {
-          processedName = processedName.replace(/^(.)/, function (fullMatch, firstLetter) {
-            return firstLetter.toUpperCase();
-          });
-        }
-
-        return processedName;
-      },
-
       _displayError: function (error) {
 
         if (error == 'nombre_vacio') {
@@ -587,52 +577,6 @@ jQuery(function ($) {
           $('#errorYear').append('¡Ups! Revisá que el año esté bien escrito.');
         }
 
-      },
-
-      _getYaxisOptions: function (series) {
-        var yaxisOptions = { min: 0 }
-          , maxValue = 0
-          , i, j, serie, seriesLength, serieLength;
-
-        for (i = 0, seriesLength = series.length; i < seriesLength; i += 1) {
-          serie = series[i];
-          for (j = 0, serieLength = serie.length; j < serieLength; j += 1) {
-            if (serie[j][1] > maxValue) {
-              maxValue = serie[j][1];
-            }
-          }
-        }
-
-        if (maxValue <= 6) {
-          yaxisOptions.max = 6;
-        }
-
-        return yaxisOptions;
-      },
-
-      _getSeriesOptions: function (names, series) {
-        var seriesOptions = []
-          , i, length;
-
-        for (i = 0, length = series.length; i < (length - 1); i += 1) {
-          seriesOptions.push({
-            label: this.humanizeName(names[i]),
-            markerOptions: {
-              size: 6,
-              lineWidth: 1
-            },
-          });
-        }
-
-        seriesOptions.push({
-          markerOptions: {
-            color: "#52BE7F",
-            show: true,
-            size: 9
-          }
-        });
-
-        return seriesOptions;
       }
     };
 

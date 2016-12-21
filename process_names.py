@@ -13,8 +13,6 @@ def format_name(name):
     formated_name = re.sub('▒~V~R~S', 'o', formated_name)
     formated_name = re.sub('▒~V~R~Z', 'u', formated_name)
     formated_name = re.sub('▒~V~R~Q', 'n', formated_name)
-    formated_name = re.sub(
-        '( de los| del| de las| de la| de)(\s.*)?', ' ', formated_name)
     formated_name = re.sub('[^\sa-zA-Z\d]+', ' ', formated_name)
     formated_name = re.sub('\s+', '_', formated_name)
     formated_name = re.sub('^_+', '', formated_name)
