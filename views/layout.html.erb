@@ -2,8 +2,10 @@
 <html>
 
     <head>
+        <!-- Title -->
         <title><% if main_name %><%= main_name %><% if year %>(<%= year %>)<% end %>
-        <% else %>&iquest;Qu&eacute; tan popular es tu nombre?<% end %>Nombres Argentina</title>
+        <% else %>&iquest;Qu&eacute; tan popular es tu nombre?<% end %> Nombres Argentina</title>
+        <!-- Meta Data -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <meta name="description" content="Descubr&iacute; la historia y las estad&iacute;sticas de tu nombre durante los &uacute;ltimos 100 a&ntilde;os en Argentina."/>
@@ -11,25 +13,24 @@
         <meta http-equiv="Content-Language" content="es"/>
         <meta name="viewport" content="width=device-width, user-scalable=no">
         <!-- FaceBook -->
-        <meta property="og:url" content="http://datos.gob.ar">
+        <meta property="og:url" content="http://visualizaciones.argentina.gob.ar/nombres">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Tu nombre en los últimos 100 años">
         <meta property="og:site_name" content="Nombres en Argentina">
         <meta property="og:description" content="¡Descubrí qué tan popular fue tu nombre en el último siglo en Argentina! ">
-        <meta property="og:image" content="http://datos.gob.ar/img/fb_card.png">
+        <meta property="og:image" content="http://visualizaciones.argentina.gob.ar/nombres/images/Nombres_metadados_fb_1220x630.png">
         <meta property="og:image:type" content="image/png">
-        <meta property="og:image:width" content="2400">
-        <meta property="og:image:height" content="1260">
+        <meta property="og:image:width" content="1220">
+        <meta property="og:image:height" content="630">
         <meta property="og:locale" content="es_AR">
         <!-- Twitter -->
         <meta name="twitter:card" content="summary">
         <meta name="twitter:site" content="@datosgobar"/>
         <meta name="twitter:title" content="Tu nombre en los últimos 100 años">
         <meta name="twitter:description" content="¡Descubrí qué tan popular fue tu nombre en el último siglo en Argentina!">
-        <meta name="twitter:image:src" content="http://datos.gob.ar/img/twitter_card.png">
-
+        <meta name="twitter:image:src" content="http://visualizaciones.argentina.gob.ar/nombres/images/Nombres_metadados_tw_240x240.png">
+        <!-- Favicon -->
         <link href="<%= asset_path('images/favicon.png') %>" rel="shortcut icon" type="image/png"/>
-
         <!-- CSS -->
         <link href="<%= stylesheet_path('bootstrap.min.css') %>" rel="stylesheet" type="text/css"/>
         <link href="<%= stylesheet_path('poncho.css') %>" rel="stylesheet" type="text/css"/>
@@ -64,7 +65,7 @@
 
         <!-- Barra de Navegacion -->
         <header id='firstheader'>
-            <img id="logo" alt="Brand" src="/images/casarosada.svg">
+            <img id="logo" alt="Brand" src="/images/logo_gobar.svg">
             <h1 class="sr-only">casarosada.gob.ar
                 <small>Presidencia de la Nación</small>
             </h1>
@@ -75,12 +76,12 @@
                         <br/>en redes
                     </li>
                     <li>
-                        <a href="javascript: window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.casarosada.gob.ar/tarifasocial', 'pop', 'width=600, height=260, scrollbars=no');" target="_blank">
+                        <a href="javascript: window.open('https://www.facebook.com/sharer/sharer.php?u=http://visualizaciones.argentina.gob.ar/nombres', 'pop', 'width=600, height=260, scrollbars=no');" target="_blank">
                             <span class="fa fa-facebook socialIcon"></span>
                         </a>
                     </li>
                     <li>
-                        <a href="javascript: window.open('https://twitter.com/share?text=Tarifa%20Social&url=http://www.casarosada.gob.ar/tarifasocial', 'pop', 'width=600, height=260, scrollbars=no');" target="_blank">
+                        <a href="javascript: window.open('https://twitter.com/share?text=Descubrí%20la%20popularidad%20de%20tu%20nombre:&url=http://visualizaciones.argentina.gob.ar/nombres', 'pop', 'width=600, height=260, scrollbars=no');" target="_blank">
                             <span class="fa fa-twitter socialIcon"></span>
                         </a>
                     </li>
