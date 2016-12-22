@@ -276,7 +276,7 @@ jQuery(function ($) {
                 if (names.length < 3) {
                   return d.y;
                 } else {
-                  return d.y - 5;
+                  return d.y - 12.5;
                 }
 
               })
