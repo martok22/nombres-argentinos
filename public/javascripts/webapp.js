@@ -627,11 +627,11 @@ jQuery(function ($) {
   });
 
   // Informacion Select
-    for (var i = 1922; i <= 2015; i++) {
+    for (var i = 2015; i >= 1922; i--) {
       $("#yearData").append("<option id='element" + i + "'>" + i + "</option>");
     } // Generamos datos del select
 
-    for (var i = 1920; i <= 2015; i += 10) {
+    for (var i = 2010; i >= 1920; i -= 10) {
       $("#decadaData").append("<option id='element" + i + "'>" + i + "</option>");
     }
 
@@ -659,7 +659,25 @@ jQuery(function ($) {
       ejecutarStatisticsYear(datoSeleccionado);
     });
 
-    $(window).ready(function(){ informacionAnios(); });
+    $(window).ready(function(){
+      informacionAnios();
+
+      // Control Hover Selects
+      $('#buscaPor > div > div.dropdown.scrollable > div > ul').mouseenter(function() {
+
+        var classElement =  $('#buscaPor > div > div.dropdown.scrollable').attr('class');
+
+        if (classElement != 'dropdown scrollable') {
+          $.fn.fullpage.setAutoScrolling(false);
+          $('body').css({ 'overflow': 'hidden' });
+        }
+      });
+
+      $('#buscaPor > div > div.dropdown.scrollable > div > ul').mouseleave(function() {
+        $.fn.fullpage.setAutoScrolling(true);
+        $('body').css({ 'overflow': 'visible' });
+      });
+    });
 
     function informacionAnios() {
       $("#decadaData").parent().parent().hide();
@@ -714,4 +732,5 @@ jQuery(function ($) {
         anchoUltimo = anchoActual;
       }
     });
+
 });
