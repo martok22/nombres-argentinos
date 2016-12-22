@@ -9,11 +9,22 @@ jQuery(function ($) {
   }
 
   function formatName(name) {
-      var processedName = window.DataProcessor.prototype._processName(name);
 
-      processedName = replaceAll(processedName, "_", " ");
+    var names = name.split('_');
 
-      return toTitleCase(processedName);
+    names.forEach(function (v, k) {
+
+      if (v !== 'de' && v !== 'la' && v !== 'los' && v !== 'las' && v !== 'del') {
+        names[k] = toTitleCase(window.DataProcessor.prototype._processName(v));
+      } else {
+        names[k] = v.toLowerCase();
+      }
+
+    });
+
+    names = names.join(' ');
+
+    return names;
   }
 
   /*
@@ -273,7 +284,7 @@ jQuery(function ($) {
 
                 var names = d.name.split('_');
 
-                if (names.length < 3) {
+                if (names.length < 2) {
                   return d.y;
                 } else {
                   return d.y - 12.5;
@@ -288,8 +299,10 @@ jQuery(function ($) {
                 var lines = names.length;
 
                 names.forEach(function (v, k) {
-                  if (v !== 'de' && v !== 'de la' && v !== 'de los' && v !== 'de las' && v !== 'del') {
+                  if (v !== 'de' && v !== 'la' && v !== 'los' && v !== 'las' && v !== 'del') {
                     names[k] = formatName(v);
+                  } else {
+                    names[k] = v.toLowerCase();
                   }
                 });
 
@@ -310,37 +323,41 @@ jQuery(function ($) {
                 "font-size": "1rem"
               });
 
-              bubbles.append('text')
-                .attr("x", function(d){
-                  return this.parentNode.getAttribute('class') === 'bubblefemale' ? medida - d.x : d.x;
-                })
-                .attr("y", function(d){ return d.y + 12.5; })
-                .attr("text-anchor", "middle")
-                .attr('id', function(d, i){
-                  return 'bubble' + i;
-                })
-                .text(function(d) {
-                  var names = d.name.split('_');
-                  var lines = names.length;
+          bubbles.append('text')
+            .attr("x", function(d){
+              return this.parentNode.getAttribute('class') === 'bubblefemale' ? medida - d.x : d.x;
+            })
+            .attr("y", function(d){ return d.y + 12.5; })
+            .attr("text-anchor", "middle")
+            .attr('id', function(d, i){
+              return 'bubble' + i;
+            })
+            .text(function(d) {
+              var names = d.name.split('_');
+              var lines = names.length;
 
-                  names.forEach(function (v, k) {
-                    if (v !== 'de' && v !== 'de la' && v !== 'de los' && v !== 'de las' && v !== 'del') {
-                      names[k] = formatName(v);
-                    }
-                  });
+              names.forEach(function (v, k) {
+                if (v !== 'de' && v !== 'la' && v !== 'los' && v !== 'las' && v !== 'del') {
+                  names[k] = formatName(v);
+                } else {
+                  names[k] = v.toLowerCase();
+                }
+              });
 
-                  if (lines === 3) {
-                    return names[1] + ' ' + names[2];
-                  } else if (lines === 4) {
-                    return names[2] + ' ' + names[3];
-                  } else if (lines === 5) {
-                    return names[2] + ' ' + names[3] + ' ' + names[4];
-                  }
-                })
-                .style({
-                  "fill":"#5D5D5D",
-                  "font-size": "1rem"
-                });
+              if (lines === 2) {
+                return names[1];
+              } else if (lines === 3) {
+                return names[1] + ' ' + names[2];
+              } else if (lines === 4) {
+                return names[2] + ' ' + names[3];
+              } else if (lines === 5) {
+                return names[2] + ' ' + names[3] + ' ' + names[4];
+              }
+            })
+            .style({
+              "fill":"#5D5D5D",
+              "font-size": "1rem"
+            });
         });
       },
       /**
@@ -683,7 +700,7 @@ jQuery(function ($) {
       $("#decadaData").parent().parent().hide();
       $("#yearData").parent().parent().show();
 
-      return "1922";
+      return yearSelected;
     }
     function informacionDecadas() {
       $("#decadaData").parent().parent().show();
