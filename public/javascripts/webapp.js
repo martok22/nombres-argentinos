@@ -700,6 +700,16 @@ jQuery(function ($) {
       $("#decadaData").parent().parent().hide();
       $("#yearData").parent().parent().show();
 
+      $('ul > .active').first().attr('class', '');
+
+      $('#buscaPor > div > div').first().children('div').children().children().each(function(k,v){
+        var element = $('#buscaPor > div > div').first().children('div').children().children().eq(k);
+        if (element.text() == yearSelected) {
+          element.attr('class', 'active');
+          $('#buscaPor > div > div').first().children('span.selected').text(element.text());
+        }
+      });
+
       return yearSelected;
     }
     function informacionDecadas() {
