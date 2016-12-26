@@ -54,8 +54,10 @@ jQuery(function ($) {
 
   var MIN_YEAR = 1922
     , MAX_YEAR = 2015
-    , DEFAULT_NAME = ['Emilia', 'Benjamin'] // nombre por defecto
-    , DEFAULT_YEAR = '2015' // año por defecto
+    //, DEFAULT_NAME = ['Emilia', 'Benjamin'] // nombre por defecto
+    //, DEFAULT_YEAR = '2015' // año por defecto
+    , DEFAULT_NAME = ['juan', 'pilar'] // nombre por defecto
+    , DEFAULT_YEAR = '1922' // año por defecto
     , yearSelected
     , nameSelected
     , chartName
@@ -369,12 +371,13 @@ jQuery(function ($) {
         $("#infoNombres").empty();
         $("#main-chart").empty();
 
-        if ($('#section2 .containerCont').width() > 500) {
-          var margin = {top: 30, right: 190, bottom: 50, left: 190};
-        } else {
-          var margin = {top: 30, right: 25, bottom: 50, left: 75};
-        }
+        var margin;
 
+        if ($('#section2 .containerCont').width() > 500) {
+          margin = {top: 30, right: 190, bottom: 50, left: 190};
+        } else {
+          margin = {top: 30, right: 25, bottom: 50, left: 75};
+        }
 
         var width = $('#section2 .containerCont').width() - margin.left - margin.right,
             height = $('#section2 .containerCont').height() - margin.top - margin.bottom;
@@ -521,7 +524,7 @@ jQuery(function ($) {
             .text(formatName(names[i]));
         }
 
-        if (bebeCheck != false) {
+        if (bebeCheck === true) {
           var yearBaby, valueBaby;
 
           var bebe = svg.append("svg:image")
@@ -535,14 +538,18 @@ jQuery(function ($) {
           })
           .attr("width", 30)
           .attr("height", 30)
-          .attr("bebe", function(d){
-            d.forEach(function(v){
-              if (v.year == window.document.getElementById('year').value && bebeCheck == true) {
-                yearBaby = v.year;
-                valueBaby = v.value;
-                bebeCheck = false;
-              }
-            })
+          .attr("bebe", function(d) {
+
+            if (bebeCheck === true) {
+              d.forEach(function(v) {
+                var tempValueYear = (window.document.getElementById('year').value != '') ? (window.document.getElementById('year').value) : (DEFAULT_YEAR);
+                if (v.year == tempValueYear && bebeCheck === true) {
+                  yearBaby = v.year;
+                  valueBaby = v.value;
+                  bebeCheck = false;
+                }
+              });
+            }
           })
           .attr("transform", "translate(" + (x(yearBaby)-15) + "," + (y(valueBaby)-15) + ")");
 
