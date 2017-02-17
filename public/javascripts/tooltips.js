@@ -7,14 +7,14 @@ Opentip.styles.formStyle = {
   shadow: false
 };
 
-var opentipTop1 = new Opentip("#name", "<span class='colorWhite'>Escribí tu nombre. ¡Pssst! Si querés compararlo con otro, separalos con una coma. Por ejemplo: Emilia, Benjamín.</span>", { style: "formStyle", showOn: "focusin", hideOn: "blur", tipJoint: "top" , borderRadius: 0});
-var opentipTop2 = new Opentip("#year", "<span class='colorWhite'>Escribí en qué año naciste.</span>", { style: "formStyle", showOn: "focusin", hideOn: "blur", tipJoint: "top" , borderRadius: 0});
-var opentipRight1 = new Opentip("#name", "<span class='colorWhite'>Escribí tu nombre. ¡Pssst! Si querés compararlo con otro, separalos con una coma. Por ejemplo: Emilia, Benjamín</span>.", { style: "formStyle", showOn: "null", hideOn: "blur", tipJoint: "right" , borderRadius: 0});
-var opentipRight2 = new Opentip("#year", "<span class='colorWhite'>Escribí en qué año naciste</span>.", { style: "formStyle", showOn: "null", hideOn: "blur", tipJoint: "right" , borderRadius: 0});
-var inputName = window.document.querySelector('#name');
-var inputYear = window.document.querySelector('#year');
+var opentipTop1 = new Opentip("#pregName", "<span class='colorWhite'>Escribí tu nombre. ¡Pssst! Si querés compararlo con otro, separalos con una coma. Por ejemplo: Emilia, Benjamín.</span>", { style: "formStyle", showOn: "focusin", hideOn: "blur", tipJoint: "top" , borderRadius: 0});
+var opentipTop2 = new Opentip("#pregYear", "<span class='colorWhite'>Escribí en qué año naciste.</span>", { style: "formStyle", showOn: "focusin", hideOn: "blur", tipJoint: "top" , borderRadius: 0});
+var opentipRight1 = new Opentip("#pregName", "<span class='colorWhite'>Escribí tu nombre. ¡Pssst! Si querés compararlo con otro, separalos con una coma. Por ejemplo: Emilia, Benjamín</span>.", { style: "formStyle", showOn: "null", hideOn: "blur", tipJoint: "right" , borderRadius: 0});
+var opentipRight2 = new Opentip("#pregYear", "<span class='colorWhite'>Escribí en qué año naciste</span>.", { style: "formStyle", showOn: "null", hideOn: "blur", tipJoint: "right" , borderRadius: 0});
+var inputName = window.document.querySelector('#pregName');
+var inputYear = window.document.querySelector('#pregYear');
 
-inputName.addEventListener('focusin', function(){
+inputName.addEventListener('mouseover', function(){
   if($(window).width() > 1200) {
     opentipTop1.hide();
     opentipRight1.show();
@@ -23,7 +23,12 @@ inputName.addEventListener('focusin', function(){
     opentipRight1.hide();
   }
 });
-inputYear.addEventListener('focusin', function(){
+inputName.addEventListener('mouseout', function(){
+  opentipTop1.hide();
+  opentipRight1.hide();
+});
+
+inputYear.addEventListener('mouseover', function(){
   if($(window).width() > 1200) {
     opentipTop2.hide();
     opentipRight2.show();
@@ -32,6 +37,11 @@ inputYear.addEventListener('focusin', function(){
     opentipRight2.hide();
   }
 });
+inputYear.addEventListener('mouseout', function(){
+  opentipTop2.hide();
+  opentipRight2.hide();
+});
+
 
 // tooltip bubble graphic
 Opentip.styles.bubbleStyle = {

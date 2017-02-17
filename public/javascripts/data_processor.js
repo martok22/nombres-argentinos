@@ -53,7 +53,7 @@ jQuery(function ($) {
             window.GENDER = nameDataResponse[0].gender; // agrego genero global
             // color genero seccion 3
             if (window.GENDER == "f") {
-              $('#section3').css({'background-color': '#FF5722'});
+              $('#section3').css({'background-color': 'rgb(244, 129, 64)'});
             } else {
               $('#section3').css({'background-color': '#4CAF50'});
             }

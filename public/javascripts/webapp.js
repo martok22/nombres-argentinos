@@ -223,7 +223,7 @@ jQuery(function ($) {
             .attr("class", classBubbles);
 
         // Colores femenino y masculino
-        var color = (gender == "female") ? "rgba(242, 113, 47, 0.3)" : "rgba(66, 190, 92, 0.3)";
+        var color = (gender == "female") ? "rgba(244, 129, 64, 0.3)" : "rgba(66, 190, 92, 0.3)";
 
         // Path a los datos de los años
         var path = "/years/" + year + ".json";
@@ -602,27 +602,27 @@ jQuery(function ($) {
 
         if (error == 'nombre_vacio') {
           $('#name').css( 'margin-bottom', '0.5rem' );
-          $('#errorName').attr('class', '').css( 'margin-bottom', '0.5rem' ).append('<div class="glyphicon glyphicon-exclamation-sign" style="margin-right:5px;"></div>');
+          $('#errorName').attr('class', '').css( 'margin-bottom', '0.5rem' ).append('<div class="glyphicon glyphicon-exclamation-sign" style="margin-right: 5px; margin-left: 5px;"></div>');
           $('#errorName').append('¡Ups! Por favor, completá este dato.');
         }
         if (error == 'nombre_incorrecto') {
           $('#name').css( 'margin-bottom', '0.5rem' );
-          $('#errorName').attr('class', '').css( 'margin-bottom', '0.5rem' ).append('<div class="glyphicon glyphicon-exclamation-sign" style="margin-right:5px;"></div>');
+          $('#errorName').attr('class', '').css( 'margin-bottom', '0.5rem' ).append('<div class="glyphicon glyphicon-exclamation-sign" style="margin-right: 5px; margin-left: 5px;"></div>');
           $('#errorName').append('¡Ups! Revisá que el nombre esté bien escrito.');
         }
         if (error == 'muchos_nombres') {
           $('#name').css( 'margin-bottom', '0.5rem' );
-          $('#errorName').attr('class', '').css( 'margin-bottom', '0.5rem' ).append('<div class="glyphicon glyphicon-exclamation-sign" style="margin-right:5px;"></div>');
+          $('#errorName').attr('class', '').css( 'margin-bottom', '0.5rem' ).append('<div class="glyphicon glyphicon-exclamation-sign" style="margin-right: 5px; margin-left: 5px;"></div>');
           $('#errorName').append('¡Ups! Podes ingresar hasta 3 nombres.');
         }
         if (error == 'anio_fueraDeRango') {
           $('#year').css( 'margin-bottom', '0.5rem' );
-          $('#errorYear').attr('class', '').css( 'margin-bottom', '0.5rem' ).append('<div class="glyphicon glyphicon-exclamation-sign" style="margin-right:5px;"></div>');
+          $('#errorYear').attr('class', '').css( 'margin-bottom', '0.5rem' ).append('<div class="glyphicon glyphicon-exclamation-sign" style="margin-right: 5px; margin-left: 5px;"></div>');
           $('#errorYear').append('¡Ups! No tenemos esa fecha. Por favor, buscá entre 1922 y 2015.');
         }
         if (error == 'anio_incorrecto') {
           $('#year').css( 'margin-bottom', '0.5rem' );
-          $('#errorYear').attr('class', '').css( 'margin-bottom', '0.5rem' ).append('<div class="glyphicon glyphicon-exclamation-sign" style="margin-right:5px;"></div>');
+          $('#errorYear').attr('class', '').css( 'margin-bottom', '0.5rem' ).append('<div class="glyphicon glyphicon-exclamation-sign" style="margin-right: 5px; margin-left: 5px;"></div>');
           $('#errorYear').append('¡Ups! Revisá que el año esté bien escrito.');
         }
 
