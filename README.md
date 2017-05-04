@@ -46,7 +46,6 @@ Este proyecto estuvo inspirado en el proyecto de [DATA Uruguay](http://data.180.
 
 ## Contacto
 
-<!-- TEXTO FIJO - NO MODIFICAR -->
-Te invitamos a [creanos un issue](https://github.com/datosgobar/nombres-argentinos/issues/new?title=Encontre un bug en nombre-del-repo) en caso de que encuentres algún bug o tengas feedback de alguna parte de `nombres-argentinos`.
+Te invitamos a [crearnos un issue](https://github.com/datosgobar/nombres-argentinos/issues/new?title=Encontre%20un%20bug%20en%20nombre-del-repo) en caso de que encuentres algún bug o tengas feedback de alguna parte de `nombres-argentinos`.
 
 Para todo lo demás, podés mandarnos tu comentario o consulta a [datos@modernizacion.gob.ar](mailto:datos@modernizacion.gob.ar).
