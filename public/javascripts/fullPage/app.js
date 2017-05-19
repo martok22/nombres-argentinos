@@ -9,8 +9,6 @@ $(document).ready(function () {
 
   if(jQuery.browser.mobile){
     scrollAutomatico = false;
-  } else {
-    scrollAutomatico = true;
   };
 
   // Generar FullPage
@@ -22,7 +20,7 @@ $(document).ready(function () {
           'seccion1', 'seccion2', 'seccion3', 'seccion4', 'seccion5'
       ],
       navigation: true,
-      navigationPosition: 'left',
+      navigationPosition: 'right',
       navigationTooltips: [],
       showActiveTooltip: false,
       slidesNavigation: true,
@@ -75,20 +73,22 @@ $(document).ready(function () {
   var seccionesColor = window.document.querySelector('#fp-nav').children[0].children;
 
   function detectarColor(){
-    if (window.location.hash == "" || window.location.hash === "#seccion1" || window.location.hash === "#seccion3") {
+    var i;
+
+    if (window.location.hash === '' || window.location.hash === '#seccion1' || window.location.hash === '#seccion3') {
       for (i = 0; i < seccionesColor.length; i++) {
-        window.document.querySelector('#fp-nav').children[0].children[i].children[0].children[0].style.backgroundColor = "white";
+        window.document.querySelector('#fp-nav').children[0].children[i].children[0].children[0].style.backgroundColor = 'white';
       }
     } else {
       for (i = 0; i < seccionesColor.length; i++) {
-        window.document.querySelector('#fp-nav').children[0].children[i].children[0].children[0].style.backgroundColor = "gray";
+        window.document.querySelector('#fp-nav').children[0].children[i].children[0].children[0].style.backgroundColor = 'gray';
       }
     }
   }
 
   detectarColor();
 
-  window.addEventListener("hashchange", function(){
+  window.addEventListener('hashchange', function(){
     detectarColor();
   });
 
