@@ -7,7 +7,7 @@ class App < Sinatra::Base
   helpers Helpers::Assets
 
   # Cambiar por IP adecuada
-  APP_DOMAIN = '190.210.163.17'
+  APP_DOMAIN = '127.0.0.1'
 
   configure do
     set :views, root_path('views')
