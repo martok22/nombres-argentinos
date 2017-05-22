@@ -648,10 +648,21 @@ jQuery(function ($) {
         })
         .attr('tooltip', function(d){
           if (d) {
-            var contenido = '<b>' + formatName(d.name) + '</b><br />';
-            contenido += 'Cantidad: ' + d.quantity + '<br />';
-            contenido += (d.value * 10).format(3, 3, '', ',') + ' por cada mil registros<br />';
-            contenido += 'Año: ' + d.year;
+            var contenido = `<div class="tooltip_format">
+              <strong>${ formatName(d.name) }</strong>
+              <div>
+                <span>Personas</span>
+                <span>${ d.quantity }</span>
+              </div>
+              <div>
+                <span>Registro por cada mil</span>
+                <span>${ (d.value * 10).format(3, 3, '', ',') }</span>
+              </div>
+              <div>
+                <span>Año</span>
+                <span>${ d.year }</span>
+              </div>
+            </div>`;
 
             new Opentip(this, contenido, { style: 'bubbleStyle', tipJoint: 'bottom', borderRadius: 20 });
           }
