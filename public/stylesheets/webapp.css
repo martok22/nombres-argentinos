@@ -1207,3 +1207,23 @@ body {
 #more p {
   text-align: center;
 }
+.tooltip_format {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+}
+.tooltip_format strong {
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+.tooltip_format div span {
+  margin-right: 10px;
+}
+.tooltip_format div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}

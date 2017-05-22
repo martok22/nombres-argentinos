@@ -33,9 +33,6 @@ jQuery(function ($) {
   function toTitleCase(str) {
       return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
   }
-  // function replaceAll(str, find, replace) {
-  //   return str.replace(new RegExp(find, 'g'), replace);
-  // }
   function formatName(name) {
     var names = name.split('_');
 
@@ -72,22 +69,22 @@ jQuery(function ($) {
       this.bindEvents();
     },
     bindEvents: function () {
-      var names, year, mainName,
-          regexName = /^[a-zA-Z ,áéíóú]+$/,
-          errores_estado = false,
-          errores         = {
-            empty_name:   false,
-            empty_year:   false,
-            invalid_name: false,
-            invalid_year: false,
-            limit_name:   false,
-            range_year:   false
-          }, url;
+      var regexName = /^[a-zA-Z ,áéíóú]+$/,
+          url;
 
       $('#name-form').submit(function (event) {
-        names      = $('#name').val().split(',');
-        year       = $('#year').val();
-        mainName   = names.shift();
+        var names      = $('#name').val().split(','),
+            year       = $('#year').val(),
+            mainName   = names.shift(),
+            errores_estado = false,
+            errores         = {
+              empty_name:   false,
+              empty_year:   false,
+              invalid_name: false,
+              invalid_year: false,
+              limit_name:   false,
+              range_year:   false
+            };
 
         event.preventDefault();                       // Se detiene envio de formulario
         d3.selectAll('.form_errors ul li').remove();  // Se eliminan antiguos mensajes de error
@@ -225,7 +222,20 @@ jQuery(function ($) {
             })
             .attr('class', `${ gender }f`)
             .attr('tooltip', function(d,i) {
-              var contenido = `<b>${ formatName(d.name) }</b><br />Cantidad: ${ d.quantity }<br />Año: ${ $('select')[0].value }`;
+              var contenido = `<div class="tooltip_format">
+                <strong>${ formatName(d.name) }</strong>
+                <div>
+                  <span>Personas</span>
+                  <span>${ d.quantity }</span>
+                </div>
+                <div>
+                  <span></span>
+                </div>
+                <div>
+                  <span>Año</span>
+                  <span>${ $('select')[0].value }</span>
+                </div>
+              </div>`;
 
               new Opentip(this, contenido, { style: 'bubbleStyle', tipJoint: 'bottom', borderRadius: 20 });
             })
@@ -287,7 +297,6 @@ jQuery(function ($) {
 
               name.forEach(function (v, k) {
                 if (v !== 'de' && v !== 'la' && v !== 'los' && v !== 'las' && v !== 'del') {
-                  console.log(v);
                   name[k] = formatName(v);
                 } else {
                   name[k] = v.toLowerCase();
@@ -492,10 +501,21 @@ jQuery(function ($) {
         })
         .attr('tooltip', function(d){
           if (d) {
-            var contenido = '<b>' + formatName(d.name) + '</b><br />';
-            contenido += 'Cantidad: ' + d.quantity + '<br />';
-            contenido += (d.value * 10).format(3, 3, '', ',') + ' por cada mil registros<br />';
-            contenido += 'Año: ' + d.year;
+            var contenido = `<div class="tooltip_format">
+              <strong>${ formatName(d.name) }</strong>
+              <div>
+                <span>Personas</span>
+                <span>${ d.quantity }</span>
+              </div>
+              <div>
+                <span>Registro por cada mil</span>
+                <span>${ (d.value * 10).format(3, 3, '', ',') }</span>
+              </div>
+              <div>
+                <span>Año</span>
+                <span>${ d.year }</span>
+              </div>
+            </div>`;
 
             new Opentip(this, contenido, { style: 'bubbleStyle', tipJoint: 'bottom', borderRadius: 20 });
           }
@@ -717,8 +737,14 @@ jQuery(function ($) {
 
     var selectores = $('select')
       .SumoSelect({ nativeOnDevice: ['Android', 'BlackBerry', 'iPhone', 'iPad', 'iPod', 'Opera Mini', 'IEMobile', 'Silk']})
-      .on('sumo:opened', (sumo) => { $('body').attr('style', 'position: fixed'); })
-      .on('sumo:closed', (sumo) => { $('body').attr('style', 'position: relative'); });
+      .on('sumo:opened', (sumo) => {
+        $.fn.fullpage.setAutoScrolling(false);
+        $('body').css({ 'overflow': 'hidden' });
+      })
+      .on('sumo:closed', (sumo) => {
+        $.fn.fullpage.setAutoScrolling(true);
+        $('body').css({ 'overflow': 'visible' });
+      });
 
     if ($('#year').val()) {
       selectores[0].sumo.selectItem($('#year').val().toString());
@@ -787,21 +813,6 @@ jQuery(function ($) {
 
 
       ejecutarStatisticsYear(datoSeleccionado);
-    });
-
-  /* Bloquear el scroll cuando se abre el selector */
-    $('#buscaPor > div > div.dropdown.scrollable > div > ul')
-    .mouseenter(function() {
-      var classElement =  $('#buscaPor > div > div.dropdown.scrollable').attr('class');
-
-      if (classElement !== 'dropdown scrollable') {
-        $.fn.fullpage.setAutoScrolling(false);
-        $('body').css({ 'overflow': 'hidden' });
-      }
-    })
-    .mouseleave(function() {
-      $.fn.fullpage.setAutoScrolling(true);
-      $('body').css({ 'overflow': 'visible' });
     });
 
   /* Generar el grafico de burbujas en funcion
