@@ -7,7 +7,7 @@ Opentip.styles.formStyle = {
   shadow: false
 };
 
-var opentip    = new Opentip("#pregName", "<span class='colorWhite'>Escribí tu nombre. ¡Pssst! Si querés compararlo con otro, separalos con una coma. Por ejemplo: Emilia, Benjamín.</span>", { style: "formStyle", showOn: "focusin", hideOn: "blur", tipJoint: "bottom" , borderRadius: 0});
+var opentip    = new Opentip("#pregName", "<span class='colorWhite'>Si querés compararlo con otro, separalos con una coma. Por ejemplo: Emilia, Benjamín.</span>", { style: "formStyle", showOn: "focusin", hideOn: "blur", tipJoint: "bottom" , borderRadius: 0});
 var inputName  = window.document.querySelector('#pregName');
 
 inputName.addEventListener('mouseover', function(){

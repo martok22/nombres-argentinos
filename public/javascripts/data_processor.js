@@ -183,7 +183,11 @@ jQuery(function ($) {
       totalQuantity += nameData[i].quantity;
     }
 
-    return `Entre los años 1922 y 2015, nacieron <b>${ new Intl.NumberFormat("de-DE").format(totalQuantity) } ${ capitalizeFirstLetter(name) }</b>`;
+    if (totalQuantity > 1) {
+      return `Entre los años 1922 y 2015, se registraron <b>${ new Intl.NumberFormat("de-DE").format(totalQuantity) } ${ capitalizeFirstLetter(name) }</b>`;
+    } else {
+      return `Entre los años 1922 y 2015, se registró <b>${ new Intl.NumberFormat("de-DE").format(totalQuantity) } ${ capitalizeFirstLetter(name) }</b>`;
+    }
   };
   statisticsCalculator.minMaxYear = function (name, nameData) {
     var maxYear = 1922

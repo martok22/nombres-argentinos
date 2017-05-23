@@ -147,7 +147,7 @@ jQuery(function ($) {
         ACTIVE_NAMES      = data.processedNames;
         ACTIVE_NAMES_DATA = data.namesData;
         STATISTICS        = data.statistics;
-        ACTIVE_GENDER     = data.namesData[data.names[0]][0].gender;
+        ACTIVE_GENDER     = data.namesData[data.names[0].toLowerCase()][0].gender;
 
         this.nameChart(ACTIVE_NAMES, ACTIVE_YEAR, ACTIVE_NAMES_DATA);
         this.nameStatistics(STATISTICS);
@@ -225,7 +225,7 @@ jQuery(function ($) {
               var contenido = `<div class="tooltip_format">
                 <strong>${ formatName(d.name) }</strong>
                 <div>
-                  <span>Personas</span>
+                  <span>Personas con este nombre</span>
                   <span>${ d.quantity }</span>
                 </div>
                 <div>
@@ -504,11 +504,11 @@ jQuery(function ($) {
             var contenido = `<div class="tooltip_format">
               <strong>${ formatName(d.name) }</strong>
               <div>
-                <span>Personas</span>
+                <span>Personas con este nombre</span>
                 <span>${ d.quantity }</span>
               </div>
               <div>
-                <span>Registro por cada mil</span>
+                <span>Popularidad (registros ‰)</span>
                 <span>${ (d.value * 10).format(3, 3, '', ',') }</span>
               </div>
               <div>
@@ -651,11 +651,11 @@ jQuery(function ($) {
             var contenido = `<div class="tooltip_format">
               <strong>${ formatName(d.name) }</strong>
               <div>
-                <span>Personas</span>
+                <span>Personas con este nombre</span>
                 <span>${ d.quantity }</span>
               </div>
               <div>
-                <span>Registro por cada mil</span>
+                <span>Popularidad (registros ‰)</span>
                 <span>${ (d.value * 10).format(3, 3, '', ',') }</span>
               </div>
               <div>
