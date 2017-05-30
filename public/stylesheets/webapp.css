@@ -155,10 +155,10 @@ input:focus, button:focus, select:focus {
   background-size: 80px;
   color: white;
   padding-top: 72px;
-  height: 50%;
+  height: 43%;
 }
 #section1 .containerCont {
-  height: 50%;
+  height: 57%;
   background-color: rgb(0, 54, 138);
   color: white;
 }
@@ -258,7 +258,7 @@ input:focus, button:focus, select:focus {
 
 @media (min-width: 768px) {
   #section1 .sectionHeader {
-    height: 70%;
+    height: 65%;
   }
   #section1 .headerTitle {
     font-size: 70px;
@@ -273,7 +273,7 @@ input:focus, button:focus, select:focus {
     display: inherit;
   }
   #section1 .containerCont {
-    height: 30%;
+    height: 35%;
   }
   #section1 #name-form {
     flex-direction: row;
@@ -556,8 +556,12 @@ line.m2, path.m2 {
 }
 
 @media (min-width: 768px) {
+  #section4 .containerCont {
+    height: 75%;
+  }
   #section4 .sectionHeader {
     padding-top: 72px;
+    height: 25%;
   }
   #section4 .headerTitle {
     font-size: 45px;
@@ -1208,22 +1212,22 @@ body {
   text-align: center;
 }
 .tooltip_format {
+  padding: 6px 0px;
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  flex-direction: column;
+  align-items: flex-end;
+  flex-direction: row;
+  justify-content: space-between;
 }
 .tooltip_format strong {
   margin-bottom: 10px;
   font-size: 18px;
 }
-.tooltip_format div span {
-  margin-right: 10px;
+.tooltip_format span {
+  line-height: 1.5;
 }
 .tooltip_format div {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
 }

@@ -69,7 +69,7 @@
           <div id="header-spacing" class="col-xs-12">
             <div class="col-xs-12 col-sm-5 no-padding logo-header">
               <div>
-                <a href="/"><img src="/images/logo.svg" class="logo-ministerio"></a>
+                <a href="https://historias.datos.gob.ar"><img src="/images/logo.svg" class="logo-ministerio"></a>
               </div>
             </div>
             <div class="col-xs-12 col-sm-7 no-padding header-links">
@@ -96,24 +96,27 @@
                   <h1 class="headerTitle">Tu nombre en los últimos 100 años</h1>
                 </div>
                 <div class="text-center">
-                  <aside class="headerSubTitle">Descubrí cuántas personas se llamaron como vos en Argentina</aside>
+                  <aside class="headerSubTitle">Descubrí cuántas personas se llamaron como vos en Argentina.</aside>
                 </div>
               </div>
             </div>
           </header>
           <section class="containerCont">
             <div class="container altoTotal">
-              <div class="row altoTotal vcenter">
+              <div class="row altoTotal vcenter" style="justify-content: space-around;">
+                <div class="parrafo_formulario" style="opacity: 0.5;font-weight: 400;font-size: 18px;">
+                  <p>Ingresá tu nombre y un año para ver su evolución Si querés, podés comparar tu nombre con otro. Sólo separalos con coma.</p>
+                </div>
                 <div class="col-xs-12	col-sm-12	col-md-12	col-lg-12 text-center">
                   <form id="name-form" action="/" method="POST" autocomplete="off">
                     <div class="input_group formulario">
-                      <label for="name">¿Cómo te llamás? <img id="pregName" class="preg" src="/images/pregunta.svg"></label>
-                      <input type="text" id="name" name="name" value="<%= names.join(', ') %>" placeholder="Ingresá un nombre"/>
+                      <label for="name">¿Cómo te llamás?</label>
+                      <input type="text" id="name" name="name" value="<%= names.join(', ') %>" placeholder="Por ejemplo: María, Juan Manuel"/>
                       <!-- <div id="errorName" class="hide"></div> -->
                     </div>
                     <div class="input_group formulario">
                       <label for="year">¿En qué año naciste?</label>
-                      <input type="text" id='year' name="year" placeholder="Ingresá un año" value="<%= year %>"/>
+                      <input type="text" id='year' name="year" placeholder="Por ejemplo: 1994" value="<%= year %>"/>
                       <!-- <div id="errorYear" class="hide"></div> -->
                     </div>
                     <button type="submit" class="btn btn-default">¡A buscar!</button>
@@ -135,16 +138,16 @@
             <div class="container altoTotal">
               <div class="titulo_final text-center">
                 <div class="text-center">
-                  <h2 class="headerTitle">¿Querés saber curiosidades sobre los nombres?</h2>
-                </div>
-                <div class="text-center">
-                  <aside class="headerSubTitle">Te contamos lo que aprendimos sobre los nombres en Argentina.</aside>
+                  <h2 class="headerTitle">¿Querés saber curiosidades sobre los nombres en Argentina?</h2>
                 </div>
                 <button type="submit" class="btn btn-default">VER CURIOSIDADES</button>
               </div>
               <div class="parrafo_final text-center">
-                <p>Este producto es posible gracias a los datos de la Dirección Nacional de las Personas del Ministerio del Interior.</p>
-                <p>Podés <a href="">consultar el dataset original</a> y también los <a href="">datos específicos</a> que usamos.</p>
+                <p>Este producto es posible gracias a los <b>datos del Registro Nacional de las Personas del Ministerio de Interior</b>.</p>
+                <br>
+                <p>Argentina cuenta con su ley de identidad de género (<a href="http://servicios.infoleg.gob.ar/infolegInternet/anexos/195000-199999/197860/norma.htm">ley 26.743</a>), que establece que cada persona tiene derecho al reconocimiento y al libre desarrollo de su identidad de género. <b>Estos datos son orientativos y no definen el sexo de cada nombre</b>. Fueron categorizados con un algoritmo predictivo con margen de error.</p>
+                <br>
+                <p>Podés <a href="">consultar el conjunto de datos originales</a> y también los <a href="">datos específicos</a> que usamos.</p>
               </div>
             </div>
           </header>

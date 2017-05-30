@@ -222,18 +222,10 @@ jQuery(function ($) {
             })
             .attr('class', `${ gender }f`)
             .attr('tooltip', function(d,i) {
-              var contenido = `<div class="tooltip_format">
-                <strong>${ formatName(d.name) }</strong>
+              var contenido = `<div class="tooltip_format" style="max-width: 200px">
                 <div>
-                  <span>Personas con este nombre</span>
-                  <span>${ d.quantity }</span>
-                </div>
-                <div>
-                  <span></span>
-                </div>
-                <div>
-                  <span>Año</span>
-                  <span>${ $('select')[0].value }</span>
+                  <strong>${ formatName(d.name) }</strong>
+                  <span>${ d.quantity } personas registradas con este nombre en ${ $('select')[0].value }.</span>
                 </div>
               </div>`;
 
@@ -502,18 +494,14 @@ jQuery(function ($) {
         .attr('tooltip', function(d){
           if (d) {
             var contenido = `<div class="tooltip_format">
-              <strong>${ formatName(d.name) }</strong>
-              <div>
+              <div style="margin-right: 10px">
+                <strong>${ formatName(d.name) } en ${ d.year }</strong>
                 <span>Personas con este nombre</span>
-                <span>${ d.quantity }</span>
+                <span>Popularidad<span style="">*</span></span>
               </div>
               <div>
-                <span>Popularidad (registros ‰)</span>
-                <span>${ (d.value * 10).format(3, 3, '', ',') }</span>
-              </div>
-              <div>
-                <span>Año</span>
-                <span>${ d.year }</span>
+                <span>${ d.quantity.format(0, 3, '.', ',') }</span>
+                <span>${ (d.value * 10).format(3, 3, '', ',') }‰</span>
               </div>
             </div>`;
 
@@ -649,18 +637,14 @@ jQuery(function ($) {
         .attr('tooltip', function(d){
           if (d) {
             var contenido = `<div class="tooltip_format">
-              <strong>${ formatName(d.name) }</strong>
-              <div>
+              <div style="margin-right: 10px">
+                <strong>${ formatName(d.name) } en ${ d.year }</strong>
                 <span>Personas con este nombre</span>
-                <span>${ d.quantity }</span>
+                <span>Popularidad<span style="">*</span></span>
               </div>
               <div>
-                <span>Popularidad (registros ‰)</span>
-                <span>${ (d.value * 10).format(3, 3, '', ',') }</span>
-              </div>
-              <div>
-                <span>Año</span>
-                <span>${ d.year }</span>
+                <span>${ d.quantity.format(0, 3, '.', ',') }</span>
+                <span>${ (d.value * 10).format(3, 3, '', ',') }‰</span>
               </div>
             </div>`;
 
