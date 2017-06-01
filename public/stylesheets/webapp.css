@@ -2,10 +2,13 @@
 html {
   font-size: 10px;
 }
-section,
+section {
+  margin: 0px;
+  padding: 0px;
+}
 h1,
 h2 {
-  margin: 0px 0px 1rem 0px;
+  margin: 0px 0px 14px 0px;
   padding: 0px;
 }
 h1 {
@@ -145,120 +148,77 @@ input:focus, button:focus, select:focus {
   width: 100%;
 }
 
-/* Contenedores */
-.sectionHeader {
-  height: 40%;
-  padding: 0px 0px 0px 0px;
-  color: #5D5D5D;
-}
+/* Section 1 */
+#section1 {}
 #section1 .sectionHeader {
   background-image: url('/images/nuevaTrama.png');
-  background-size: 5em;
+  background-size: 80px;
   color: white;
-  padding: 60px 0px 0px 0px;
-}
-#section4 .sectionHeader {
-  height: 15%;
-}
-#section5 .sectionHeader {
-  height: 70%;
-}
-.containerCont {
-  height: 100%;
-  padding: 0px 0px 0px 0px;
-  width: 100%;
+  padding-top: 72px;
+  height: 43%;
 }
 #section1 .containerCont {
+  height: 57%;
   background-color: rgb(0, 54, 138);
-  color: orange;
-  height: 60%;
-}
-#section2 .containerCont {
-  height: 60%;
-}
-#section4 .containerCont {
-  height: 85%;
-}
-#section5 .containerCont {
-  height: 30%;
-  background-color: white;
-  -ms-flex-pack: center;
-  justify-content: center;
-  padding: 20px 0px;
-}
-
-/* Encabezados */
-.headerTitle {
-  margin-bottom: 5px;
-  font-size: 2rem;
-  font-weight: 400;
-}
-#section1 .headerTitle {
-  font-weight: 600;
-  font-size: 3rem;
-}
-.headerSubTitle {
-  font-size: 1rem;
-  font-weight: 300;
-}
-#section1 .headerSubTitle {
-  font-size: 1.3rem;
-}
-
-/* Parrafos */
-#section3 p {
-  font-size: 2.3rem;
-  font-weight: bold;
-  color: rgba(255, 255, 255, 0.5);
-  margin: 1rem auto 2.5rem auto;
-}
-#section3 p:last-child {
-  margin-bottom: 0px;
-}
-#section5 header p {
-  font-size: 1rem;
-  font-weight: 300;
-  color: #868686;
-  margin: 0px;
-}
-
-/* Secciones */
-#section2 .containerCont {
-  padding: 20px;
-}
-#section3 h2 {
-  margin-bottom: 5rem;
   color: white;
 }
-#section1 label {
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 10px;
+#section1 .img_caritas {
+  width: 200px;
+  margin: 0px auto 20px auto;
+  display: none;
 }
-#section1 input {
+#section1 .headerTitle {
+  width: 100%;
+  max-width: 400px;
+  font-size: 40px;
+  font-weight: 600;
+}
+#section1 .headerSubTitle {
+  width: 300px;
+  font-size: 18px;
+}
+#section1 #name-form {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+#section1 #name-form .formulario {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin-bottom: 20px;
+  width: 100%;
+}
+#section1 #name-form label {
+  font-size: 16px;
+  font-weight: normal;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+#section1 #name-form input {
   border: 1px solid rgba(255, 255, 255, 0.5);;
   border-radius: 10px;
   background-color: transparent;
   color: white;
   outline: none;
   text-align: left;
-  color: white;
   font-size: 16px;
   padding: 5px 20px;
-}
-#name {
   width: 100%;
 }
-#year {
-  width: 150px;
-}
-#section1 input::-webkit-input-placeholder {
+#section1 #name-form input::-webkit-input-placeholder {
   color: rgba(255, 255, 255, 0.5);
   font-weight: 300;
   text-align: left;
   font-size: 16px;
 }
-#section1 button {
+#section1 #name-form button {
   background-color: rgb(3, 169, 244);
   border: 0px;
   border-radius: 10px;
@@ -267,7 +227,409 @@ input:focus, button:focus, select:focus {
   text-transform: uppercase;
   font-size: 16px;
   color: rgb(0, 54, 138);
+  margin: 0px;
+  height: 34px;
 }
+#section1 .form_errors {
+  width: 100%;
+}
+.not-placeholder::-webkit-input-placeholder {
+  color: transparent;
+}
+#section1 .form_errors ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0px;
+  margin: 0px;
+}
+#section1 .form_errors ul li {
+  display: flex;
+  justify-content: flex-start;
+  align-items: baseline;
+  flex-direction: row;
+}
+#section1 .form_errors li span {
+  margin: 10px 10px 0px 10px;
+  text-align: left;
+}
+
+@media (min-width: 768px) {
+  #section1 .sectionHeader {
+    height: 65%;
+  }
+  #section1 .headerTitle {
+    font-size: 70px;
+    max-width: 600px;
+  }
+  #section1 .headerSubTitle {
+    width: 100%;
+    font-size: 26px;
+  }
+  #section1 .img_caritas {
+    width: 275px;
+    display: inherit;
+  }
+  #section1 .containerCont {
+    height: 35%;
+  }
+  #section1 #name-form {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  #section1 #name-form .formulario {
+    margin-bottom: 0px;
+    width: 35%;
+  }
+  #section1 #name-form button {
+    width: 20%;
+  }
+  #section1 .form_errors ul {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0px;
+    margin: 0px;
+  }
+  #section1 .form_errors li:first-child span {
+    margin: 10px 10px 0px 0px;
+  }
+}
+@media (min-width: 992px) {}
+@media (min-width: 1200px) {}
+
+/* Section 2 */
+#section2 {}
+#section2 .sectionHeader {
+  background-color: white;
+  color: inherit;
+  height: 40%;
+}
+#section2 .containerCont {
+  height: 60%;
+  background-color: white;
+  color: inherit;
+}
+#section2 .headerTitle {
+  width: 100%;
+  font-size: 40px;
+  font-weight: 600;
+  max-width: 300px;
+  color: #4D4D4D;
+}
+#section2 .headerSubTitle {
+  width: 100%;
+  font-size: 18px;
+  width: 300px;
+  color: #808080;
+}
+#section2 #infoNombres {
+  top: -20%;
+  display: flex;
+  align-items: center;
+}
+#section2 #infoNombres svg {
+  width: 24px;
+  height: 0.3rem;
+}
+#section2 #infoNombres text {
+  margin-right: 20px;
+  color: #808080;
+  font-size: 18px;
+  font-weight: 300;
+}
+.yAxis .tick text {
+  transform: translateX(-10px);
+  font-size: 12px;
+  fill: #CCCCCC;
+}
+.xAxis .tick text {
+  transform: translateY(10px);
+  font-size: 16px;
+  fill: #777777;
+}
+.axis line {
+ fill: none;
+ stroke: #CCCCCC;
+}
+.axis path {
+  fill: none;
+  stroke: #CCCCCC;
+  stroke-width: 2px;
+}
+.focus circle {
+  fill: white;
+  stroke-width: 4px;
+}
+.voronoi path {
+  fill: none;
+  pointer-events: all;
+}
+line.f0, path.f0, line.f1, path.f1, line.f2, path.f2, line.m0, path.m0, line.m1, path.m1, line.m2, path.m2 {
+ fill: none;
+ stroke-width: 4px;
+ stroke-linecap: round;
+ stroke-linejoin: round;
+}
+line.f0, line.f1, line.f2, line.m0, line.m1, line.m2 {
+  transform: translate(4px, 0.15rem);
+}
+line.f0, path.f0 {
+  stroke: rgb(244, 129, 64);
+}
+line.f1, path.f1 {
+  stroke: #BF360C;
+}
+line.f2, path.f2 {
+  stroke: #FBE9E7;
+}
+line.m0, path.m0 {
+  stroke: #4CAF50;
+}
+line.m1, path.m1 {
+  stroke: #1B5E20;
+}
+line.m2, path.m2 {
+  stroke: #C8E6C9;
+}
+#main-chart {
+  padding-bottom: 40px;
+  height: 100%;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  #section2 .sectionHeader {
+    padding-top: 72px;
+    height: 40%;
+  }
+  #section2 .headerTitle {
+    width: 100%;
+    font-size: 45px;
+    font-weight: 600;
+    max-width: inherit;
+  }
+  #section2 .headerSubTitle {
+    width: 100%;
+    font-size: 22px;
+    width: 100%;
+  }
+  #section2 #infoNombres text {
+    font-size: 22px;
+  }
+  line.f0, path.f0, line.f1, path.f1, line.f2, path.f2, line.m0, path.m0, line.m1, path.m1, line.m2, path.m2, .focus circle {
+    stroke-width: 7px;
+  }
+}
+
+/* Section 3 */
+#section3 {}
+#section3 .containerCont {
+  height: 100%;
+}
+#section3 .headerTitle {
+  width: 100%;
+  font-size: 40px;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 60px;
+}
+#section3 p {
+  font-size: 22px;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 10px auto 20px auto;
+  max-width: 425px;
+}
+#section3 p:last-child {
+  margin-bottom: 0px;
+}
+#section3 p b {
+  color: white;
+}
+
+@media (min-width: 768px) {
+  #section3 .containerCont {
+    padding-top: 72px;
+    height: 100%;
+  }
+  #section3 .headerTitle {
+    font-size: 45px;
+    margin-bottom: 80px;
+  }
+  #section3 p {
+    font-size: 45px;
+    margin: 10px auto 40px auto;
+    max-width: 880px;
+  }
+}
+
+/* Section 4 */
+#section4 {}
+#section4 .sectionHeader {
+  background-color: white;
+  color: inherit;
+  height: 40%;
+}
+#section4 .containerCont {
+  height: 60%;
+  background-color: white;
+  color: inherit;
+}
+#section4 .headerTitle {
+  width: 100%;
+  font-size: 40px;
+  font-weight: 600;
+  max-width: 300px;
+  color: #4D4D4D;
+}
+#section4 .headerSubTitle {
+  font-size: 18px;
+  width: 300px;
+  color: #808080;
+}
+#section4 form {
+  margin-top: 20px;
+}
+#section4 form #buscaPor aside,
+#section4 form #buscaPor label {
+  color: #808080;
+  font-size: 22px;
+  font-weight: 300;
+}
+#section4 input[type="radio"] {
+  display: none;
+}
+#section4 #buscaPor > div > label {
+  cursor: pointer;
+  position: relative;
+  padding-left: 20px;
+}
+#section4 #buscaPor > div > label:before {
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+  background-color: transparent;
+  border: 1px solid #5D5D5D;
+  border-radius: 100%;
+  transition: background 0.25s linear;
+}
+#section4 input[type=radio]:checked + label:before {
+  content: "\2022" !important;
+  color: #5D5D5D !important;
+  font-size: 28px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-weight: 900 !important;
+}
+#section4 .contenedorCaritas {
+  display: none;
+  margin: 0px auto;
+  width: 200px;
+  position: relative;
+}
+#extra-year-data {
+  display: flex;
+  padding: 0px 0px 20px 0px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+#extra-year-data svg {
+  width: 100%;
+}
+#extra-year-data .bubblemale #tooltipBubble1 {
+  fill: rgba(66, 190, 92, 0.5) !important;
+}
+#extra-year-data .bubblefemale #tooltipBubble1 {
+  fill: rgba(242, 113, 47, 0.5) !important;
+}
+#extra-year-data text {
+  fill: #5D5D5D;
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  #section4 .containerCont {
+    height: 75%;
+  }
+  #section4 .sectionHeader {
+    padding-top: 72px;
+    height: 25%;
+  }
+  #section4 .headerTitle {
+    font-size: 45px;
+    max-width: inherit;
+  }
+  #section4 .headerSubTitle {
+    font-size: 22px;
+    width: 100%;
+  }
+  #section4 .contenedorCaritas {
+    display: block;
+  }
+  #extra-year-data {
+    padding: 0px 0px 40px 0px;
+  }
+  #extra-year-data svg {
+    width: 50%;
+  }
+  #extra-year-data text {
+    font-size: 18px;
+  }
+}
+
+/* Section 5 */
+#section5 {}
+#section5 .sectionHeader {
+  height: calc(100% - 230px);
+  background-color: #E6E7E8;
+}
+#section5 .headerTitle {
+  width: 100%;
+  font-size: 32px;
+  font-weight: 600;
+  max-width: 400px;
+  color: #4D4D4D;
+}
+#section5 .headerSubTitle {
+  font-size: 18px;
+  width: 300px;
+  margin: auto;
+  color: #808080;
+  margin-bottom: 20px;
+}
+#section5 header p {
+  font-size: 12px;
+  font-weight: 300;
+  color: #868686;
+  margin: 0px;
+}
+
+@media (min-width: 768px) {
+  #section5 .sectionHeader {
+    padding-top: 72px;
+  }
+  #section5 .headerTitle {
+    font-size: 35px;
+    max-width: inherit;
+  }
+  #section5 .headerSubTitle {
+    font-size: 22px;
+    width: 100%;
+    margin-bottom: 40px;
+  }
+  #section5 header p {
+    font-size: 17px;
+  }
+}
+
 #section5 button {
   background-color: #CCCCCC;
   border: 0px;
@@ -280,34 +642,14 @@ input:focus, button:focus, select:focus {
   margin: 0px;
   margin-top: 10px;
 }
-#section2,
-#section4 {
-  background-color: white;
-}
-#section5 {
-  background-color: #E6E7E8;
-}
-#section4 .contenedorCaritas {
-  margin: 0px auto;
-  top: 20px;
-  position: relative;
-}
-#section3 p b {
-  color: white;
-}
+
 #section5 header > div {
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-direction: column;
   flex-direction: column;
-  -ms-flex-align: center;
   align-items: center;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
+  justify-content: space-around;
 }
-#section3Padd {
-  padding-top: 60px;
-}
+
 
 /* Tooltip generales*/
 .colorWhite {
@@ -325,100 +667,17 @@ input:focus, button:focus, select:focus {
   display: none;
 }
 .ot-content {
-    font-size: 0.75rem;
+    font-size: 14px;
 }
 
 /* Graficos en Linea */
- #main-chart {
-   /*top: 50%;
-   left: 50%;
-   position: absolute;
-   transform: translate(-50%, -50%);*/
- }
- .axis path,
- .axis line {
-   fill: none;
-   stroke: #CCCCCC;
- }
- .axis path {
-   stroke-width: 2px;
- }
- line.f0, path.f0,
- line.f1, path.f1,
- line.f2, path.f2,
- line.m0, path.m0,
- line.m1, path.m1,
- line.m2, path.m2 {
-  fill: none;
-  stroke-width: 0.3rem;
-  stroke-linecap: round;
-  stroke-linejoin: round;
- }
- line.f0,
- line.f1,
- line.f2,
- line.m0,
- line.m1,
- line.m2 {
-  transform: translate(4px, 0.15rem);
- }
- line.f0, path.f0 {
-   stroke: rgb(244, 129, 64);
- }
- line.f1, path.f1 {
-   stroke: #BF360C;
- }
- line.f2, path.f2 {
-   stroke: #FBE9E7;
- }
- line.m0, path.m0 {
-   stroke: #4CAF50;
- }
- line.m1, path.m1 {
-   stroke: #1B5E20;
- }
- line.m2, path.m2 {
-   stroke: #C8E6C9;
- }
- .hover-line {
-   fill: none;
-   pointer-events: all;
- }
- .focus circle {
-   fill: none;
-   stroke: #5D5D5D;
- }
- .voronoi path {
+ /*.hover-line {
    fill: none;
    pointer-events: all;
  }
  .line-hover{
    stroke-width: 4;
- }
- #infoNombres {
-   /*position: absolute;*/
-   top: -20%;
-   display: -ms-flexbox;
-   display: flex;
-   -ms-flex-align: center;
-   align-items: center;
- }
- #infoNombres svg {
-   width: 24px;
-   height: 0.3rem;
- }
-
-
- .yAxis .tick text {
-   transform: translateX(-10px);
-   font-size: 12px;
-   fill: #CCCCCC;
- }
- .xAxis .tick text {
-   transform: translateY(10px);
-   font-size: 16px;
-   fill: #777777;
- }
+ }*/
 
 /* Grafico Bubble */
 .contenedorCaritas {
@@ -468,9 +727,6 @@ input:focus, button:focus, select:focus {
 input[type="radio"], input[type="checkbox"] {
   margin: 0px 5px 0px 5px;
 }
-#section4 input[type="radio"] {
-  display: none;
-}
 .infoButton {
   display: -ms-flexbox;
   display: flex;
@@ -481,57 +737,7 @@ input[type="radio"], input[type="checkbox"] {
   -ms-flex-direction: row;
   flex-direction: row;
 }
-#section4 label {
-  cursor: pointer;
-  position: relative;
-  padding-left: 20px;
-}
-#section4 label:before {
-  content: "";
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  margin-right: 5px;
-  background-color: transparent;
-  border: 1px solid #5D5D5D;
-  border-radius: 100%;
-}
-#section4 input[type=radio]:checked + label:before {
-  content: "\2022";
-  color: #5D5D5D;
-  font-size: 28px;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-align: center;
-  align-items: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  font-weight: 900;
-}
 
-#section4 {
-
-}
-#extra-year-data {
-  display: -ms-flexbox;
-  display: flex;
-  padding: 50px 20px 0px 20px;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -ms-flex-direction: column;
-  flex-direction: column;
-}
-.contenedorCaritas {
-  display: none;
-}
-.bubblemale #tooltipBubble1 {
-  fill: rgba(66, 190, 92, 0.5) !important;
-}
-.bubblefemale #tooltipBubble1 {
-  fill: rgba(242, 113, 47, 0.5) !important;
-}
 #containerSlide {
   z-index: 999999;
   position: fixed;
@@ -576,7 +782,6 @@ input[type="radio"], input[type="checkbox"] {
 #fp-nav {
   display: none;
 }
-
 #buscaPor {
   display: -ms-flexbox;
   display: flex;
@@ -604,9 +809,7 @@ input[type="radio"], input[type="checkbox"] {
    font-weight: 300;
    text-align: left;
  }
- #caritas {
-   display: none;
- }
+
 /* Responsive */
 @media(min-width:415px){
   html {
@@ -614,18 +817,9 @@ input[type="radio"], input[type="checkbox"] {
   }
 }
 @media(min-width:600px){
-  #section1 .containerCont {
-    height: 50%;
-  }
-  #caritas {
-    display: inherit;
-    width: 225px;
-    margin: 0px auto 20px auto;
-  }
-  /* Barra Superior */
   #firstheader {
     -ms-flex-pack: distribute;
-        justify-content: space-around;
+    justify-content: space-around;
   }
   #logo {
       margin: 0px;
@@ -638,104 +832,18 @@ input[type="radio"], input[type="checkbox"] {
     -ms-flex-align: center;
     align-items: center;
   }
-  #extra-year-data {
-    -ms-flex-direction: row;
-    flex-direction: row;
-    padding: 0px 20px 0px 20px;
-  }
   #fp-nav {
-    display: block;
-  }
-  .contenedorCaritas {
     display: block;
   }
   .formularioBubble select {
     padding: 0px;
   }
-  .sectionHeader {
-    height: 50%;
-    padding: 60px 0px 0px 0px;
-  }
-  #section2 .sectionHeader {
-    height: 40%;
-  }
-  #section4 .sectionHeader {
-    height: 25%;
-  }
-  #section4 .containerCont {
-    height: 75%;
-  }
-  #section4 .sectionHeader {
-    height: 25%;
-  }
-  #section2 .containerCont {
-    padding: 20px 40px;
-  }
-  #section5 .sectionHeader {
-    height: 70%;
-  }
-}
-@media(min-width:600px) and (min-height:900px) {
-  html {
-    font-size: 19px;
-  }
-}
-@media(min-width:768px){
-  html {
-    font-size: 13px;
-  }
-  .seccionFormularioBubble {
-    top: 25%;
-  }
-}
-@media(min-width:992px){
-  html {
-    font-size: 16px;
-  }
-  #section3 p {
-    font-size: 2.1rem;
-  }
-}
-@media(min-width:1200px){
-  html {
-    font-size: 16px;
-  }
-  #section3 p {
-    font-size: 2.3rem;
-  }
-}
-@media(min-width:1400px){
-  html {
-    font-size: 18px;
-  }
 }
 
-.formulario {
-  -ms-flex-align: start;
-      align-items: flex-start;
-}
-.formulario label {
-  color: white;
-  text-transform: uppercase;
-}
-
-.subContainerForm {
-  width: 100%;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-pack: start;
-      justify-content: flex-start;
-  -ms-flex-align: center;
-      align-items: center;
-  -ms-flex-direction: row;
-      flex-direction: row;
-  margin-bottom: 15px;
-}
 .preg {
   width: 20px;
   margin-left: 10px;
 }
-
 
 /* Nuevos estilos */
 body {
@@ -745,9 +853,9 @@ body {
 #header {
   background: white;
   padding: 0;
-  -o-box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.5);
   box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.5);
-  position: relative;
+  position: absolute;
+  width: 100%;
   white-space: nowrap;
   z-index: 9000;
 }
@@ -1102,4 +1210,24 @@ body {
 }
 #more p {
   text-align: center;
+}
+.tooltip_format {
+  padding: 6px 0px;
+  display: flex;
+  align-items: flex-end;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.tooltip_format strong {
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+.tooltip_format span {
+  line-height: 1.5;
+}
+.tooltip_format div {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
 }

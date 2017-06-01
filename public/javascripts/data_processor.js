@@ -183,9 +183,12 @@ jQuery(function ($) {
       totalQuantity += nameData[i].quantity;
     }
 
-    return "Entre los años 1922 y 2015, nacieron <b>" + new Intl.NumberFormat("de-DE").format(totalQuantity) + " " + capitalizeFirstLetter(name) + "</b>.";
+    if (totalQuantity > 1) {
+      return `Entre 1922 y 2015, se registraron <b>${ new Intl.NumberFormat("de-DE").format(totalQuantity) } ${ capitalizeFirstLetter(name) }</b>.`;
+    } else {
+      return `Entre 1922 y 2015, se registró <b>${ new Intl.NumberFormat("de-DE").format(totalQuantity) } ${ capitalizeFirstLetter(name) }</b>.`;
+    }
   };
-
   statisticsCalculator.minMaxYear = function (name, nameData) {
     var maxYear = 1922
       , maxYearNumber = 0
@@ -216,10 +219,8 @@ jQuery(function ($) {
         minYearNumber = quantity;
       }
     }
-
-    return "Tu nombre alcanzó la mayor popularidad en <b>" + maxYear + "</b> y la menor en <b>" + minYear + "</b>.";
+    return `Tu nombre alcanzó la mayor popularidad en <b>${ maxYear }</b> y, la menor, en <b>${ minYear }</b>.`;
   };
-
   statisticsCalculator.currentYear = function (name, nameData, currYear) {
     var indexCurrYear = currYear - MIN_YEAR;
     var numNamesCurrYear = nameData[indexCurrYear].quantity;
@@ -227,9 +228,9 @@ jQuery(function ($) {
     if (numNamesCurrYear == 0) {
       return "No hay registro de personas llamadas así en ese año";
     } else if(numNamesCurrYear == 1){
-      return "El año en el que naciste, sólo <b>" + numNamesCurrYear + "</b> persona se llamó igual que vos. ¡Uauu!";
+      return "El año en el que naciste, sólo <b>" + numNamesCurrYear + "</b> persona se llamó igual que vos.";
     } else {
-      return "El año en el que naciste, otras <b>" + new Intl.NumberFormat("de-DE").format(numNamesCurrYear) + "</b> personas se llamaron igual que vos. ¡Uauu!";
+      return "El año en el que naciste, otras <b>" + new Intl.NumberFormat("de-DE").format(numNamesCurrYear) + "</b> personas se llamaron igual que vos.";
     }
   }
 
