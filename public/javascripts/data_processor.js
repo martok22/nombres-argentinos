@@ -184,9 +184,9 @@ jQuery(function ($) {
     }
 
     if (totalQuantity > 1) {
-      return `Entre 1922 y 2015, se registraron <b>${ new Intl.NumberFormat("de-DE").format(totalQuantity) } ${ capitalizeFirstLetter(name) }</b>.`;
+      return `Entre 1922 y 2015, se registraron <b>${ new Intl.NumberFormat("de-DE").format(totalQuantity) }</b> personas llamadas <b>${ capitalizeFirstLetter(name) }</b>.`;
     } else {
-      return `Entre 1922 y 2015, se registró <b>${ new Intl.NumberFormat("de-DE").format(totalQuantity) } ${ capitalizeFirstLetter(name) }</b>.`;
+      return `Entre 1922 y 2015, sólo vos te llamaste <b>${ capitalizeFirstLetter(name) }</b>.`;
     }
   };
   statisticsCalculator.minMaxYear = function (name, nameData) {
@@ -226,11 +226,11 @@ jQuery(function ($) {
     var numNamesCurrYear = nameData[indexCurrYear].quantity;
 
     if (numNamesCurrYear == 0) {
-      return "No hay registro de personas llamadas así en ese año";
+      return `Nadie se llamó así en ${ currYear }.`;
     } else if(numNamesCurrYear == 1){
-      return "El año en el que naciste, sólo <b>" + numNamesCurrYear + "</b> persona se llamó igual que vos.";
+      return `En ${ currYear }, sólo vos te llamaste así.`;
     } else {
-      return "El año en el que naciste, otras <b>" + new Intl.NumberFormat("de-DE").format(numNamesCurrYear) + "</b> personas se llamaron igual que vos.";
+      return `En ${ currYear }, otras <b>${ new Intl.NumberFormat("de-DE").format(numNamesCurrYear - 1) }</b> personas se llamaron igual que vos.`;
     }
   }
 
