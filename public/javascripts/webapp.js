@@ -147,7 +147,7 @@ jQuery(function ($) {
         ACTIVE_NAMES      = data.processedNames;
         ACTIVE_NAMES_DATA = data.namesData;
         STATISTICS        = data.statistics;
-        ACTIVE_GENDER     = data.namesData[data.names[0].toLowerCase()][0].gender;
+        ACTIVE_GENDER     = data.namesData[data.names[0].toLowerCase().replace(' ', '_')][0].gender;
 
         this.nameChart(ACTIVE_NAMES, ACTIVE_YEAR, ACTIVE_NAMES_DATA);
         this.nameStatistics(STATISTICS);
