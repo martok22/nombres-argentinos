@@ -170,7 +170,7 @@ input:focus, button:focus, select:focus {
 #section1 .headerTitle {
   width: 100%;
   max-width: 400px;
-  font-size: 40px;
+  font-size: 36px;
   font-weight: 600;
 }
 #section1 .headerSubTitle {
@@ -208,7 +208,7 @@ input:focus, button:focus, select:focus {
   color: white;
   outline: none;
   text-align: left;
-  font-size: 16px;
+  font-size: 14px;
   padding: 5px 20px;
   width: 100%;
 }
@@ -216,7 +216,7 @@ input:focus, button:focus, select:focus {
   color: rgba(255, 255, 255, 0.5);
   font-weight: 300;
   text-align: left;
-  font-size: 16px;
+  font-size: 14px;
 }
 #section1 #name-form button {
   background-color: rgb(3, 169, 244);
@@ -252,10 +252,23 @@ input:focus, button:focus, select:focus {
   flex-direction: row;
 }
 #section1 .form_errors li span {
-  margin: 10px 10px 0px 10px;
+  margin: 5px 5px 0px 0px;
   text-align: left;
+  font-size: 14px;
 }
 
+@media (min-height: 736px) and (max-width: 768px) {
+  #section1 .sectionHeader {
+    height: 50%;
+  }
+  #section1 .containerCont {
+    height: 50%;
+  }
+  #section1 .img_caritas {
+    width: 200px;
+    display: inherit;
+  }
+}
 @media (min-width: 768px) {
   #section1 .sectionHeader {
     height: 65%;
@@ -264,13 +277,13 @@ input:focus, button:focus, select:focus {
     font-size: 70px;
     max-width: 600px;
   }
-  #section1 .headerSubTitle {
-    width: 100%;
-    font-size: 26px;
-  }
   #section1 .img_caritas {
     width: 275px;
     display: inherit;
+  }
+  #section1 .headerSubTitle {
+    width: 100%;
+    font-size: 26px;
   }
   #section1 .containerCont {
     height: 35%;
@@ -315,15 +328,16 @@ input:focus, button:focus, select:focus {
 }
 #section2 .headerTitle {
   width: 100%;
-  font-size: 40px;
+  font-size: 30px;
   font-weight: 600;
-  max-width: 300px;
+  max-width: 225px;
   color: #4D4D4D;
 }
 #section2 .headerSubTitle {
   width: 100%;
   font-size: 18px;
   width: 300px;
+  max-width: 225px;
   color: #808080;
 }
 #section2 #infoNombres {
@@ -338,7 +352,7 @@ input:focus, button:focus, select:focus {
 #section2 #infoNombres text {
   margin-right: 20px;
   color: #808080;
-  font-size: 18px;
+  font-size: 14px;
   font-weight: 300;
 }
 .yAxis .tick text {
@@ -401,10 +415,21 @@ line.m2, path.m2 {
   width: 100%;
 }
 
+@media (min-height: 736px) and (max-width: 768px) {
+  #section2 .sectionHeader {
+    height: 30%;
+  }
+  #section2 .containerCont {
+    height: 70%;
+  }
+}
 @media (min-width: 768px) {
   #section2 .sectionHeader {
     padding-top: 72px;
-    height: 40%;
+    height: 35%;
+  }
+  #section2 .containerCont {
+    height: 65%;
   }
   #section2 .headerTitle {
     width: 100%;
@@ -416,9 +441,10 @@ line.m2, path.m2 {
     width: 100%;
     font-size: 22px;
     width: 100%;
+    max-width: inherit;
   }
   #section2 #infoNombres text {
-    font-size: 22px;
+    font-size: 16px;
   }
   line.f0, path.f0, line.f1, path.f1, line.f2, path.f2, line.m0, path.m0, line.m1, path.m1, line.m2, path.m2, .focus circle {
     stroke-width: 7px;
@@ -472,16 +498,16 @@ line.m2, path.m2 {
 #section4 .sectionHeader {
   background-color: white;
   color: inherit;
-  height: 40%;
+  height: 30%;
 }
 #section4 .containerCont {
-  height: 60%;
+  height: 70%;
   background-color: white;
   color: inherit;
 }
 #section4 .headerTitle {
   width: 100%;
-  font-size: 40px;
+  font-size: 30px;
   font-weight: 600;
   max-width: 300px;
   color: #4D4D4D;
@@ -494,10 +520,13 @@ line.m2, path.m2 {
 #section4 form {
   margin-top: 20px;
 }
+#section4 form #buscaPor span {
+  font-size: 14px;
+}
 #section4 form #buscaPor aside,
 #section4 form #buscaPor label {
   color: #808080;
-  font-size: 22px;
+  font-size: 16px;
   font-weight: 300;
 }
 #section4 input[type="radio"] {
@@ -506,7 +535,7 @@ line.m2, path.m2 {
 #section4 #buscaPor > div > label {
   cursor: pointer;
   position: relative;
-  padding-left: 20px;
+  padding-left: 10px;
 }
 #section4 #buscaPor > div > label:before {
   content: "";
@@ -557,11 +586,11 @@ line.m2, path.m2 {
 
 @media (min-width: 768px) {
   #section4 .containerCont {
-    height: 75%;
+    height: 70%;
   }
   #section4 .sectionHeader {
     padding-top: 72px;
-    height: 25%;
+    height: 30%;
   }
   #section4 .headerTitle {
     font-size: 45px;
@@ -593,13 +622,14 @@ line.m2, path.m2 {
 }
 #section5 .headerTitle {
   width: 100%;
-  font-size: 32px;
+  font-size: 24px;
   font-weight: 600;
   max-width: 400px;
+  margin-bottom: 0px;
   color: #4D4D4D;
 }
 #section5 .headerSubTitle {
-  font-size: 18px;
+  font-size: 16px;
   width: 300px;
   margin: auto;
   color: #808080;
@@ -612,13 +642,32 @@ line.m2, path.m2 {
   margin: 0px;
 }
 
+@media (min-height: 636px) and (max-width: 768px) {
+  #section5 header p {
+    margin-bottom: 10px;
+    font-size: 13px;
+  }
+}
+@media (min-height: 736px) and (max-width: 768px) {
+  #section5 .headerTitle {
+    margin-bottom: 10px;
+  }
+  #section5 header p {
+    margin-bottom: 20px;
+    font-size: 14px;
+  }
+  #section5 header p:last-child {
+    margin-bottom: 0px;
+  }
+}
 @media (min-width: 768px) {
   #section5 .sectionHeader {
     padding-top: 72px;
   }
   #section5 .headerTitle {
-    font-size: 35px;
+    font-size: 30px;
     max-width: inherit;
+    margin-bottom: 20px;
   }
   #section5 .headerSubTitle {
     font-size: 22px;
@@ -626,7 +675,11 @@ line.m2, path.m2 {
     margin-bottom: 40px;
   }
   #section5 header p {
-    font-size: 17px;
+    margin-bottom: 20px;
+    font-size: 16px;
+  }
+  #section5 header p:last-child {
+    margin-bottom: 0px;
   }
 }
 
@@ -1230,4 +1283,29 @@ body {
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-start;
+}
+.parrafo_formulario {
+  padding: 0px 20px;
+  opacity: 0.5;
+  font-weight: 400;
+  font-size: 14px;
+  text-align: center;
+}
+.parrafo_formulario p {
+  margin-bottom: 0px;
+}
+@media (min-width: 768px) {
+  .parrafo_formulario {
+    font-size: 18px;
+  }
+}
+.unidad_medida {
+  position: absolute;
+  bottom: 0px;
+  font-size: 12px;
+  line-height: 16px;
+  margin-bottom: 10px;
+}
+.SumoSelect {
+  font-size: 14px;
 }
