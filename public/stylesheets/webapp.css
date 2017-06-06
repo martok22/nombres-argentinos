@@ -1568,3 +1568,6 @@ body {
 .SumoSelect {
   font-size: 14px;
 }
+.seccionFormularioBubble {
+  z-index: 10;
+}

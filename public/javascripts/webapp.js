@@ -733,11 +733,11 @@ jQuery(function ($) {
     var selectores = $('select')
       .SumoSelect({ nativeOnDevice: ['Android', 'BlackBerry', 'iPhone', 'iPad', 'iPod', 'Opera Mini', 'IEMobile', 'Silk']})
       .on('sumo:opened', (sumo) => {
-        $.fn.fullpage.setAutoScrolling(false);
+        // $.fn.fullpage.setAutoScrolling(false);
         $('body').css({ 'overflow': 'hidden' });
       })
       .on('sumo:closed', (sumo) => {
-        $.fn.fullpage.setAutoScrolling(true);
+        // $.fn.fullpage.setAutoScrolling(true);
         $('body').css({ 'overflow': 'visible' });
       });
 
@@ -798,8 +798,7 @@ jQuery(function ($) {
 
   /* Generar el grafico de burbujas en funcion de
     la seleccion del input */
-    $('.selectBubble')
-    .on('change', function(e) {
+    $('.selectBubble').on('change', function(e) {
       if ($('#anio').is(':checked')) {
         datoSeleccionado = $('#yearData').val();
       } else {
