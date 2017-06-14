@@ -693,22 +693,22 @@ jQuery(function ($) {
       var error_element = $('.form_errors ul');
 
       if (all_errors.empty_name === true) {
-        error_element.append(`<li><span class="glyphicon glyphicon-exclamation-sign"></span><span>¡Ups! Por favor, completá tu nombre.</span></li>`);
+        error_element.append(`<li><span class="glyphicon glyphicon-exclamation-sign"></span><span>Por favor, completá tu nombre.</span></li>`);
       }
       if (all_errors.empty_year === true) {
-        error_element.append(`<li><span class="glyphicon glyphicon-exclamation-sign"></span><span>¡Ups! Por favor, completá un año.</span></li>`);
+        error_element.append(`<li><span class="glyphicon glyphicon-exclamation-sign"></span><span>Por favor, completá un año.</span></li>`);
       }
       if (all_errors.invalid_name === true) {
-        error_element.append(`<li><span class="glyphicon glyphicon-exclamation-sign"></span><span>¡Ups! Revisá que tu nombre esté bien escrito.</span></li>`);
+        error_element.append(`<li><span class="glyphicon glyphicon-exclamation-sign"></span><span>Revisá que tu nombre esté bien escrito.</span></li>`);
       }
       if (all_errors.invalid_year === true) {
-        error_element.append(`<li><span class="glyphicon glyphicon-exclamation-sign"></span><span>¡Ups! Revisá que el año esté bien escrito.</span></li>`);
+        error_element.append(`<li><span class="glyphicon glyphicon-exclamation-sign"></span><span>Revisá que el año esté bien escrito.</span></li>`);
       }
       if (all_errors.limit_name === true) {
-        error_element.append(`<li><span class="glyphicon glyphicon-exclamation-sign"></span><span>¡Ups! Podes ingresar hasta 3 nombres.</span></li>`);
+        error_element.append(`<li><span class="glyphicon glyphicon-exclamation-sign"></span><span>Podes ingresar hasta 3 nombres.</span></li>`);
       }
       if (all_errors.range_year === true) {
-        error_element.append(`<li><span class="glyphicon glyphicon-exclamation-sign"></span><span>¡Ups! No tenemos esa fecha. Por favor, buscá entre ${ MIN_YEAR } y ${ MAX_YEAR }.</span></li>`);
+        error_element.append(`<li><span class="glyphicon glyphicon-exclamation-sign"></span><span>No tenemos esa fecha. Por favor, buscá entre ${ MIN_YEAR } y ${ MAX_YEAR }.</span></li>`);
       }
     }
   };
@@ -733,11 +733,11 @@ jQuery(function ($) {
     var selectores = $('select')
       .SumoSelect({ nativeOnDevice: ['Android', 'BlackBerry', 'iPhone', 'iPad', 'iPod', 'Opera Mini', 'IEMobile', 'Silk']})
       .on('sumo:opened', (sumo) => {
-        $.fn.fullpage.setAutoScrolling(false);
+        // $.fn.fullpage.setAutoScrolling(false);
         $('body').css({ 'overflow': 'hidden' });
       })
       .on('sumo:closed', (sumo) => {
-        $.fn.fullpage.setAutoScrolling(true);
+        // $.fn.fullpage.setAutoScrolling(true);
         $('body').css({ 'overflow': 'visible' });
       });
 
@@ -798,8 +798,7 @@ jQuery(function ($) {
 
   /* Generar el grafico de burbujas en funcion de
     la seleccion del input */
-    $('.selectBubble')
-    .on('change', function(e) {
+    $('.selectBubble').on('change', function(e) {
       if ($('#anio').is(':checked')) {
         datoSeleccionado = $('#yearData').val();
       } else {
