@@ -1,6 +1,7 @@
 require 'sinatra/base'
 require 'sinatra/config_file'
 require 'json'
+require 'mysql2'
 require root_path('helpers/assets')
 
 class App < Sinatra::Base
@@ -33,6 +34,11 @@ class App < Sinatra::Base
       cache_control :public, :must_revalidate, max_age: 60 * 60 * 24
       names = (params[:others] || '').split(',')
       names.unshift(main_name) if main_name
+      
+      # Buscar en la base
+      puts client
+      puts "hola"
+
       erb(:'index.html', layout: :'layout.html', locals: {
         names: names.map(&:strip),
         main_name: main_name,
