@@ -36,8 +36,7 @@ class App < Sinatra::Base
       names.unshift(main_name) if main_name
       
       # Buscar en la base
-      puts client
-      puts "hola"
+      
 
       erb(:'index.html', layout: :'layout.html', locals: {
         names: names.map(&:strip),
