@@ -268,7 +268,7 @@ input:focus, button:focus, select:focus {
   font-size: 14px;
 }
 #section1 #name-form button {
-  background-color: rgb(3, 169, 244);
+  background-color: #0695d6;
   border: 0px;
   border-radius: 10px;
   padding: 5px 20px;
@@ -279,6 +279,16 @@ input:focus, button:focus, select:focus {
   margin: 0px;
   height: 34px;
 }
+#section1 #name-form button:hover {
+  background-color: #17b2f8;
+}
+
+1 de agosto
+martes
+
+15 de diciembre
+
+
 #section1 .form_errors {
   width: 100%;
 }
@@ -919,13 +929,47 @@ line.m2, path.m2 {
   background-color: #CCCCCC;
   border: 0px;
   border-radius: 10px;
-  padding: 0.5rem 1rem;
+  padding: 5px 20px;
   font-weight: 400;
   text-transform: none;
   font-size: 1.3rem;
   color: #5D5D5D;
   margin: 0px;
+}
+#section5 .titulo_final h2 {
+  font-size: 18px;
+}
+@media (min-width: 768px) {
+  #section5 .titulo_final h2 {
+    font-size: 30px;
+  }
+}
+#section5 .titulo_final button {
+  color: white;
+  background-color: #0695d6;
+  border: none;
+  cursor: pointer;
+  text-transform: uppercase;
+  outline: none;
+  -webkit-transition: all 0.25s;
+  transition: all 0.25s;
+  position: relative;
+  padding: 5px 20px;
+  -webkit-border-radius: 50px;
+  border-radius: 50px;
   margin-top: 10px;
+}
+@media (min-width: 768px) {
+  #section5 .titulo_final button {
+    padding: 15px 30px;
+  }
+}
+#section5 .titulo_final button:hover {
+  color: white;
+  background-color: #17b2f8;
+}
+#section5 .titulo_final button:active {
+  top: 1px;
 }
 
 #section5 header > div {
@@ -1570,4 +1614,20 @@ body {
 }
 .seccionFormularioBubble {
   z-index: 10;
+}
+p.issue {
+  text-align: center;
+  font-size: 13px;
+  margin: 0px auto;
+  color: $generic_color;
+}
+#logo-interior {
+  height: 35px;
+  margin-top: 10px;
+}
+@media (min-width: 768px) {
+  #logo-interior {
+    height: 45px;
+    margin-top: 10px;
+  }
 }
