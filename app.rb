@@ -35,8 +35,8 @@ class App < Sinatra::Base
       names = (params[:others] || '').split(',')
       names.unshift(main_name) if main_name
       
-      # Buscar en la base
-      
+      main_name_json = Nombre.new(main_name).get_all
+      puts main_name_json
 
       erb(:'index.html', layout: :'layout.html', locals: {
         names: names.map(&:strip),
@@ -48,3 +48,5 @@ class App < Sinatra::Base
     end
   end
 end
+
+require_relative('models/nombre.rb')

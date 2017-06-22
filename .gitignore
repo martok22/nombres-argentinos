@@ -7,3 +7,4 @@ data/nombres1922a2015-sin-genero.csv
 config/mysql.conf
 config/app_config.yml
 .DS_Store
+config/*
