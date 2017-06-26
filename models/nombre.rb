@@ -26,5 +26,3 @@ class Nombre
         all_years.to_json
     end
 end
-
-require_relative('anio.rb')

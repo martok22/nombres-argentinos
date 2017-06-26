@@ -1,10 +1,7 @@
 #!/usr/bin/ruby
 class Anio
     def initialize(year, gender, quantity, percentage)
-        @year = year
-        @gender = gender
-        @quantity = quantity
-        @percentage = percentage
+        @year, @gender, @quantity, @percentage = year, gender, quantity, percentage        
     end
 
     def year
