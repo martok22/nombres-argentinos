@@ -14,6 +14,8 @@ class App < Sinatra::Base
   NOMBRES_DEFAULT = ["Emilia", "Benjamin"]
   YEAR_DEFAULT = 2015
 
+  NOMBRES_DEFAULT = ["Emilia", "Benjamin"]
+
   configure do
     set :views, root_path('views')
     set :public_folder, root_path('public')
@@ -33,7 +35,7 @@ class App < Sinatra::Base
     erb :'not_found.html'
   end
 
-  get %r{/(?:nombre/([^/]{2,120})(?:/(\d{4,4}))?)?} do |main_name, year|
+  get %r{/(?:nombre/([^/]{2,120})(?:/(\d{4,4}))?)?$} do |main_name, year|
     if settings.app_domain === request.env['HTTP_HOST']
       cache_control :public, :must_revalidate, max_age: 60 * 60 * 24
       
