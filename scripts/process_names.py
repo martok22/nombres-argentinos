@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import pandas as pd
 import numpy as np
+import sqlalchemy
 from sqlalchemy import create_engine
 import json
 import re
@@ -17,7 +18,9 @@ engine = create_engine(
 
 # Conexion a base mysql
 engine = create_engine(
-    'mysql://root:5B1c1cl3t4l@127.0.0.1/nombres?charset=utf8')
+    "mysql://" + config["username"] + ":" + config["password"] +
+    "@" + config["host"] + "/nombres?charset=utf8",
+    pool_recycle=3600)
 
 
 def format_name(name):
@@ -36,7 +39,7 @@ def format_name(name):
 
 
 # Load csv into dataframe
-df = pd.read_csv('../data/nombres-sample.csv',
+df = pd.read_csv('../data/nombres1922a2015conpp.csv',
                  header=None,
                  dtype={'0': str,
                         '1': np.int32,
@@ -49,29 +52,31 @@ df = df.groupby(('name', 'year', 'gender')).agg(
     {'quantity': sum, 'percentage': sum}).reset_index()
 
 # Escribir dataframe a base
-df.to_sql('nombres', engine, flavor='mysql', if_exists='replace')
+# df.to_sql('nombres', engine, flavor='mysql',
+#           if_exists='replace', chunksize=20000)
+# print("Terminamos de escribir nombres a la base")
 
 # --- Start calculos de top anuales ---
 
 # Agrupar nombres por anio
-df_by_year = df.groupby('year')
+# df_by_year = df.groupby('year')
 
-# Iterar por los años y generar jsons anuales dividos por genero
-for name, group in df_by_year:
-    year = format_name(str(name))
-    top_year = {}
-    df_by_gender = group.groupby('gender')
-    for name, group in df_by_gender:
-        gender = name.lower()
-        df_year_gender = group.sort_values(by=['quantity'], ascending=False)[
-            ['name', 'quantity']].head(10)
-        df_year_gender['name'] = df_year_gender[
-            'name'].apply(lambda x: format_name(x))
-        top_year[gender] = df_year_gender.to_dict('records')
+# # Iterar por los años y generar jsons anuales dividos por genero
+# for name, group in df_by_year:
+#     year = format_name(str(name))
+#     top_year = {}
+#     df_by_gender = group.groupby('gender')
+#     for name, group in df_by_gender:
+#         gender = name.lower()
+#         df_year_gender = group.sort_values(by=['quantity'], ascending=False)[
+#             ['name', 'quantity']].head(10)
+#         df_year_gender['name'] = df_year_gender[
+#             'name'].apply(lambda x: format_name(x))
+#         top_year[gender] = df_year_gender.to_dict('records')
 
-    file_url = '../public/years/' + year + '.json'
-    with open(file_url, 'w') as fp:
-        json.dump(top_year, fp)
+#     file_url = '../public/years/' + year + '.json'
+#     with open(file_url, 'w') as fp:
+#         json.dump(top_year, fp)
 
 # Para debug
 # print('--------- termino anios ----------')
@@ -139,19 +144,30 @@ for index, unique_names in enumerate(split_unique_names):
 
     if index == 0:
         todos_con_todos.to_sql('cruce_nombres_anios',
-                               engine, flavor='mysql', if_exists='replace')
+                               engine, flavor='mysql', index=False,
+                               if_exists='replace',
+                               dtype={'name': sqlalchemy.NVARCHAR(length=255),
+                                      'gender':
+                                      sqlalchemy.types.NVARCHAR(length=1),
+                                      'year': sqlalchemy.types.Integer,
+                                      'percentage':
+                                      sqlalchemy.types.Float(precision=10,
+                                                             asdecimal=True),
+                                      'quantity': sqlalchemy.types.BigInteger,
+                                      'decade': sqlalchemy.types.Integer})
     else:
         todos_con_todos.to_sql('cruce_nombres_anios',
-                               engine, flavor='mysql', if_exists='append')
+                               engine, flavor='mysql', index=False,
+                               if_exists='append')
 
-    names_group = todos_con_todos.groupby('name')
+#     # names_group = todos_con_todos.groupby('name')
 
-    # Escribir jsons de nombres
-    for name, group in names_group:
-        file_url = '../public/names/' + format_name(str(name)) + '.json'
-        print(file_url)
-        list_name = group.reset_index(
-        )[['gender', 'year', 'percentage', 'quantity']].to_dict('records')
+#     # Escribir jsons de nombres
+#     # for name, group in names_group:
+#     #     file_url = '../public/names/' + format_name(str(name)) + '.json'
+#     #     print(file_url)
+#     #     list_name = group.reset_index(
+#     #     )[['gender', 'year', 'percentage', 'quantity']].to_dict('records')
 
-        with open(file_url, 'w') as fp:
-            json.dump(list_name, fp)
+#     #     with open(file_url, 'w') as fp:
+#     #         json.dump(list_name, fp)
