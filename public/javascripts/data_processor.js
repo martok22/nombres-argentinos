@@ -166,7 +166,6 @@ jQuery(function ($) {
     return `Tu nombre alcanzó la mayor popularidad en <b>${ yearMaxPop }</b> y, la menor, en <b>${ yearMinPop }</b>.`;
   };
 
-
   statisticsCalculator.currentYear = function (name, mainNameData, currYear) {
     var indexCurrYear = currYear - MIN_YEAR;
     var numNamesCurrYear = mainNameData[indexCurrYear].quantity;
