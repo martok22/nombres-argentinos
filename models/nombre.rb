@@ -3,7 +3,7 @@ require 'yaml'
 
 class Nombre
     @@config = YAML.load_file('config/mysql.conf')
-    @@mysql_client = Mysql2::Client.new(:host => @@config["host"], :username => @@config["user"], :password => @@config["password"], :database => "nombres")
+    @@mysql_client = Mysql2::Client.new(:host => @@config["host"], :username => @@config["username"], :password => @@config["password"], :database => "nombres")
 
     def initialize(nombre)
         @nombre = nombre

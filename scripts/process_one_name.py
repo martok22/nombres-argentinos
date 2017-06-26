@@ -34,7 +34,7 @@ print('-------------- termino loading csv --------------')
 df.columns = ['name', 'quantity', 'year', 'gender', 'percentage']
 
 # Reemplazar por nombre en cuestión
-df = df[df['name'] == 'NOMBRE']
+df = df[df['name'] == 'MICKEY']
 df = df.groupby(('name', 'year', 'gender')).agg(
     {'quantity': sum, 'percentage': sum}).reset_index()
 

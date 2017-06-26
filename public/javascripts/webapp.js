@@ -140,7 +140,8 @@ jQuery(function ($) {
       // Si el año esta vacio, toma por defecto el nombre predeterminado
       if ($('#year').val() !== '') { year = $('#year').val(); }
 
-      processor = new DataProcessor(names, year);
+      var main_name = '<%= main_name %>';
+      processor = new DataProcessor(main_name, main_name_data, other_names, other_names_data, year);
 
       processor.fetchData().done(function (data) {
         ACTIVE_YEAR_DATA  = data.yearData;

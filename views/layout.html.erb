@@ -117,12 +117,12 @@
                 <form id="name-form" action="/" method="POST" autocomplete="off">
                   <div class="input_group formulario">
                     <label for="name">¿Cómo te llamás?</label>
-                    <input type="text" id="name" name="name" value="<%= names.join(', ') %>" placeholder="Por ejemplo: María, Juan Manuel"/>
-                    <!-- <div id="errorName" class="hide"></div> -->
-                  </div>
-                  <div class="input_group formulario">
-                    <label for="year">¿En qué año naciste?</label>
-                    <input type="text" id='year' name="year" placeholder="Por ejemplo: 1994" value="<%= year %>"/>
+                      <input type="text" id="name" name="name" value="<% if not default %><%= main_name + ', ' + other_names.join(', ') %><% end %>" placeholder="Por ejemplo: María, Juan Manuel"/>
+                      <!-- <div id="errorName" class="hide"></div> -->
+                    </div>
+                    <div class="input_group formulario">
+                      <label for="year">¿En qué año naciste?</label>
+                      <input type="text" id='year' name="year" placeholder="Por ejemplo: 1994" value="<%= year %>"/>
                     <!-- <div id="errorYear" class="hide"></div> -->
                   </div>
                   <button type="submit" class="btn btn-default">¡A buscar!</button>

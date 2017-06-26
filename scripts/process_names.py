@@ -12,7 +12,7 @@ with open('../config/mysql.conf', 'r') as f:
 # Conexion a base mysql
 engine = create_engine(
     "mysql://" + config["username"] + ":" + config["password"] +
-    "@" + config["host"] + "/nombres?charset=utf8",
+    "@" + config["host"] + "/nombres?charset=utf8mb4",
     pool_recycle=3600)
 
 
@@ -45,14 +45,14 @@ df = df.groupby(('name', 'year', 'gender')).agg(
     {'quantity': sum, 'percentage': sum}).reset_index()
 
 # Escribir dataframe a base
-# df.to_sql('nombres', engine, flavor='mysql',
-#           if_exists='replace', chunksize=20000)
-# print("Terminamos de escribir nombres a la base")
+df.to_sql('nombres', engine, flavor='mysql',
+          if_exists='replace', chunksize=20000)
+print("Terminamos de escribir nombres a la base")
 
 # --- Start calculos de top anuales ---
 
 # Agrupar nombres por anio
-# df_by_year = df.groupby('year')
+df_by_year = df.groupby('year')
 
 # # Iterar por los años y generar jsons anuales dividos por genero
 # for name, group in df_by_year:
@@ -106,7 +106,7 @@ df['decade'] = df['year'] // 10 * 10
 all_unique_names = df.groupby(('name', 'gender')).agg(
     {'percentage': 'sum'}).reset_index()
 all_unique_names = all_unique_names.sort_values('percentage', ascending=False)
-all_unique_names = all_unique_names[['name', 'gender']].head(100)
+all_unique_names = all_unique_names[['name', 'gender']].head(300)
 
 # Crear dataframe de anios para hacer el cruce cartesiano luego
 years = pd.DataFrame({'year': list(range(1922, 2016))})
