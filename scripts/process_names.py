@@ -45,9 +45,9 @@ df = df.groupby(('name', 'year', 'gender')).agg(
     {'quantity': sum, 'percentage': sum}).reset_index()
 
 # Escribir dataframe a base
-df.to_sql('nombres', engine, flavor='mysql',
-          if_exists='replace', chunksize=20000)
-print("Terminamos de escribir nombres a la base")
+# df.to_sql('nombres', engine, flavor='mysql',
+#           if_exists='replace', chunksize=20000)
+# print("Terminamos de escribir nombres a la base")
 
 # --- Start calculos de top anuales ---
 

@@ -16,75 +16,59 @@ jQuery(function ($) {
     };
 
   DataProcessor.prototype.fetchData = function (callback) {
-    var namesDone = 0
-      , yearDone = ! this.year
-      , $processing = new $.Deferred()
-      , mainName = this.mainName
-      , checkDone, yearData, i, length, name;
+    var yearDone = ! this.year,
+        mainName = this.mainName,
+        mainNameData = this.mainNameData,
+        otherNames = this.otherNames,
+        otherNamesData = this.otherNamesData,
+        year = this.year,
+        $processing = new $.Deferred(),
+        checkDone, yearData, i, length, name;
+
+    var processedNames = [];
+    var namesData = {};
+    processedNames.push(mainName);
+    namesData[mainName] = mainNameData;
+    for (var i=0; i < otherNames.length; i++) {
+      processedNames.push(otherNames[i]);
+      namesData[otherNames[i]] = JSON.parse(otherNamesData[i]);
+    } 
 
     checkDone = function () {
-      if ((namesDone === (this.otherNames.length + 1)) && yearDone) {
-        statistics = this._fetchStatistics(this.mainNameData, this.year);
+      if (yearDone) {
+        statistics = this._fetchStatistics(mainNameData, year);
         $processing.resolve({
-          mainName: this.mainName,
-          mainNameData: this.mainNamesData,
-          year: this.year,
-          otherNames: this.otherNames,
-          otherNamesData: this.otherNamesData,
+          year: year,
           yearData: yearData,
-          statistics: statistics
+          statistics: statistics,
+          processedNames: processedNames,
+          namesData: namesData
         });
       }
     }.bind(this);
 
     window.GENDER = false;
 
-    for (i = 0, length = (this.otherNames.length + 1); i < length; i += 1) {
-      name = this.otherNames[i];
+    if (mainNameData.length == 0) {
+      $processing.reject({ type: "invalid_name", name: mainName });
+      return $processing;
+    }
 
-      console.log(this.mainName);
-      if (this.mainName === "") {
-        $processing.reject({ type: "invalid_name", name: name });
-        return $processing;
+    $('#errorName').attr('class', 'hide').empty(); // Borramos errores año
+
+    if (!window.GENDER) {
+      window.GENDER = mainNameData[0].gender; // agrego genero global
+      // color genero seccion 3
+      if (window.GENDER == "f") {
+        $('#section3').css({'background-color': 'rgb(244, 129, 64)'});
+      } else {
+        $('#section3').css({'background-color': '#4CAF50'});
       }
+    }
 
-      (function (newName) {
-        $('#errorName').attr('class', 'hide').empty(); // Borramos errores año
-
-        this._fetchNameData(newName).done(function (nameDataResponse) {
-
-          if (!window.GENDER) {
-            window.GENDER = nameDataResponse[0].gender; // agrego genero global
-            // color genero seccion 3
-            if (window.GENDER == "f") {
-              $('#section3').css({'background-color': 'rgb(244, 129, 64)'});
-            } else {
-              $('#section3').css({'background-color': '#4CAF50'});
-            }
-          }
-
-          namesDone += 1;
-          checkDone();
-
-          // Envia a la seccion 2 cuando recibe un pedido
-          if (window.location.pathname !== '/') {
-              window.location.hash = "#seccion2";
-          }
-
-        }).fail(function (nameDataResponse) {
-          $('#name').css( 'margin-bottom', '0.5rem' );
-          $('#errorName').attr('class', '').css( 'margin-bottom', '0.5rem' ).append('<div class="glyphicon glyphicon-exclamation-sign" style="margin-right:5px;"></div>');
-          $('#errorName').append('No tenemos resultados. Revisá que el nombre esté bien escrito o probá con otro.');
-          $.fn.fullpage.destroy('all');
-          $('#section1').css({ margin: '0px', height: '100vh'});
-          $('#section1 > section').css({ margin: '0px'});
-          $('#section2').hide();
-          $('#section3').hide();
-          $('#section4').hide();
-          $('#section5').hide();
-        });
-
-      }.bind(this)(name));
+    // Envia a la seccion 2 cuando recibe un pedido
+    if (window.location.pathname !== '/') {
+        window.location.hash = "#seccion2";
     }
 
     if (!yearDone) {
@@ -103,14 +87,6 @@ jQuery(function ($) {
     return $processing;
   };
 
-  // DataProcessor.prototype._fetchNameData = function (name) {
-  //   return $.ajax({
-  //     url: NAMES_BASE_URL + processedName + ".json",
-  //     method: "GET",
-  //     dataType: "json"
-  //   });
-  // };
-
   DataProcessor.prototype._fetchYearData = function () {
     return $.ajax({
       url: YEARS_BASE_URL + this.year + ".json",
@@ -118,42 +94,6 @@ jQuery(function ($) {
       dataType: "json"
     });
   };
-
-  // DataProcessor.prototype._processNames = function (names) {
-  //   var processedNames = []
-  //     , i, length
-
-  //   for (i = 0, length = names.length; i < length; i += 1) {
-  //     processedNames.push(this._processName(names[i]));
-  //   }
-
-  //   return processedNames;
-  // };
-
-  // DataProcessor.prototype._processName = function (name) {
-  //   var replacements = [
-  //     [/á/, "a"],
-  //     [/é/, "e"],
-  //     [/í/, "i"],
-  //     [/ó/, "o"],
-  //     [/ú/, "u"],
-  //     [/ñ/, "n"],
-  //     [/[^\sa-zA-Z\d]+/g, " "],
-  //     [/\s+/g, "_"],
-  //     [/^_+/, ""],
-  //     [/_+$/, ""]
-  //   ]
-  //   , length = replacements.length
-  //   , i = 0;
-
-  //   name = name.toLowerCase();
-
-  //   for (; i < length; i += 1) {
-  //     name = name.replace(replacements[i][0], replacements[i][1]);
-  //   }
-
-  //   return name;
-  // };
 
   DataProcessor.prototype._processYear = function (yearStr) {
     var year = parseInt(yearStr, 10);
@@ -164,6 +104,32 @@ jQuery(function ($) {
     else {
       return null;
     }
+  };
+
+  DataProcessor.prototype._processName = function (name) {
+    var replacements = [
+      [/á/, "a"],
+      [/é/, "e"],
+      [/í/, "i"],
+      [/ó/, "o"],
+      [/ú/, "u"],
+      [/ñ/, "n"],
+      [/[^\sa-zA-Z\d]+/g, " "],
+      [/\s+/g, "_"],
+      ["_", " "],
+      [/^_+/, ""],
+      [/_+$/, ""]
+    ]
+    , length = replacements.length
+    , i = 0;
+
+    name = name.toLowerCase();
+
+    for (; i < length; i += 1) {
+      name = name.replace(replacements[i][0], replacements[i][1]);
+    }
+
+    return name;
   };
 
   DataProcessor.prototype._fetchStatistics = function (mainNameData, currYear) {

@@ -2,14 +2,17 @@ require 'sinatra/base'
 require 'sinatra/config_file'
 require 'json'
 require 'mysql2'
+require 'gon-sinatra'
 require root_path('helpers/assets')
 
 class App < Sinatra::Base
   register Sinatra::ConfigFile
+  register Gon::Sinatra
   helpers Helpers::Assets
 
   config_file 'config/app_config.yml'
   NOMBRES_DEFAULT = ["Emilia", "Benjamin"]
+  YEAR_DEFAULT = 2015
 
   configure do
     set :views, root_path('views')
@@ -30,10 +33,12 @@ class App < Sinatra::Base
     erb :'not_found.html'
   end
 
-  get %r{/(?:nombre/([^/]{2,120})(?:/(\d{4,4}))?)?$} do |main_name, year|
+  get %r{/(?:nombre/([^/]{2,120})(?:/(\d{4,4}))?)?} do |main_name, year|
     if settings.app_domain === request.env['HTTP_HOST']
       cache_control :public, :must_revalidate, max_age: 60 * 60 * 24
       
+      # Sacamos espacios
+      main_name = URI.decode(main_name)
       # Otros nombres para comparar / Sacamos whitespace
       other_names = (params[:others] || '').split(',').map(&:strip)
 
@@ -46,6 +51,9 @@ class App < Sinatra::Base
         other_names = [NOMBRES_DEFAULT[1]]
       end
 
+      # Asignar default de anio
+      year = year ? year.to_i : YEAR_DEFAULT
+
       # Buscar data de todos los nombres (el principal y el/los otros)
       main_name_data = Nombre.new(main_name).get_all
       other_names_data = []
@@ -53,13 +61,18 @@ class App < Sinatra::Base
         other_names_data << Nombre.new(other_name).get_all
       end
 
+      # Disponibilidar variables para el JS usando la gema gon-sinatra
+      gon.main_name = main_name
+      gon.main_name_data = main_name_data
+      gon.other_names = other_names
+      gon.other_names_data = other_names_data
+      gon.year = year
+
       erb(:'index.html', layout: :'layout.html', locals: {
         default: default,
         main_name: main_name,
-        main_name_data: main_name_data,
         other_names: other_names,
-        other_names_data: other_names_data,
-        year: year ? year.to_i : ''
+        year: year
       })
     else
       redirect("http://#{settings.host}:#{settings.port}", 301)

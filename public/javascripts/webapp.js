@@ -52,8 +52,6 @@ jQuery(function ($) {
   //////////////////////////////////////////////////////////////////////////////
   // Variables Globales
   var MIN_YEAR      = 1922, MAX_YEAR = 2015,
-      DEFAULT_NAMES = ['Emilia', 'Benjamin'],
-      DEFAULT_YEAR  = MAX_YEAR,
       ACTIVE_YEAR_DATA, ACTIVE_YEAR,
       ACTIVE_NAMES, ACTIVE_NAMES_DATA,
       ACTIVE_GENDER, STATISTICS,
@@ -102,7 +100,6 @@ jQuery(function ($) {
         }
 
         if (year === '') {                            // Validaciones años
-          year = DEFAULT_YEAR;
           errores.empty_year = true;
           errores_estado = true;
         } else if (year > MAX_YEAR || year < MIN_YEAR) {
@@ -130,17 +127,19 @@ jQuery(function ($) {
       });
     },
     render: function () {
-      var names = DEFAULT_NAMES,
-          year  = DEFAULT_YEAR,
+      var main_name = gon.main_name,
+          main_name_data = JSON.parse(gon.main_name_data),
+          other_names = gon.other_names,
+          other_names_data = gon.other_names_data,
+          year = gon.year,
           processor;
 
       // Si el nombre esta vacio, toma por defecto el nombre predeterminado
-      if ($('#name').val() !== '') { names = $('#name').val().split(','); }
+      //if ($('#name').val() !== '') { names = $('#name').val().split(','); }
 
       // Si el año esta vacio, toma por defecto el nombre predeterminado
-      if ($('#year').val() !== '') { year = $('#year').val(); }
+      //if ($('#year').val() !== '') { year = $('#year').val(); }
 
-      var main_name = '<%= main_name %>';
       processor = new DataProcessor(main_name, main_name_data, other_names, other_names_data, year);
 
       processor.fetchData().done(function (data) {
@@ -149,13 +148,14 @@ jQuery(function ($) {
         ACTIVE_NAMES      = data.processedNames;
         ACTIVE_NAMES_DATA = data.namesData;
         STATISTICS        = data.statistics;
-        ACTIVE_GENDER     = data.namesData[window.DataProcessor.prototype._processName(data.names[0])][0].gender;
+        ACTIVE_GENDER     = data.namesData[main_name][0].gender;
 
         this.nameChart(ACTIVE_NAMES, ACTIVE_YEAR, ACTIVE_NAMES_DATA);
         this.nameStatistics(STATISTICS);
         this.bubbleChart(ACTIVE_YEAR);
       }.bind(this)).fail(function (error) {
         console.error(error);
+        error.invalid_name = true;
         this.displayErrors(error);
       }.bind(this));
     },
@@ -706,6 +706,7 @@ jQuery(function ($) {
         error_element.append(`<li><span class="glyphicon glyphicon-exclamation-sign"></span><span>Por favor, completá un año.</span></li>`);
       }
       if (all_errors.invalid_name === true) {
+        console.log("invalid_name");
         error_element.append(`<li><span class="glyphicon glyphicon-exclamation-sign"></span><span>Revisá que tu nombre esté bien escrito.</span></li>`);
       }
       if (all_errors.invalid_year === true) {
