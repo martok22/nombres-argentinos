@@ -33,10 +33,12 @@ class App < Sinatra::Base
     erb :'not_found.html'
   end
 
-  get %r{/(?:nombre/([^/]{2,120})(?:/(\d{4,4}))?)?$} do |main_name, year|
+  get %r{/(?:nombre/([^/]{2,120})(?:/(\d{4,4}))?)?} do |main_name, year|
     if settings.app_domain === request.env['HTTP_HOST']
       cache_control :public, :must_revalidate, max_age: 60 * 60 * 24
       
+      # Sacamos espacios
+      main_name = URI.decode(main_name)
       # Otros nombres para comparar / Sacamos whitespace
       other_names = (params[:others] || '').split(',').map(&:strip)
 
