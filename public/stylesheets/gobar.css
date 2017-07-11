@@ -1,0 +1,238 @@
+body {
+  padding: 72px 0px 0px 0px;
+  position: relative;
+}
+
+a {
+  color: #0695d6;
+  text-decoration: none !important;
+}
+a:focus, a:hover {
+  color: #17b2f8;
+}
+
+header#barra_navegacion {
+  background-color: white;
+  box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.5);
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+  z-index: 99999999;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  height: 72px;
+  display: flex;
+}
+@media (min-width: 768px) {
+  header#barra_navegacion {
+    position: fixed;
+  }
+}
+header#barra_navegacion a#logo_modernizacion {
+  padding: 0px;
+  height: 100%;
+}
+@media (min-width: 460px) {
+  header#barra_navegacion a#logo_modernizacion {
+    padding: 0px 0px;
+  }
+}
+header#barra_navegacion a#logo_modernizacion > img {
+  width: 300px;
+  max-width: 100%;
+  height: 100%;
+}
+header#barra_navegacion div#header_redes_sociales {
+  display: none;
+  padding: 0px 0px;
+  height: 72px;
+}
+@media (min-width: 768px) {
+  header#barra_navegacion div#header_redes_sociales {
+    display: flex;
+    align-items: center;
+  }
+}
+header#barra_navegacion div#header_redes_sociales > span {
+  color: #0695d6;
+  padding: 0px 10px;
+  margin: 0px;
+  font-size: 17px;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 72px;
+}
+header#barra_navegacion div#header_redes_sociales > a {
+  color: #0695d6;
+  background-color: white;
+  padding: 0px 0.3em;
+  margin: 0px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  height: 100%;
+  line-height: 72px;
+}
+header#barra_navegacion div#header_redes_sociales > a:hover {
+  color: white;
+  background-color: #0695d6;
+}
+@media (min-width: 992px) {
+  header#barra_navegacion div#header_redes_sociales > a {
+    padding: 0px 10px;
+  }
+}
+header#barra_navegacion div#header_redes_sociales > a > i {
+  font-size: 32px;
+}
+
+section#curiosidades {
+  background-color: white;
+  padding: 60px 0px;
+}
+section#curiosidades > .restricted-max-width {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+section#curiosidades > .restricted-max-width h3 {
+  text-align: center;
+  margin: 0px auto 20px auto;
+  color: #767676;
+  font-weight: normal;
+}
+section#curiosidades > .restricted-max-width button {
+  margin: 0px auto 40px auto;
+  color: white;
+  background-color: #0695d6;
+  border-radius: 16px;
+  border: none;
+  padding: 16px 48px;
+  outline: none;
+}
+section#curiosidades > .restricted-max-width button:hover {
+  background-color: #17b2f8;
+}
+section#curiosidades > .restricted-max-width button:active {
+  background-color: #48c2fa;
+}
+section#curiosidades > .restricted-max-width p {
+  text-align: center;
+  margin: 0px auto 60px auto;
+  color: #767676;
+}
+section#curiosidades > .restricted-max-width p.issue {
+  text-align: center;
+  margin: 0px auto;
+  color: #767676;
+}
+
+footer#footer {
+  position: relative;
+  background-color: white;
+  box-shadow: 0px -2px 4px rgba(220, 220, 220, 0.75);
+  padding: 0px;
+  width: 100%;
+  z-index: 999;
+  bottom: 0px;
+}
+footer#footer p {
+  font-size: 16px;
+  font-weight: 500;
+}
+footer#footer #footer-spacer {
+  padding: 20px 0;
+}
+@media (min-width: 768px) {
+  footer#footer #footer-spacer {
+    padding: 50px 0;
+  }
+}
+footer#footer #footer-spacer .footer-section {
+  color: #0695d6;
+  font-size: 16px;
+  font-weight: 500;
+  text-align: center;
+}
+@media (min-width: 768px) {
+  footer#footer #footer-spacer .footer-section {
+    text-align: left;
+  }
+}
+footer#footer #footer-spacer .footer-section.logo img {
+  max-width: 300px;
+  margin-bottom: 20px;
+}
+footer#footer #footer-spacer .footer-section.logo a.social-link {
+  display: inline-block;
+  border-radius: 4px;
+  padding: 8px;
+  text-align: center;
+  width: 46px;
+  height: 46px;
+}
+footer#footer #footer-spacer .footer-section.logo a.social-link:hover {
+  background: #0695d6;
+  color: white;
+}
+footer#footer #footer-spacer .footer-section.logo a.social-link i {
+  display: inline-block;
+  font-size: 28px;
+}
+footer#footer #footer-spacer .footer-section.links-internos a:hover {
+  color: #17b2f8;
+}
+footer#footer #footer-spacer .footer-section.links-internos a.ckan-anchor {
+  display: inline-block;
+  text-align: left;
+}
+footer#footer #footer-spacer .footer-section.links-externos .ckan-link {
+  margin: 0;
+  color: #767676;
+}
+footer#footer #footer-spacer .footer-section.links-externos .ckan-name {
+  color: #0695d6;
+}
+footer#footer #footer-spacer .footer-section.links-externos .ckan-name:hover {
+  color: #17b2f8;
+}
+
+.restricted-max-width {
+  width: 100%;
+  max-width: 550px;
+  margin: 0px auto;
+  overflow: hidden;
+}
+@media (min-width: 768px) {
+  .restricted-max-width {
+    max-width: 750px;
+  }
+}
+@media (min-width: 1200px) {
+  .restricted-max-width {
+    max-width: 1200px;
+  }
+}
+.restricted-max-width:after {
+  content: " ";
+  display: block;
+  height: 0;
+  clear: both;
+}
+
+.header-span-link {
+  color: #0695d6;
+  font-size: 17px;
+  padding: 0px 10px;
+  font-weight: 500;
+}
+
+.header-spacing {
+  padding: 0px 20px;
+}
