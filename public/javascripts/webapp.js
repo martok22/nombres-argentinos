@@ -147,7 +147,7 @@ jQuery(function ($) {
         ACTIVE_NAMES      = data.processedNames;
         ACTIVE_NAMES_DATA = data.namesData;
         STATISTICS        = data.statistics;
-        ACTIVE_GENDER     = data.namesData[data.names[0].toLowerCase().replace(' ', '_')][0].gender;
+        ACTIVE_GENDER     = data.namesData[window.DataProcessor.prototype._processName(data.names[0])][0].gender;
 
         this.nameChart(ACTIVE_NAMES, ACTIVE_YEAR, ACTIVE_NAMES_DATA);
         this.nameStatistics(STATISTICS);
@@ -716,9 +716,21 @@ jQuery(function ($) {
   App.initialize();
   App.render();
 
-  $('.help-tooltip').tooltip();
+  $(window).ready(function() {
+    // tooltip bubble graphic
+    Opentip.styles.bubbleStyle = {
+      stem: true,
+      background: "white",
+      borderColor: "silver",
+      shadow: false,
+      showEffectDuration: 0
+    };
 
-  $(window).ready(function(){
+    window.addEventListener("hashchange", function(){
+       for(var i = 0; i < Opentip.tips.length; i ++) { Opentip.tips[i].hide(); }
+    });
+
+    // $('.help-tooltip').tooltip();
 
     // Informacion Select
     var decadaStatistics, anioStatistics, datoSeleccionado;
@@ -733,11 +745,9 @@ jQuery(function ($) {
     var selectores = $('select')
       .SumoSelect({ nativeOnDevice: ['Android', 'BlackBerry', 'iPhone', 'iPad', 'iPod', 'Opera Mini', 'IEMobile', 'Silk']})
       .on('sumo:opened', (sumo) => {
-        // $.fn.fullpage.setAutoScrolling(false);
         $('body').css({ 'overflow': 'hidden' });
       })
       .on('sumo:closed', (sumo) => {
-        // $.fn.fullpage.setAutoScrolling(true);
         $('body').css({ 'overflow': 'visible' });
       });
 
@@ -816,6 +826,9 @@ jQuery(function ($) {
     var widthCheck = APP_WIDTH;
 
     $(window).resize(function() {
+      window.document.getElementById('section5').style.height = '';
+      window.document.querySelector('#section5').children[0].style.height = '';
+      
       bebeCheck = true;
       APP_WIDTH = $(window).width();
 
