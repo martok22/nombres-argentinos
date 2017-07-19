@@ -470,7 +470,7 @@ jQuery(function ($) {
           .attr('bebe', function(d) {
             if (bebeCheck === true) {
               d.forEach(function(v) {
-                var tempValueYear = ($('#year').val())?($('#year').val()):(DEFAULT_YEAR);
+                var tempValueYear = ($('#year').val())?($('#year').val()):(gon.year);
                 if (parseInt(v.year) === parseInt(tempValueYear) && bebeCheck === true) {
                   APP_NAME_CHART.yearBaby  = v.year;
                   APP_NAME_CHART.valueBaby = v.value;

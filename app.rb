@@ -37,8 +37,6 @@ class App < Sinatra::Base
     if settings.app_domain === request.env['HTTP_HOST']
       cache_control :public, :must_revalidate, max_age: 60 * 60 * 24
       
-      # Sacamos espacios
-      main_name = URI.decode(main_name)
       # Otros nombres para comparar / Sacamos whitespace
       other_names = (params[:others] || '').split(',').map(&:strip)
 
