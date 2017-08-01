@@ -60,7 +60,8 @@ jQuery(function ($) {
       APP_WIDTH = $(window).width(),
       APP_NAME_CHART = {},
       bebeCheck = true,
-      countNames = 0;
+      countNames = 0,
+      statusYear = 'año';
 
   //////////////////////////////////////////////////////////////////////////////
   // Variables Globales
@@ -222,13 +223,21 @@ jQuery(function ($) {
             })
             .attr('class', `${ gender }f`)
             .attr('tooltip', function(d,i) {
-              var valueYear = (year.length === 4);
-              var contenido = `<div class="tooltip_format" style="max-width: 200px">
-                <div>
-                  <strong>${ formatName(d.name) }</strong>
-                  <span>${ d.quantity.format(0, 3, '.', ',') } personas registradas con este nombre en ${ $('select')[0].value }.</span>
-                </div>
-              </div>`;
+
+              var valueYear = (year.length === 4),
+                  contenido;
+
+              if (statusYear === 'año') {
+                contenido = `<div class="tooltip_format" style="width: 130px">
+                  <span><strong style="margin-bottom: 6px;">${ formatName(d.name) }</strong></span>
+                  <span><strong>${ d.quantity.format(0, 3, '.', ',') }</strong> personas registradas con este nombre en <strong>${ $('select')[0].value }</strong>.</span>
+                </div>`;
+              } else {
+                contenido = `<div class="tooltip_format" style="width: 130px">
+                  <span><strong style="margin-bottom: 6px;">${ formatName(d.name) }</strong></span>
+                  <span><strong>${ d.quantity.format(0, 3, '.', ',') }</strong> personas registradas con este nombre para el decenio que comenzó en (<strong>${ $('select')[0].value }</strong>).</span>
+                </div>`;
+              }
 
               new Opentip(this, contenido, { style: 'bubbleStyle', tipJoint: 'bottom', borderRadius: 20 });
             })
@@ -494,16 +503,10 @@ jQuery(function ($) {
         })
         .attr('tooltip', function(d){
           if (d) {
-            var contenido = `<div class="tooltip_format">
-              <div style="margin-right: 10px">
-                <strong>${ formatName(d.name) } en ${ d.year }</strong>
-                <span>Personas con este nombre</span>
-                <span>Popularidad<span style="">*</span></span>
-              </div>
-              <div>
-                <span>${ d.quantity.format(0, 3, '.', ',') }</span>
-                <span>${ (d.value * 10).format(3, 3, '', ',') }‰</span>
-              </div>
+            var contenido = `<div class="tooltip_format" style="width: 130px">
+                <span style="margin-bottom: 6px;"><strong>${ formatName(d.name) } en ${ d.year }</strong></span>
+                <span>Personas con este nombre <strong>${ d.quantity.format(0, 3, '.', ',') }</strong></span>
+                <span>Popularidad* <strong>${ (d.value * 10).format(3, 3, '', ',') }‰</strong></span>
             </div>`;
 
             new Opentip(this, contenido, { style: 'bubbleStyle', tipJoint: 'bottom', borderRadius: 20 });
@@ -637,17 +640,19 @@ jQuery(function ($) {
         })
         .attr('tooltip', function(d){
           if (d) {
-            var contenido = `<div class="tooltip_format">
-              <div style="margin-right: 10px">
-                <strong>${ formatName(d.name) } en ${ d.year }</strong>
-                <span>Personas con este nombre</span>
-                <span>Popularidad<span style="">*</span></span>
-              </div>
-              <div>
-                <span>${ d.quantity.format(0, 3, '.', ',') }</span>
-                <span>${ (d.value * 10).format(3, 3, '', ',') }‰</span>
-              </div>
-            </div>`;
+            var contenido;
+
+            if (statusYear === 'año') {
+              contenido = `<div class="tooltip_format" style="width: 130px">
+                <span><strong style="margin-bottom: 6px;">${ formatName(d.name) }</strong></span>
+                <span><strong>${ d.quantity.format(0, 3, '.', ',') }</strong> personas registradas con este nombre en <strong>${ document.querySelectorAll('.SumoSelect[style=""] p')[0].title.trim() }</strong>.</span>
+              </div>`;
+            } else {
+              contenido = `<div class="tooltip_format" style="width: 130px">
+                <span><strong style="margin-bottom: 6px;">${ formatName(d.name) }</strong></span>
+                <span><strong>${ d.quantity.format(0, 3, '.', ',') }</strong> personas registradas con este nombre para el decenio que comenzó en (<strong>${ document.querySelectorAll('.SumoSelect[style=""] p')[0].title.trim() }</strong>).</span>
+              </div>`;
+            }
 
             new Opentip(this, contenido, { style: 'bubbleStyle', tipJoint: 'bottom', borderRadius: 20 });
           }
@@ -764,13 +769,13 @@ jQuery(function ($) {
     function informacionAnios() {
       $('#decadaData').parent().hide();
       $('#yearData').parent().show();
-
+      statusYear = 'año';
       return ($('#year').val())?($('#year').val()):(DEFAULT_YEAR);
     }
     function informacionDecadas() {
       $('#decadaData').parent().show();
       $('#yearData').parent().hide();
-
+      statusYear = 'decada';
       return 'decada-1920';
     }
     function ejecutarStatisticsYear(year) {
