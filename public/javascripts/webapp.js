@@ -222,10 +222,11 @@ jQuery(function ($) {
             })
             .attr('class', `${ gender }f`)
             .attr('tooltip', function(d,i) {
+              var valueYear = (year.length === 4);
               var contenido = `<div class="tooltip_format" style="max-width: 200px">
                 <div>
                   <strong>${ formatName(d.name) }</strong>
-                  <span>${ d.quantity } personas registradas con este nombre en ${ $('select')[0].value }.</span>
+                  <span>${ d.quantity.format(0, 3, '.', ',') } personas registradas con este nombre en ${ $('select')[0].value }.</span>
                 </div>
               </div>`;
 
@@ -449,9 +450,9 @@ jQuery(function ($) {
           .datum(flatData)
           .attr('xlink:href', function(d) {
             if (d[0].class.charAt(0) === 'f') {
-              return  '/images/icono-nacimiento-mujer.png';
+              return  '/images/baby-female.png';
             } else {
-              return '/images/icono-nacimiento-varon.png';
+              return '/images/baby-male.png';
             }
           })
           .attr('width', 34)
@@ -828,7 +829,7 @@ jQuery(function ($) {
     $(window).resize(function() {
       window.document.getElementById('section5').style.height = '';
       window.document.querySelector('#section5').children[0].style.height = '';
-      
+
       bebeCheck = true;
       APP_WIDTH = $(window).width();
 
