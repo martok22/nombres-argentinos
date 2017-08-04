@@ -510,7 +510,6 @@ jQuery(function ($) {
               <span>Popularidad* <strong>${ (d.value * 10).format(3, 3, '', ',') }‰</strong></span>
             </div>`;
 
-            console.log(contenido);
             new Opentip(this, contenido, { style: 'bubbleStyle', tipJoint: 'bottom', borderRadius: 20 });
           }
 
@@ -725,16 +724,16 @@ jQuery(function ($) {
   App.initialize();
   App.render();
 
-  $(window).ready(function() {
-    // tooltip bubble graphic
-    Opentip.styles.bubbleStyle = {
-      stem: true,
-      background: "white",
-      borderColor: "silver",
-      shadow: false,
-      showEffectDuration: 0
-    };
+  // tooltip bubble graphic
+  Opentip.styles.bubbleStyle = {
+    stem: true,
+    background: "white",
+    borderColor: "silver",
+    shadow: false,
+    showEffectDuration: 0
+  };
 
+  $(window).ready(function() {
     window.addEventListener("hashchange", function(){
        for(var i = 0; i < Opentip.tips.length; i ++) { Opentip.tips[i].hide(); }
     });
