@@ -34,7 +34,7 @@ jQuery(function ($) {
       return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
   }
   function formatName(name) {
-    var names = name.split('_');
+    var names = name.split(' ');
 
     names.forEach(function (v, k) {
       if (v !== 'de' && v !== 'la' && v !== 'los' && v !== 'las' && v !== 'del') {
