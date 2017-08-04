@@ -1,21 +1,21 @@
 require 'sinatra/base'
+require 'sinatra/config_file'
 require 'json'
 require root_path('helpers/assets')
 
 class App < Sinatra::Base
-
+  register Sinatra::ConfigFile
   helpers Helpers::Assets
 
-  # Cambiar por IP adecuada
-  APP_DOMAIN = '127.0.0.1'
+  config_file 'config/app_config.yml'
 
   configure do
     set :views, root_path('views')
     set :public_folder, root_path('public')
     set :static_cache_control, [:public, max_age: 60 * 60 * 24]
-    set :environment, (ENV['RACK_ENV'] || 'development').to_sym
+    set :environment, settings.environment
 
-    set :app_domain, settings.development? ? '127.0.0.1:9393' : APP_DOMAIN
+    set :app_domain, settings.development? ? '127.0.0.1:9393' : "#{settings.host}:#{settings.port}"
 
     enable :static
   end
@@ -28,7 +28,7 @@ class App < Sinatra::Base
     erb :'not_found.html'
   end
 
-  get %r{/(?:nombre/([^/]{2,120})(?:/(\d{4,4}))?)?$} do |main_name, year|
+  get %r{/(?:nombre/([^/]{2,120})(?:/(\d{4,4}))?)?} do |main_name, year|
     if settings.app_domain === request.env['HTTP_HOST']
       cache_control :public, :must_revalidate, max_age: 60 * 60 * 24
       names = (params[:others] || '').split(',')
@@ -39,7 +39,7 @@ class App < Sinatra::Base
         year: year ? year.to_i : ''
       })
     else
-      redirect("http://#{APP_DOMAIN}", 301)
+      redirect("http://#{settings.host}:#{settings.port}", 301)
     end
   end
 end

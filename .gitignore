@@ -4,4 +4,6 @@ public/years/*
 process_individual_name.py
 data/nombres1922a2015conpp.csv
 data/nombres1922a2015-sin-genero.csv
+config/mysql.conf
+config/app_config.yml
 .DS_Store
