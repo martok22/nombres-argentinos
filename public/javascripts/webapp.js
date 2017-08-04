@@ -505,11 +505,12 @@ jQuery(function ($) {
         .attr('tooltip', function(d){
           if (d) {
             var contenido = `<div class="tooltip_format" style="width: 130px">
-                <span style="margin-bottom: 6px;"><strong>${ formatName(d.name) } en ${ d.year }</strong></span>
-                <span>Personas con este nombre <strong>${ d.quantity.format(0, 3, '.', ',') }</strong></span>
-                <span>Popularidad* <strong>${ (d.value * 10).format(3, 3, '', ',') }‰</strong></span>
+              <span style="margin-bottom: 6px;"><strong>${ formatName(d.name) } en ${ d.year }</strong></span>
+              <span>Personas con este nombre <strong>${ d.quantity.format(0, 3, '.', ',') }</strong></span>
+              <span>Popularidad* <strong>${ (d.value * 10).format(3, 3, '', ',') }‰</strong></span>
             </div>`;
 
+            console.log(contenido);
             new Opentip(this, contenido, { style: 'bubbleStyle', tipJoint: 'bottom', borderRadius: 20 });
           }
 
