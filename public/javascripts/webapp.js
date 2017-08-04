@@ -230,12 +230,12 @@ jQuery(function ($) {
               if (statusYear === 'año') {
                 contenido = `<div class="tooltip_format" style="width: 130px">
                   <span><strong style="margin-bottom: 6px;">${ formatName(d.name) }</strong></span>
-                  <span><strong>${ d.quantity.format(0, 3, '.', ',') }</strong> personas registradas con este nombre en <strong>${ $('select')[0].value }</strong>.</span>
+                  <span><strong>${ d.quantity.format(0, 3, '.', ',') }</strong> personas registradas con este nombre en <strong>${ $('#buscaPor > div > div:nth-child(6) > p > span').text().trim() }</strong>.</span>
                 </div>`;
               } else {
                 contenido = `<div class="tooltip_format" style="width: 130px">
                   <span><strong style="margin-bottom: 6px;">${ formatName(d.name) }</strong></span>
-                  <span><strong>${ d.quantity.format(0, 3, '.', ',') }</strong> personas registradas con este nombre para el decenio que comenzó en (<strong>${ $('select')[0].value }</strong>).</span>
+                  <span><strong>${ d.quantity.format(0, 3, '.', ',') }</strong> personas registradas con este nombre para el decenio que comenzó en (<strong>${ $('#buscaPor > div > div:nth-child(7) > p > span').text().trim() }</strong>).</span>
                 </div>`;
               }
 
@@ -645,12 +645,12 @@ jQuery(function ($) {
             if (statusYear === 'año') {
               contenido = `<div class="tooltip_format" style="width: 130px">
                 <span><strong style="margin-bottom: 6px;">${ formatName(d.name) }</strong></span>
-                <span><strong>${ d.quantity.format(0, 3, '.', ',') }</strong> personas registradas con este nombre en <strong>${ document.querySelectorAll('.SumoSelect[style=""] p')[0].title.trim() }</strong>.</span>
+                <span><strong>${ d.quantity.format(0, 3, '.', ',') }</strong> personas registradas con este nombre en <strong>${ $('#buscaPor > div > div:nth-child(6) > p > span').text().trim() }</strong>.</span>
               </div>`;
             } else {
               contenido = `<div class="tooltip_format" style="width: 130px">
                 <span><strong style="margin-bottom: 6px;">${ formatName(d.name) }</strong></span>
-                <span><strong>${ d.quantity.format(0, 3, '.', ',') }</strong> personas registradas con este nombre para el decenio que comenzó en (<strong>${ document.querySelectorAll('.SumoSelect[style=""] p')[0].title.trim() }</strong>).</span>
+                <span><strong>${ d.quantity.format(0, 3, '.', ',') }</strong> personas registradas con este nombre para el decenio que comenzó en (<strong>${ $('#buscaPor > div > div:nth-child(7) > p > span').text().trim() }</strong>).</span>
               </div>`;
             }
 
