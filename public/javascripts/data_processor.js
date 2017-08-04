@@ -189,38 +189,45 @@ jQuery(function ($) {
       return `Entre 1922 y 2015, sólo vos te llamaste <b>${ capitalizeFirstLetter(name.toLowerCase()) }</b>.`;
     }
   };
+
   statisticsCalculator.minMaxYear = function (name, nameData) {
-    var maxYear = 1922
-      , maxYearNumber = 0
-      , length = nameData.length
-      , i = 0;
+    var yearMinPop = nameData.filter(function(d) { return d.percentage === d3.min(nameData, (c) => c.percentage); })[0].year,
+        yearMaxPop = nameData.filter(function(d) { return d.percentage === d3.max(nameData, (c) => c.percentage); })[0].year;
 
-    for (; i < length; i += 1) {
-      if (nameData[i].quantity > maxYearNumber) {
-        maxYear = nameData[i].year;
-        maxYearNumber = nameData[i].quantity;
-      }
-    }
+    // var maxYear = 1922
+    //   , maxYearNumber = 0
+    //   , length = nameData.length
+    //   , i = 0;
+    //
+    // for (; i < length; i += 1) {
+    //   if (nameData[i].quantity > maxYearNumber) {
+    //     maxYear       = nameData[i].year;
+    //     maxYearNumber = nameData[i].quantity;
+    //   }
+    // }
+    //
+    // var minYear = MIN_YEAR
+    //   , minYearNumber = 9999999
+    //   , length = nameData.length
+    //   , year, quantity, i;
+    //
+    // for (year = MIN_YEAR; year <= MAX_YEAR; year++) {
+    //   quantity = 0;
+    //   for (i = 0; i < nameData.length; i += 1) {
+    //     if (nameData[i].year == year) {
+    //       quantity = nameData[i].quantity;
+    //     }
+    //   }
+    //
+    //   if (quantity < minYearNumber) {
+    //     minYear = year;
+    //     minYearNumber = quantity;
+    //   }
+    // }
 
-    var minYear = MIN_YEAR
-      , minYearNumber = 9999999
-      , length = nameData.length
-      , year, quantity, i;
-
-    for (year = MIN_YEAR; year <= MAX_YEAR; year++) {
-      quantity = 0;
-      for (i = 0; i < nameData.length; i += 1) {
-        if (nameData[i].year == year) {
-          quantity = nameData[i].quantity;
-        }
-      }
-      if (quantity < minYearNumber) {
-        minYear = year;
-        minYearNumber = quantity;
-      }
-    }
-    return `Tu nombre alcanzó la mayor popularidad en <b>${ maxYear }</b> y, la menor, en <b>${ minYear }</b>.`;
+    return `Tu nombre alcanzó la mayor popularidad en <b>${ yearMaxPop }</b> y, la menor, en <b>${ yearMinPop }</b>.`;
   };
+
   statisticsCalculator.currentYear = function (name, nameData, currYear) {
     var indexCurrYear = currYear - MIN_YEAR;
     var numNamesCurrYear = nameData[indexCurrYear].quantity;
