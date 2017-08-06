@@ -1261,7 +1261,3 @@ input[type="radio"], input[type="checkbox"] {
 .seccionFormularioBubble {
   z-index: 10;
 }
-
-#yearData, #decadaData {
-  display: none;
-}
