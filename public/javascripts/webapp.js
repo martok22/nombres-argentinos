@@ -772,7 +772,7 @@ jQuery(function ($) {
       $('#decadaData').parent().hide();
       $('#yearData').parent().show();
       statusYear = 'año';
-      return ($('#year').val())?($('#year').val()):(DEFAULT_YEAR);
+      return ($('#year').val())?($('#year').val()):(gon.year);
     }
     function informacionDecadas() {
       $('#decadaData').parent().show();
@@ -781,6 +781,8 @@ jQuery(function ($) {
       return 'decada-1920';
     }
     function ejecutarStatisticsYear(year) {
+      console.log("anio seleccionado es");
+      console.log(year);
       if ($(window).width() < 768){
         App.bubbleChart(year);
       } else {
@@ -801,7 +803,7 @@ jQuery(function ($) {
       $('this').removeClass('not-placeholder');
     });
 
-  /* Cambiar las opciones del selector en funcion
+    /* Cambiar las opciones del selector en funcion
     de los años o las decadas */
     $('input[type=radio]')
     .on('change', function(e) {
@@ -816,7 +818,8 @@ jQuery(function ($) {
 
   /* Generar el grafico de burbujas en funcion de
     la seleccion del input */
-    $('.selectBubble').on('change', function(e) {
+    $('.formularioBubble').on('change', function(e) {
+      console.log("seleccione otro anio");
       if ($('#anio').is(':checked')) {
         datoSeleccionado = $('#yearData').val();
       } else {
