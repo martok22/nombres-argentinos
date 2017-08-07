@@ -153,15 +153,3 @@ for index, unique_names in enumerate(split_unique_names):
         todos_con_todos.to_sql('cruce_nombres_anios',
                                engine, flavor='mysql', index=False,
                                if_exists='append')
-
-#     # names_group = todos_con_todos.groupby('name')
-
-#     # Escribir jsons de nombres
-#     # for name, group in names_group:
-#     #     file_url = '../public/names/' + format_name(str(name)) + '.json'
-#     #     print(file_url)
-#     #     list_name = group.reset_index(
-#     #     )[['gender', 'year', 'percentage', 'quantity']].to_dict('records')
-
-#     #     with open(file_url, 'w') as fp:
-#     #         json.dump(list_name, fp)
