@@ -236,7 +236,7 @@ jQuery(function ($) {
               } else {
                 contenido = `<div class="tooltip_format" style="width: 130px">
                   <span><strong style="margin-bottom: 6px;">${ formatName(d.name) }</strong></span>
-                  <span><strong>${ d.quantity.format(0, 3, '.', ',') }</strong> personas registradas con este nombre para el decenio que comenzó en (<strong>${ $('#buscaPor > div > div:nth-child(7) > p > span').text().trim() }</strong>).</span>
+                  <span><strong>${ d.quantity.format(0, 3, '.', ',') }</strong> personas registradas con este nombre para el decenio que comenzó en <strong>${ $('#buscaPor > div > div:nth-child(7) > p > span').text().trim() }</strong>.</span>
                 </div>`;
               }
 
@@ -651,7 +651,7 @@ jQuery(function ($) {
             } else {
               contenido = `<div class="tooltip_format" style="width: 130px">
                 <span><strong style="margin-bottom: 6px;">${ formatName(d.name) }</strong></span>
-                <span><strong>${ d.quantity.format(0, 3, '.', ',') }</strong> personas registradas con este nombre para el decenio que comenzó en (<strong>${ $('#buscaPor > div > div:nth-child(7) > p > span').text().trim() }</strong>).</span>
+                <span><strong>${ d.quantity.format(0, 3, '.', ',') }</strong> personas registradas con este nombre para el decenio que comenzó en <strong>${ $('#buscaPor > div > div:nth-child(7) > p > span').text().trim() }</strong>.</span>
               </div>`;
             }
 
