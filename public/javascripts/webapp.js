@@ -105,7 +105,7 @@ jQuery(function ($) {
         } else if (year > MAX_YEAR || year < MIN_YEAR) {
           errores.range_year = true;
           errores_estado = true;
-        } else if (isNaN(parseInt(year)) === true) {
+        } else if (isNaN(Number(year.trim())) === true) {
           errores.invalid_year = true;
           errores_estado = true;
         }
@@ -160,6 +160,7 @@ jQuery(function ($) {
       }.bind(this));
     },
     bubbleChart: function (year) {
+
       d3.selectAll('#extra-year-data svg').remove();  // Se elimina grafico anterior
 
       var height = $('#extra-year-data').height(),
@@ -720,9 +721,6 @@ jQuery(function ($) {
     }
   };
 
-  App.initialize();
-  App.render();
-
   // tooltip bubble graphic
   Opentip.styles.bubbleStyle = {
     stem: true,
@@ -736,6 +734,9 @@ jQuery(function ($) {
     window.addEventListener("hashchange", function(){
        for(var i = 0; i < Opentip.tips.length; i ++) { Opentip.tips[i].hide(); }
     });
+
+    App.initialize();
+    App.render();
 
     // $('.help-tooltip').tooltip();
 
@@ -758,10 +759,7 @@ jQuery(function ($) {
         $('body').css({ 'overflow': 'visible' });
       });
 
-    if ($('#year').val()) {
-      selectores[0].sumo.selectItem($('#year').val().toString());
-    }
-
+    selectores[0].sumo.selectItem($('#year').val().toString());
     selectores[1].sumo.selectItem('1920');
 
     $('#decadaData').parent().hide();
@@ -823,7 +821,6 @@ jQuery(function ($) {
       } else {
         datoSeleccionado = 'decada-' + $('#decadaData').val();
       }
-
 
       ejecutarStatisticsYear(datoSeleccionado);
     });
