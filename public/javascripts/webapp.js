@@ -34,7 +34,7 @@ jQuery(function ($) {
       return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
   }
   function formatName(name) {
-    var names = name.split('_');
+    var names = name.split(' ');
 
     names.forEach(function (v, k) {
       if (v !== 'de' && v !== 'la' && v !== 'los' && v !== 'las' && v !== 'del') {
@@ -52,8 +52,6 @@ jQuery(function ($) {
   //////////////////////////////////////////////////////////////////////////////
   // Variables Globales
   var MIN_YEAR      = 1922, MAX_YEAR = 2015,
-      DEFAULT_NAMES = ['Emilia', 'Benjamin'],
-      DEFAULT_YEAR  = MAX_YEAR,
       ACTIVE_YEAR_DATA, ACTIVE_YEAR,
       ACTIVE_NAMES, ACTIVE_NAMES_DATA,
       ACTIVE_GENDER, STATISTICS,
@@ -102,7 +100,6 @@ jQuery(function ($) {
         }
 
         if (year === '') {                            // Validaciones años
-          year = DEFAULT_YEAR;
           errores.empty_year = true;
           errores_estado = true;
         } else if (year > MAX_YEAR || year < MIN_YEAR) {
@@ -130,17 +127,20 @@ jQuery(function ($) {
       });
     },
     render: function () {
-      var names = DEFAULT_NAMES,
-          year  = DEFAULT_YEAR,
+      var main_name = gon.main_name,
+          main_name_data = JSON.parse(gon.main_name_data),
+          other_names = gon.other_names,
+          other_names_data = gon.other_names_data,
+          year = gon.year,
           processor;
 
       // Si el nombre esta vacio, toma por defecto el nombre predeterminado
-      if ($('#name').val() !== '') { names = $('#name').val().split(','); }
+      //if ($('#name').val() !== '') { names = $('#name').val().split(','); }
 
       // Si el año esta vacio, toma por defecto el nombre predeterminado
-      if ($('#year').val() !== '') { year = $('#year').val(); }
+      //if ($('#year').val() !== '') { year = $('#year').val(); }
 
-      processor = new DataProcessor(names, year);
+      processor = new DataProcessor(main_name, main_name_data, other_names, other_names_data, year);
 
       processor.fetchData().done(function (data) {
         ACTIVE_YEAR_DATA  = data.yearData;
@@ -148,13 +148,14 @@ jQuery(function ($) {
         ACTIVE_NAMES      = data.processedNames;
         ACTIVE_NAMES_DATA = data.namesData;
         STATISTICS        = data.statistics;
-        ACTIVE_GENDER     = data.namesData[window.DataProcessor.prototype._processName(data.names[0])][0].gender;
+        ACTIVE_GENDER     = data.namesData[main_name][0].gender;
 
         this.nameChart(ACTIVE_NAMES, ACTIVE_YEAR, ACTIVE_NAMES_DATA);
         this.nameStatistics(STATISTICS);
         this.bubbleChart(ACTIVE_YEAR);
       }.bind(this)).fail(function (error) {
         console.error(error);
+        error.invalid_name = true;
         this.displayErrors(error);
       }.bind(this));
     },
@@ -469,7 +470,7 @@ jQuery(function ($) {
           .attr('bebe', function(d) {
             if (bebeCheck === true) {
               d.forEach(function(v) {
-                var tempValueYear = ($('#year').val())?($('#year').val()):(DEFAULT_YEAR);
+                var tempValueYear = ($('#year').val())?($('#year').val()):(gon.year);
                 if (parseInt(v.year) === parseInt(tempValueYear) && bebeCheck === true) {
                   APP_NAME_CHART.yearBaby  = v.year;
                   APP_NAME_CHART.valueBaby = v.value;
@@ -504,9 +505,9 @@ jQuery(function ($) {
         .attr('tooltip', function(d){
           if (d) {
             var contenido = `<div class="tooltip_format" style="width: 130px">
-                <span style="margin-bottom: 6px;"><strong>${ formatName(d.name) } en ${ d.year }</strong></span>
-                <span>Personas con este nombre <strong>${ d.quantity.format(0, 3, '.', ',') }</strong></span>
-                <span>Popularidad* <strong>${ (d.value * 10).format(3, 3, '', ',') }‰</strong></span>
+              <span style="margin-bottom: 6px;"><strong>${ formatName(d.name) } en ${ d.year }</strong></span>
+              <span>Personas con este nombre <strong>${ d.quantity.format(0, 3, '.', ',') }</strong></span>
+              <span>Popularidad* <strong>${ (d.value * 10).format(3, 3, '', ',') }‰</strong></span>
             </div>`;
 
             new Opentip(this, contenido, { style: 'bubbleStyle', tipJoint: 'bottom', borderRadius: 20 });
@@ -705,6 +706,7 @@ jQuery(function ($) {
         error_element.append(`<li><span class="glyphicon glyphicon-exclamation-sign"></span><span>Por favor, completá un año.</span></li>`);
       }
       if (all_errors.invalid_name === true) {
+        console.log("invalid_name");
         error_element.append(`<li><span class="glyphicon glyphicon-exclamation-sign"></span><span>Revisá que tu nombre esté bien escrito.</span></li>`);
       }
       if (all_errors.invalid_year === true) {
@@ -722,16 +724,16 @@ jQuery(function ($) {
   App.initialize();
   App.render();
 
-  $(window).ready(function() {
-    // tooltip bubble graphic
-    Opentip.styles.bubbleStyle = {
-      stem: true,
-      background: "white",
-      borderColor: "silver",
-      shadow: false,
-      showEffectDuration: 0
-    };
+  // tooltip bubble graphic
+  Opentip.styles.bubbleStyle = {
+    stem: true,
+    background: "white",
+    borderColor: "silver",
+    shadow: false,
+    showEffectDuration: 0
+  };
 
+  $(window).ready(function() {
     window.addEventListener("hashchange", function(){
        for(var i = 0; i < Opentip.tips.length; i ++) { Opentip.tips[i].hide(); }
     });
@@ -770,7 +772,7 @@ jQuery(function ($) {
       $('#decadaData').parent().hide();
       $('#yearData').parent().show();
       statusYear = 'año';
-      return ($('#year').val())?($('#year').val()):(DEFAULT_YEAR);
+      return ($('#year').val())?($('#year').val()):(gon.year);
     }
     function informacionDecadas() {
       $('#decadaData').parent().show();
@@ -779,6 +781,8 @@ jQuery(function ($) {
       return 'decada-1920';
     }
     function ejecutarStatisticsYear(year) {
+      console.log("anio seleccionado es");
+      console.log(year);
       if ($(window).width() < 768){
         App.bubbleChart(year);
       } else {
@@ -799,7 +803,7 @@ jQuery(function ($) {
       $('this').removeClass('not-placeholder');
     });
 
-  /* Cambiar las opciones del selector en funcion
+    /* Cambiar las opciones del selector en funcion
     de los años o las decadas */
     $('input[type=radio]')
     .on('change', function(e) {
@@ -814,7 +818,8 @@ jQuery(function ($) {
 
   /* Generar el grafico de burbujas en funcion de
     la seleccion del input */
-    $('.selectBubble').on('change', function(e) {
+    $('.formularioBubble').on('change', function(e) {
+      console.log("seleccione otro anio");
       if ($('#anio').is(':checked')) {
         datoSeleccionado = $('#yearData').val();
       } else {

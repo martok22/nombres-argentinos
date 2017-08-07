@@ -5,83 +5,70 @@ jQuery(function ($) {
     , MIN_YEAR = 1922
     , MAX_YEAR = 2015
     , statisticsCalculator = {}
-    , DataProcessor = function (names, year, gender = "m") {
-        this.names = names;
-        this.processedNames = this._processNames(names);
+    , DataProcessor = function (main_name, main_name_data, other_names, other_names_data, year, gender = "m") {
+        this.mainName = main_name;
+        this.mainNameData = main_name_data;
+        this.otherNames = other_names;
+        this.otherNamesData = other_names_data;
+        this.mainNameData = main_name_data;
         this.year = this._processYear(year);
-        this.gender = gender; // dato genero
+        this.gender = gender; 
     };
 
   DataProcessor.prototype.fetchData = function (callback) {
-    var namesDone = 0
-      , yearDone = ! this.year
-      , $processing = new $.Deferred()
-      , namesData = {}
-      , mainName = this.processedNames[0]
-      , checkDone, yearData, i, length, name;
+    var yearDone = ! this.year,
+        mainName = this.mainName,
+        mainNameData = this.mainNameData,
+        otherNames = this.otherNames,
+        otherNamesData = this.otherNamesData,
+        year = this.year,
+        $processing = new $.Deferred(),
+        checkDone, yearData, i, length, name;
+
+    var processedNames = [];
+    var namesData = {};
+    processedNames.push(mainName);
+    namesData[mainName] = mainNameData;
+    for (var i=0; i < otherNames.length; i++) {
+      processedNames.push(otherNames[i]);
+      namesData[otherNames[i]] = JSON.parse(otherNamesData[i]);
+    } 
 
     checkDone = function () {
-      if ((namesDone === this.processedNames.length) && yearDone) {
-        statistics = this._fetchStatistics(namesData[mainName], this.year);
+      if (yearDone) {
+        statistics = this._fetchStatistics(mainNameData, year);
         $processing.resolve({
-          names: this.names,
-          processedNames: this.processedNames,
-          year: this.year,
-          namesData: namesData,
+          year: year,
           yearData: yearData,
-          statistics: statistics
+          statistics: statistics,
+          processedNames: processedNames,
+          namesData: namesData
         });
       }
     }.bind(this);
 
     window.GENDER = false;
 
-    for (i = 0, length = this.processedNames.length; i < length; i += 1) {
-      name = this.processedNames[i];
+    if (mainNameData.length == 0) {
+      $processing.reject({ type: "invalid_name", name: mainName });
+      return $processing;
+    }
 
-      if (this.processedNames[i] === "") {
-        $processing.reject({ type: "invalid_name", name: name });
-        return $processing;
+    $('#errorName').attr('class', 'hide').empty(); // Borramos errores año
+
+    if (!window.GENDER) {
+      window.GENDER = mainNameData[0].gender; // agrego genero global
+      // color genero seccion 3
+      if (window.GENDER == "f") {
+        $('#section3').css({'background-color': 'rgb(244, 129, 64)'});
+      } else {
+        $('#section3').css({'background-color': '#4CAF50'});
       }
+    }
 
-      (function (newName) {
-        $('#errorName').attr('class', 'hide').empty(); // Borramos errores año
-
-        this._fetchNameData(newName).done(function (nameDataResponse) {
-
-          if (!window.GENDER) {
-            window.GENDER = nameDataResponse[0].gender; // agrego genero global
-            // color genero seccion 3
-            if (window.GENDER == "f") {
-              $('#section3').css({'background-color': 'rgb(244, 129, 64)'});
-            } else {
-              $('#section3').css({'background-color': '#4CAF50'});
-            }
-          }
-
-          namesDone += 1;
-          namesData[newName] = nameDataResponse;
-          checkDone();
-
-          // Envia a la seccion 2 cuando recibe un pedido
-          if (window.location.pathname !== '/') {
-              window.location.hash = "#seccion2";
-          }
-
-        }).fail(function (nameDataResponse) {
-          $('#name').css( 'margin-bottom', '0.5rem' );
-          $('#errorName').attr('class', '').css( 'margin-bottom', '0.5rem' ).append('<div class="glyphicon glyphicon-exclamation-sign" style="margin-right:5px;"></div>');
-          $('#errorName').append('No tenemos resultados. Revisá que el nombre esté bien escrito o probá con otro.');
-          $.fn.fullpage.destroy('all');
-          $('#section1').css({ margin: '0px', height: '100vh'});
-          $('#section1 > section').css({ margin: '0px'});
-          $('#section2').hide();
-          $('#section3').hide();
-          $('#section4').hide();
-          $('#section5').hide();
-        });
-
-      }.bind(this)(name));
+    // Envia a la seccion 2 cuando recibe un pedido
+    if (window.location.pathname !== '/') {
+        window.location.hash = "#seccion2";
     }
 
     if (!yearDone) {
@@ -100,14 +87,6 @@ jQuery(function ($) {
     return $processing;
   };
 
-  DataProcessor.prototype._fetchNameData = function (processedName) {
-    return $.ajax({
-      url: NAMES_BASE_URL + processedName + ".json",
-      method: "GET",
-      dataType: "json"
-    });
-  };
-
   DataProcessor.prototype._fetchYearData = function () {
     return $.ajax({
       url: YEARS_BASE_URL + this.year + ".json",
@@ -116,15 +95,15 @@ jQuery(function ($) {
     });
   };
 
-  DataProcessor.prototype._processNames = function (names) {
-    var processedNames = []
-      , i, length
+  DataProcessor.prototype._processYear = function (yearStr) {
+    var year = parseInt(yearStr, 10);
 
-    for (i = 0, length = names.length; i < length; i += 1) {
-      processedNames.push(this._processName(names[i]));
+    if (year >= 0) {
+      return year;
     }
-
-    return processedNames;
+    else {
+      return null;
+    }
   };
 
   DataProcessor.prototype._processName = function (name) {
@@ -137,6 +116,7 @@ jQuery(function ($) {
       [/ñ/, "n"],
       [/[^\sa-zA-Z\d]+/g, " "],
       [/\s+/g, "_"],
+      ["_", " "],
       [/^_+/, ""],
       [/_+$/, ""]
     ]
@@ -152,35 +132,24 @@ jQuery(function ($) {
     return name;
   };
 
-  DataProcessor.prototype._processYear = function (yearStr) {
-    var year = parseInt(yearStr, 10);
-
-    if (year >= 0) {
-      return year;
-    }
-    else {
-      return null;
-    }
-  };
-
-  DataProcessor.prototype._fetchStatistics = function (nameData, currYear) {
+  DataProcessor.prototype._fetchStatistics = function (mainNameData, currYear) {
     var statistics = []
-      , name = this.names[0];
+      , name = this.mainName;
 
-    statistics.push(statisticsCalculator.totalNames(name, nameData));
-    statistics.push(statisticsCalculator.minMaxYear(name, nameData));
-    statistics.push(statisticsCalculator.currentYear(name, nameData, currYear));
+    statistics.push(statisticsCalculator.totalNames(name, mainNameData));
+    statistics.push(statisticsCalculator.minMaxYear(name, mainNameData));
+    statistics.push(statisticsCalculator.currentYear(name, mainNameData, currYear));
 
     return statistics;
   };
 
-  statisticsCalculator.totalNames = function (name, nameData) {
+  statisticsCalculator.totalNames = function (name, mainNameData) {
     var totalQuantity = 0
-    , length = nameData.length
+    , length = mainNameData.length
     , i = 0;
 
     for (; i < length; i += 1) {
-      totalQuantity += nameData[i].quantity;
+      totalQuantity += mainNameData[i].quantity;
     }
 
     if (totalQuantity > 1) {
@@ -194,43 +163,12 @@ jQuery(function ($) {
     var yearMinPop = nameData.filter(function(d) { return d.percentage === d3.min(nameData, (c) => c.percentage); })[0].year,
         yearMaxPop = nameData.filter(function(d) { return d.percentage === d3.max(nameData, (c) => c.percentage); })[0].year;
 
-    // var maxYear = 1922
-    //   , maxYearNumber = 0
-    //   , length = nameData.length
-    //   , i = 0;
-    //
-    // for (; i < length; i += 1) {
-    //   if (nameData[i].quantity > maxYearNumber) {
-    //     maxYear       = nameData[i].year;
-    //     maxYearNumber = nameData[i].quantity;
-    //   }
-    // }
-    //
-    // var minYear = MIN_YEAR
-    //   , minYearNumber = 9999999
-    //   , length = nameData.length
-    //   , year, quantity, i;
-    //
-    // for (year = MIN_YEAR; year <= MAX_YEAR; year++) {
-    //   quantity = 0;
-    //   for (i = 0; i < nameData.length; i += 1) {
-    //     if (nameData[i].year == year) {
-    //       quantity = nameData[i].quantity;
-    //     }
-    //   }
-    //
-    //   if (quantity < minYearNumber) {
-    //     minYear = year;
-    //     minYearNumber = quantity;
-    //   }
-    // }
-
     return `Tu nombre alcanzó la mayor popularidad en <b>${ yearMaxPop }</b> y, la menor, en <b>${ yearMinPop }</b>.`;
   };
 
-  statisticsCalculator.currentYear = function (name, nameData, currYear) {
+  statisticsCalculator.currentYear = function (name, mainNameData, currYear) {
     var indexCurrYear = currYear - MIN_YEAR;
-    var numNamesCurrYear = nameData[indexCurrYear].quantity;
+    var numNamesCurrYear = mainNameData[indexCurrYear].quantity;
 
     if (numNamesCurrYear == 0) {
       return `Nadie se llamó así en ${ currYear }.`;
