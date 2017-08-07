@@ -706,7 +706,6 @@ jQuery(function ($) {
         error_element.append(`<li><span class="glyphicon glyphicon-exclamation-sign"></span><span>Por favor, completá un año.</span></li>`);
       }
       if (all_errors.invalid_name === true) {
-        console.log("invalid_name");
         error_element.append(`<li><span class="glyphicon glyphicon-exclamation-sign"></span><span>Revisá que tu nombre esté bien escrito.</span></li>`);
       }
       if (all_errors.invalid_year === true) {
@@ -781,8 +780,7 @@ jQuery(function ($) {
       return 'decada-1920';
     }
     function ejecutarStatisticsYear(year) {
-      console.log("anio seleccionado es");
-      console.log(year);
+
       if ($(window).width() < 768){
         App.bubbleChart(year);
       } else {
@@ -819,7 +817,7 @@ jQuery(function ($) {
   /* Generar el grafico de burbujas en funcion de
     la seleccion del input */
     $('.formularioBubble').on('change', function(e) {
-      console.log("seleccione otro anio");
+
       if ($('#anio').is(':checked')) {
         datoSeleccionado = $('#yearData').val();
       } else {
