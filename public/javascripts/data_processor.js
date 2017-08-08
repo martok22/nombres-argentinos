@@ -61,6 +61,17 @@ jQuery(function ($) {
       }
     });
 
+    if (year === '') { // Validaciones años
+      $processing.reject({ type: "empty_year", year: year });
+      return $processing;
+    } else if (year > MAX_YEAR || year < MIN_YEAR) {
+      $processing.reject({ type: "range_year", year: year });
+      return $processing;
+    } else if (isNaN(Number(year.trim())) === true || parseInt(year.trim()).toString().length !== 4) {
+      $processing.reject({ type: "invalid_year", year: year });
+      return $processing;
+    }
+
     $('#errorName').attr('class', 'hide').empty(); // Borramos errores año
 
     if (!window.GENDER) {

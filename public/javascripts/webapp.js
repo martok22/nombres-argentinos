@@ -169,9 +169,7 @@ jQuery(function ($) {
         this.bubbleChart(ACTIVE_YEAR);
       }.bind(this)).fail(function (error) {
 
-        if (error.type === 'invalid_name') {
-          error.invalid_name = true;
-        }
+        error[error.type] = true;
 
         this.displayErrors(error);
       }.bind(this));
