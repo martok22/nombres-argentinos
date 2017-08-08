@@ -700,6 +700,11 @@ jQuery(function ($) {
     displayErrors: function (all_errors) {
       var error_element = $('.form_errors ul');
 
+      $('#section2').remove();
+      $('#section3').remove();
+      $('#section4').remove();
+      $('#section5').remove();
+
       if (all_errors.empty_name === true) {
         error_element.append(`<li><span class="glyphicon glyphicon-exclamation-sign"></span><span>Por favor, completá tu nombre.</span></li>`);
       }
