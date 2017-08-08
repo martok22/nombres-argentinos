@@ -721,6 +721,9 @@ jQuery(function ($) {
     }
   };
 
+  App.initialize();
+  App.render();
+
   // tooltip bubble graphic
   Opentip.styles.bubbleStyle = {
     stem: true,
@@ -734,9 +737,6 @@ jQuery(function ($) {
     window.addEventListener("hashchange", function(){
        for(var i = 0; i < Opentip.tips.length; i ++) { Opentip.tips[i].hide(); }
     });
-
-    App.initialize();
-    App.render();
 
     // $('.help-tooltip').tooltip();
 
