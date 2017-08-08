@@ -72,7 +72,7 @@ jQuery(function ($) {
           url;
 
       $('#name-form').submit(function (event) {
-        var names      = $('#name').val().split(','),
+        var names      = $('#name').val().replace(/\s+/g, ' ').split(','),
             year       = $('#year').val(),
             mainName   = names.shift(),
             errores_estado = false,
@@ -91,7 +91,7 @@ jQuery(function ($) {
         if (mainName === '') {                        // Validaciones nombres
           errores.empty_name = true;
           errores_estado = true;
-        } else if (!regexName.test(mainName) || $('#name').val().length > 120 || $('#name').val().length < 2) { // Validacion Nombre - Formato Incorrecto
+        } else if (!regexName.test(mainName) || $('#name').val().replace(/\s+/g, ' ').length > 120 || $('#name').val().replace(/\s+/g, ' ').length < 2) { // Validacion Nombre - Formato Incorrecto
           errores.invalid_name = true;
           errores_estado = true;
         } else if (names.length > 2) {
@@ -105,7 +105,7 @@ jQuery(function ($) {
         } else if (year > MAX_YEAR || year < MIN_YEAR) {
           errores.range_year = true;
           errores_estado = true;
-        } else if (isNaN(Number(year.trim())) === true) {
+        } else if (isNaN(Number(year.trim())) === true && year.trim().length !== 4) {
           errores.invalid_year = true;
           errores_estado = true;
         }
