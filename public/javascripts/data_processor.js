@@ -12,7 +12,7 @@ jQuery(function ($) {
         this.otherNamesData = other_names_data;
         this.mainNameData = main_name_data;
         this.year = this._processYear(year);
-        this.gender = gender; 
+        this.gender = gender;
     };
 
   DataProcessor.prototype.fetchData = function (callback) {
@@ -32,7 +32,7 @@ jQuery(function ($) {
     for (var i=0; i < otherNames.length; i++) {
       processedNames.push(otherNames[i]);
       namesData[otherNames[i]] = JSON.parse(otherNamesData[i]);
-    } 
+    }
 
     checkDone = function () {
       if (yearDone) {
@@ -53,6 +53,13 @@ jQuery(function ($) {
       $processing.reject({ type: "invalid_name", name: mainName });
       return $processing;
     }
+
+    otherNamesData.forEach(function(v, k) {
+      if (v.length === 2) {
+        $processing.reject({ type: "invalid_name", name: otherNames[k] });
+        return $processing;
+      }
+    });
 
     $('#errorName').attr('class', 'hide').empty(); // Borramos errores año
 

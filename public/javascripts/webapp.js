@@ -68,7 +68,7 @@ jQuery(function ($) {
       this.bindEvents();
     },
     bindEvents: function () {
-      var regexName = /^[a-zA-Z ,áéíóú]+$/,
+      var regexName = /^[a-zA-Z ,áéíóúñ]+$/,
           url;
 
       $('#name-form').submit(function (event) {
@@ -76,7 +76,7 @@ jQuery(function ($) {
             year       = $('#year').val(),
             mainName   = names.shift(),
             errores_estado = false,
-            errores         = {
+            errores = {
               empty_name:   false,
               empty_year:   false,
               invalid_name: false,
@@ -91,7 +91,7 @@ jQuery(function ($) {
         if (mainName === '') {                        // Validaciones nombres
           errores.empty_name = true;
           errores_estado = true;
-        } else if (!regexName.test(mainName) || $('#name').val().replace(/\s+/g, ' ').length > 120 || $('#name').val().replace(/\s+/g, ' ').length < 2) { // Validacion Nombre - Formato Incorrecto
+        } else if (!regexName.test(mainName) || mainName.length > 120 || mainName.length < 2) { // Validacion Nombre - Formato Incorrecto
           errores.invalid_name = true;
           errores_estado = true;
         } else if (names.length > 2) {
@@ -99,13 +99,33 @@ jQuery(function ($) {
           errores_estado = true;
         }
 
-        if (year === '') {                            // Validaciones años
+        if (names.length <= 2 && names.length !== 0) {
+          if (names[0] === '') {
+            errores.empty_name = true;
+            errores_estado = true;
+          } else if (!regexName.test(names[0]) || names[0].length > 120 || names[0].length < 2) {
+            errores.invalid_name = true;
+            errores_estado = true;
+          }
+
+          if (names.length === 2) {
+            if (names[1] === '') {
+              errores.empty_name = true;
+              errores_estado = true;
+            } else if (!regexName.test(names[1]) || names[1].length > 120 || names[1].length < 2) {
+              errores.invalid_name = true;
+              errores_estado = true;
+            }
+          }
+        }
+
+        if (year === '') { // Validaciones años
           errores.empty_year = true;
           errores_estado = true;
         } else if (year > MAX_YEAR || year < MIN_YEAR) {
           errores.range_year = true;
           errores_estado = true;
-        } else if (isNaN(Number(year.trim())) === true || parseInt(year.trim()).length !== 4) {
+        } else if (isNaN(Number(year.trim())) === true || parseInt(year.trim()).toString().length !== 4) {
           errores.invalid_year = true;
           errores_estado = true;
         }
@@ -134,12 +154,6 @@ jQuery(function ($) {
           year = gon.year,
           processor;
 
-      // Si el nombre esta vacio, toma por defecto el nombre predeterminado
-      //if ($('#name').val() !== '') { names = $('#name').val().split(','); }
-
-      // Si el año esta vacio, toma por defecto el nombre predeterminado
-      //if ($('#year').val() !== '') { year = $('#year').val(); }
-
       processor = new DataProcessor(main_name, main_name_data, other_names, other_names_data, year);
 
       processor.fetchData().done(function (data) {
@@ -154,8 +168,11 @@ jQuery(function ($) {
         this.nameStatistics(STATISTICS);
         this.bubbleChart(ACTIVE_YEAR);
       }.bind(this)).fail(function (error) {
-        console.error(error);
-        error.invalid_name = true;
+
+        if (error.type === 'invalid_name') {
+          error.invalid_name = true;
+        }
+
         this.displayErrors(error);
       }.bind(this));
     },
