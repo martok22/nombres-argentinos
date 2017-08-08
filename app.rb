@@ -20,7 +20,7 @@ class App < Sinatra::Base
     set :static_cache_control, [:public, max_age: 60 * 60 * 24]
     set :environment, settings.environment
 
-    set :app_domain, settings.development? ? '127.0.0.1:9393' : "#{settings.host}:#{settings.port}"
+    set :app_domain, settings.development? ? '127.0.0.1:9393' : "#{settings.host}"
 
     enable :static
   end
