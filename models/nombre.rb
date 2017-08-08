@@ -3,7 +3,6 @@ require 'yaml'
 
 class Nombre
     @@config = YAML.load_file('config/mysql.conf')
-    @@mysql_client = Mysql2::Client.new(:host => @@config["host"], :username => @@config["username"], :password => @@config["password"], :database => "nombres")
 
     def initialize(nombre)
         @nombre = nombre
@@ -14,8 +13,9 @@ class Nombre
     end
 
     def get_all
-        mysql_client = @@mysql_client
+        mysql_client = Mysql2::Client.new(:host => @@config["host"], :username => @@config["username"], :password => @@config["password"], :database => "nombres")
         results = mysql_client.query("SELECT * FROM cruce_nombres_anios WHERE name = '#{@nombre}'", :symbolize_keys => true)
+        mysql_client.close
 
         all_years = []
 
