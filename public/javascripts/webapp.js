@@ -68,7 +68,7 @@ jQuery(function ($) {
       this.bindEvents();
     },
     bindEvents: function () {
-      var regexName = /^[a-zA-Z ,áéíóú]+$/,
+      var regexName = /^[a-zA-Z ,áéíóúñ]+$/,
           url;
 
       $('#name-form').submit(function (event) {
