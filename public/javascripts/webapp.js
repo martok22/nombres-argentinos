@@ -105,7 +105,7 @@ jQuery(function ($) {
         } else if (year > MAX_YEAR || year < MIN_YEAR) {
           errores.range_year = true;
           errores_estado = true;
-        } else if (isNaN(Number(year.trim())) === true && year.trim().length !== 4) {
+        } else if (isNaN(Number(year.trim())) === true || parseInt(year.trim()).length !== 4) {
           errores.invalid_year = true;
           errores_estado = true;
         }
