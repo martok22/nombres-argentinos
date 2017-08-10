@@ -67,7 +67,7 @@ jQuery(function ($) {
     } else if (year > MAX_YEAR || year < MIN_YEAR) {
       $processing.reject({ type: "range_year", year: year });
       return $processing;
-    } else if (isNaN(Number(year.trim())) === true || parseInt(year.trim()).toString().length !== 4) {
+    } else if (isNaN(Number(year.toString().trim())) === true || parseInt(year.toString().trim()).toString().length !== 4) {
       $processing.reject({ type: "invalid_year", year: year });
       return $processing;
     }
