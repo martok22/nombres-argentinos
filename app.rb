@@ -51,6 +51,9 @@ class App < Sinatra::Base
         other_names = [NOMBRES_DEFAULT[1]]
       end
 
+      # Force encoding utf-8 para server thin
+      main_name.force_encoding('utf-8')
+
       # Asignar default de anio
       year = year ? year.to_i : YEAR_DEFAULT
 
@@ -58,6 +61,7 @@ class App < Sinatra::Base
       main_name_data = Nombre.new(main_name).get_all
       other_names_data = []
       other_names.each do |other_name|
+        other_name.force_encoding('utf-8')
         other_names_data << Nombre.new(other_name).get_all
       end
 
