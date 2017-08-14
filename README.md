@@ -1,4 +1,4 @@
-# nombres-argentinos
+# Nombres Argentinos
 
 Proyecto de visualización de estadísticas sobre nombres de nacimientos argentinos de 1922 a 2015.
 
@@ -16,29 +16,40 @@ Proyecto de visualización de estadísticas sobre nombres de nacimientos argenti
 
 ### Dependencias
 
-* Ruby
+* Ruby (> 2.2)
+  * bundler
+  * ruby-dev
 * Python
   * pip
   * pandas
+* mysql (> 5.7)
+  * libmysqlclient-dev
 
 #### Generación de data
 
-1. Instalar `pandas`: `pip install pandas`
-2. Cambiar el path del archivo csv con la data de nombres por el correpondiente en `process_names.py`.
-3. Correr `process_names.py`: `python process_names.py`
-4. Verificar que los jsons fueron generados en `public/names/` y `public/years/`
+1. Clonar el repositorio.
+2. Copiar el archivo sample de configuración de mysql: `cp config/mysql.conf.sample config/mysql.conf`
+3. Editar `config/mysql.conf` con los valores correspondientes.
+4. Instalar `pandas` y sus dependencias: `pip install pandas`. _NOTA: Ser pacientes, la instalación de pandas lleva un buen tiempo_
+5. Cambiar el path del archivo csv con la data de nombres por el correpondiente en `process_names.py`.
+6. Crear la base de datos `nombres` en mysql.
+7. Correr `process_names.py`: `cd scripts; python process_names.py`
+8. Verificar que los jsons de años (y décadas) fueron generados en `public/years/`.
+9. Verificar que los datos de años fueron generados en la base de datos de `nombres`.
 
 ##### Nota sobre los datos
 
 En `data/` pueden encontrar:
 - Una muestra de los datos usados para el proyecto de nombres argentinos.
-- Todos los datos de nombres argentinos, pero sin la columna de género, ya que la misma fue calculada de manera predictiva.
+  - _La muestra no contiene la columna de género, ya que la misma fue agregada posteriormente y calculada predictivamente_
 
 #### Iniciar el servidor en development
 
-1. Asegurarse que el host está correctamente configurado en `app.rb`
-2. Iniciar el servidor en el puerto 9393: `bundle exec shotgun -p 9393`
-3. Ir a `127.0.0.1:9393/` y confirmar que la web está corriendo correctamente.
+1. Copiar el archivo sample de configuración de la app: `cp config/app_config.yml.sample config/app_config.yml`
+2. Instalar las gemas necesarias: `bundle install`.
+3. Iniciar el servidor en el puerto 9393: `shotgun -p 9393`
+  - El servidor puede correrse tanto con `webrick` (`shotgun -p 9393 -s webrick`) como con `thin` (`shotgun -p 9393 -s thin`). 
+4. Ir a `127.0.0.1:9393/` y confirmar que la web está corriendo correctamente.
 
 ## Créditos
 
@@ -46,6 +57,6 @@ Este proyecto estuvo inspirado en el proyecto de [DATA Uruguay](http://data.180.
 
 ## Contacto
 
-Te invitamos a [crearnos un issue](https://github.com/datosgobar/nombres-argentinos/issues/new?title=Encontre%20un%20bug%20en%20nombre-del-repo) en caso de que encuentres algún bug o tengas feedback de alguna parte de `nombres-argentinos`.
+Te invitamos a [crearnos un issue](https://github.com/datosgobar/nombres-argentinos/issues/new) en caso de que encuentres algún bug o tengas feedback de alguna parte de `nombres-argentinos`.
 
 Para todo lo demás, podés mandarnos tu comentario o consulta a [datos@modernizacion.gob.ar](mailto:datos@modernizacion.gob.ar).
