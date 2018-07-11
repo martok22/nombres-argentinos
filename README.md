@@ -53,7 +53,7 @@ En `data/` pueden encontrar:
 
 ## Créditos
 
-Este proyecto estuvo inspirado en el proyecto de [DATA Uruguay](http://data.180.com.uy/) hecho con los nombres de nacimiento de Montevideo. Agradecemos su ayuda, colaboración y código abierto :)
+Este proyecto estuvo inspirado en el proyecto de [DATA Uruguay](https://data.180.com.uy/) hecho con los nombres de nacimiento de Montevideo. Agradecemos su ayuda, colaboración y código abierto :)
 
 ## Contacto
 
